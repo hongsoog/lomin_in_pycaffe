@@ -1,0 +1,3 @@
+
+ $ grep --include='*.ipynb' --exclude-dir='.ipynb_checkpoints' -rliw . -e 'padding'
+

@@ -1,0 +1,31 @@
+digraph G {
+    graph [rankdir=TB, clusterrank="local"];
+    subgraph cluster_G {
+
+        graph [style="filled,rounded",fillcolor="#80808018", label=""];
+        detection_model_debug [label="detection_model_debug", style="filled", fillcolor="#ffffffb2", fontcolor="#000000", group="0"];
+        subgraph cluster_detection_model_debug {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="detection_model_debug"];
+            detection_model_debug__DetectionDemo [label="DetectionDemo\n(./detection_model_debug.py:37)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+            detection_model_debug__bb_image_draw [label="bb_image_draw\n(./detection_model_debug.py:168)", style="filled", fillcolor="#feccccb2", fontcolor="#000000", group="0"];
+        }
+        subgraph cluster_detection_model_debug__DetectionDemo {
+
+            graph [style="filled,rounded",fillcolor="#80808018", label="detection_model_debug.DetectionDemo"];
+            detection_model_debug__DetectionDemo____init__ [label="__init__\n(./detection_model_debug.py:41)", style="filled", fillcolor="#ff9999b2", fontcolor="#000000", group="0"];
+            detection_model_debug__DetectionDemo__compute_prediction [label="compute_prediction\n(./detection_model_debug.py:78)", style="filled", fillcolor="#ff9999b2", fontcolor="#000000", group="0"];
+            detection_model_debug__DetectionDemo__filter_by_score [label="filter_by_score\n(./detection_model_debug.py:134)", style="filled", fillcolor="#ff9999b2", fontcolor="#000000", group="0"];
+            detection_model_debug__DetectionDemo__parse_result [label="parse_result\n(./detection_model_debug.py:141)", style="filled", fillcolor="#ff9999b2", fontcolor="#000000", group="0"];
+            detection_model_debug__DetectionDemo__run_on_pil_image [label="run_on_pil_image\n(./detection_model_debug.py:63)", style="filled", fillcolor="#ff9999b2", fontcolor="#000000", group="0"];
+        }
+    }
+        detection_model_debug -> detection_model_debug__DetectionDemo [style="solid", color="#000000"];
+        detection_model_debug -> detection_model_debug__bb_image_draw [style="solid", color="#000000"];
+        detection_model_debug -> detection_model_debug__DetectionDemo____init__ [style="solid", color="#000000"];
+        detection_model_debug -> detection_model_debug__DetectionDemo__run_on_pil_image [style="solid", color="#000000"];
+        detection_model_debug__DetectionDemo__run_on_pil_image -> detection_model_debug__DetectionDemo__compute_prediction [style="solid", color="#000000"];
+        detection_model_debug__DetectionDemo__run_on_pil_image -> detection_model_debug__DetectionDemo__filter_by_score [style="solid", color="#000000"];
+        detection_model_debug__DetectionDemo__run_on_pil_image -> detection_model_debug__DetectionDemo__parse_result [style="solid", color="#000000"];
+        detection_model_debug__bb_image_draw -> detection_model_debug__DetectionDemo__run_on_pil_image [style="solid", color="#000000"];
+    }

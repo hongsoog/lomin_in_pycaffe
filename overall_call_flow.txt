@@ -1,0 +1,147 @@
+GenearizedRCNN ==> model
+maskrcnn_benchmark/modelling/detector/generalized_rcnn.py
+
+GeneralizedRCNN::forward(self, images, targets=None) in GeneralizedRCNN(nn.Module)
+        Arguments:
+            images (list[Tensor] or ImageList): images to be processed
+            targets (list[BoxList]): ground-truth boxes present in the image (optional), None in test mode
+
+        Returns:
+            result (list[BoxList] or dict[Tensor]): the output from the model.
+                During training, it returns a dict[Tensor] which contains the losses.
+                During testing, it returns list[BoxList] contains additional fields
+                like `scores`, `labels` and `mask` (for Mask R-CNN models).
+
+	// 1. backbone: resent50, fpn
+	images = to_image_list(images)
+
+
+	// 1. backbone: resent50, fpn
+	// backbone defined in maskrcnn_benchmark/modelling/backbone/backbone.py
+	// return : features [P2, P3, P4, P6, P7]
+	// 
+	features = self.backbone(images.tensors)
+
+	// 2.rpn
+	proposals, proposal_losses = self.rpn(images, features, targets =None)
+
+=======================================================================================
+
+
+maskrcnn_benchmark/modelling/backbone/backbone.py ==> model.backbone
+
+
+=======================================================================================
+maskrcnn_benchmark/modelling/backbone/resnet.py ==> model.backbone.body
+
+ResNet::forward(self.x)
+
+      Arguments:
+			    x: images type of ImageList
+
+	x = self.stem(x)
+
+	for stage_name in self.stages
+			x = getattr(self, stage_name(x)
+
+			if self.return_features[stagename]:
+				 ouputs.append(x)
+
+	return outputs   // [C1, C2, C3, C4]
+
+
+
+=======================================================================================
+maskrcnn_benchmark/modelling/backbone/fpn.py  ==> model.backbone.fpn
+
+FPN::forward(self,x)
+      Arguments:
+			    x: [C1, C2, C3, C4] - return value of Resnet::forward()
+
+
+    # last_inner = fpn_inner4(C4)
+    last_inner = getattr(self, self.inner_blocks[-1])(x[-1])
+
+    # create an empty result list
+    results = []
+
+    # reslts.append( fpn_layer4(last_inner)
+    # == results.append( fpn_layer4(fpn_inner4(C4))
+    results.append(getattr(self, self.layer_blocks[-1])(last_inner))
+
+    for feature, inner_block, layer_block in zip(
+            x[:-1][::-1], self.inner_blocks[:-1][::-1], self.layer_blocks[:-1][::-1]
+        ):
+
+				if not inner_block: 
+				   continue
+
+			  # Upsample of last_inner 
+        inner_top_down = F.interpolate(last_inner, scale_factor=2, mode="nearest")
+
+				# get the calculation result of inner_block
+        inner_lateral = getattr(self, inner_block)(feature)
+
+				# Superimpose the two as the output of the current pyramid level and
+        use it as an input to the next pyramid level
+        last_inner = inner_lateral + inner_top_down
+
+
+        # Add the current pyramid level output to the result list,
+        # Note that use layer_block to perform convolution calculations at the same time,
+        # in order to make the highest resolution first, we need to insert the current
+        # pyramid level output to the 0 position (i.e, prepend)
+        results.insert(0, getattr(self, layer_block)(last_inner))
+
+		// for loop ends
+		results = [P2, P3, P4]
+
+    if isinstance(self.top_blocks, LastLevelP6P7):
+		    # calc P6 and P7 from P4
+		    last_results = self.top_blocks(x[-1], results[-1])
+
+				# append the newly calculated result to the list
+        results.extend(last_results)
+
+				return tuple[results)
+
+=======================================================================================
+
+maskrcnn_benchmark/modelling/rpn/rpn.py  ==> model.rpn
+
+RPNModule::forward(self, images, features, targets=None):
+
+        """
+        Arguments:
+            images (ImageList): images for which we want to compute the predictions
+            features (list[Tensor]): features computed from the images that are
+                used for computing the predictions. Each tensor in the list
+                correspond to different feature levels ==> [P2, P3, P4, P6, P7] from fpn.foward()
+            targets (list[BoxList): ground-truth boxes present in the image (optional)
+
+        Returns:
+            boxes (list[BoxList]): the predicted boxes from the RPN, one BoxList per
+                image.
+            losses (dict[Tensor]): the losses for the model during training. During
+                testing, it is an empty dict.
+        """
+
+    // self.head:
+		objectness, rpn_box_regression = self.head(features)
+
+		// self.anchor_generator:
+    anchors = self.anchor_generator(images, features)
+
+  	return self._forward_test(anchors, objectness, rpn_box_regression)
+
+
+RPNModule::_forward_test(self, anchors, objectness, rpn_box_regression):
+
+    // self.box_selector_test:
+    boxes = self.box_selector_test(anchors, objectness, rpn_box_regression)
+
+		inds = [ box.get_field("objectness").sort(descending=True)[1] for box in boxes ]
+
+    boxes = [box[ind] for box, ind in zip(boxes, inds)]
+
+		return boxes, {}

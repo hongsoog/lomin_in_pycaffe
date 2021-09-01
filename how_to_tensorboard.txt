@@ -1,0 +1,6 @@
+## Run tensorboard server at current directory
+$ tensorboard --logdir=runs/lomin_detect/
+
+
+# open web browser with alpha.etri.re.kr:6006
+

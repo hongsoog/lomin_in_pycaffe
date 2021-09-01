@@ -1,0 +1,230 @@
+// ------------------------------------------------------------------------------------------------------------------------
+// Note
+// This is just structure of detection model v2, its structure does not imply any order of layers.
+// In this structure analysis, some layers those not include learnable parameters, such as ReLU or maxpool are hidden.
+// ------------------------------------------------------------------------------------------------------------------------
+
+(lomin) kimkk@alpha ~/lomin $ vi model_structure.txt
+
+GenerallizedRCNN    "model"
+  │
+  ├─── backbone     "model.backbone"
+  │     │
+  │     ├─── body  "model.backbone.body"
+  │     │     ├── stem   "model.backbone.body.stem"
+  │     │     │    │   related source: maskrcnn_benchmark/modelling/backbone/resenet.py StemWithFixedBatchNorm class
+  │     │     │    │   --> conv1 ->  bn1 (FronzenBatchNorm2d : bn -> scale ) -> relu -> max_pool2d
+  │     │     │    │
+  │     │     │    ├── conv1  "model.backbone.body.stem.conv1",  // def: Conv2d(in_channels=3, out_channels=64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)]
+  │     │     │    └── bn1    "model.backbone.body.stem.bn1",    // def: FrozenBatchNorm2d() : bn -> scale
+  │     │     │
+  │     │     ├── layer1 "model.backbone.body.layer1"
+  │     │     │    │
+  │     │     │    │    related source: maskrcnn_benchmark/modelling/backbone/resenet.py BottleneckWithFixedBatchNorm class
+  │     │     │    │        + ---------------------------------------> downnsample -----------------+
+  │     │     │    │        ^                                                                       |
+  │     │     │    │        │                                                                      V
+  │     │     │    │    --> + -> conv1 -> bn1 -> relu -> conv2 -> bn2 -> relue -> conv3 -> bn3 ->  Add  -> relu
+  │     │     │    │
+  │     │     │    ├─── 0   "model.backbone.body.layer1.0"
+  │     │     │    │    ├── downsample "model.backbone.body.layer1.0.downsample"
+  │     │     │    │    │    │
+  │     │     │    │    │    ├── 0     "model.backbone.body.layer1.0.downsample.0",   // def: Conv2d(in_channels=64, out_channels=256, kernel_size=(1, 1), stride=(1, 1), bias=False) x
+  │     │     │    │    │    └── 1     "model.backbone.body.layer1.0.downsample.1",   // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv1      "model.backbone.body.layer1.0.conv1",          // def: Conv2d(in_channels=64, out_channels=64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    ├── bn1        "model.backbone.body.layer1.0.bn1",            // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv2      "model.backbone.body.layer1.0.conv2",          // def: Conv2d(in_channels=64, out_channels=64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │    │    ├── bn2        "model.backbone.body.layer1.0.bn2",            // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv3      "model.backbone.body.layer1.0.conv3",          // def: Conv2d(in_channels=64, out_channels=256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    └── bn3        "model.backbone.body.layer1.0.bn3",            // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │
+  │     │     │    │    --> conv1 -> bn1 -> relu -> conv2 -> bn2 -> relue -> conv3 -> bn3 -> relu
+  │     │     │    │
+  │     │     │    ├─── 1   "model.backbone.body.layer1.1"
+  │     │     │    │    ├── conv1      "model.backbone.body.layer1.1.conv1",          // def: Conv2d(in_channels=256, out_channels=64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    ├── bn1        "model.backbone.body.layer1.1.bn1",            // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv2      "model.backbone.body.layer1.1.conv2",          // def: Conv2d(in_channels=64,  out_channels=64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │    │    ├── bn2        "model.backbone.body.layer1.1.bn1",            // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv3      "model.backbone.body.layer1.1.conv3",          // def: Conv2d(in_channels=64,  out_channels=256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    └── bn3        "model.backbone.body.layer1.1.bn3",            // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │
+  │     │     │    │    --> conv1 -> bn1 -> relu -> conv2 -> bn2 -> relue -> conv3 -> bn3 -> relu
+  │     │     │    │
+  │     │     │    └─── 2   "model.backbone.body.layer1.2"
+  │     │     │         ├── conv1      "model.backbone.body.layer1.2.conv1",          // def: Conv2d(in_channels=256, out_channels=64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │         ├── bn1        "model.backbone.body.layer1.2.bn1",            // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │         ├── conv2      "model.backbone.body.layer1.2.conv2",          // def: Conv2d(in_channels=64,  out_channels=64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │         ├── bn2        "model.backbone.body.layer1.2.bn2",            // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │         ├── conv3      "model.backbone.body.layer1.2.conv3",          // def: Conv2d(in_channels=64,  out_channels=256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │         └── bn3        "model.backbone.body.layer1.2.conv2",          // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │
+  │     │     ├── layer2 "model.backbone.body.layer2"
+  │     │     │    │
+  │     │     │    ├─── 0   "model.backbone.body.layer2.0"
+  │     │     │    │    ├── downsample  "model.backbone.body.layer2.0.downsample"
+  │     │     │    │    │    │
+  │     │     │    │    │    ├── 0      "model.backbone.body.layer2.0.downsample.0" , // def: Conv2d(in_channels=256, out_channels=512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+  │     │     │    │    │    └── 1      "model.backbone.body.layer2.0.downsample.1",  // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv1       "model.backbone.body.layer2.0.conv1",         // def: Conv2d(in_channels=256, out_channels=128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+  │     │     │    │    ├── bn1         "model.backbone.body.layer2.0.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv2       "model.backbone.body.layer2.0.conv2",         // def: Conv2d(in_channels=128, out_channels=128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │    │    ├── bn2         "model.backbone.body.layer2.0.bn2",,          // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv3       "model.backbone.body.layer2.0.conv3",         // def: Conv2d(in_channels=128, out_channels=512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    └── bn3         "model.backbone.body.layer2.0.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │
+  │     │     │    ├─── 1   "model.backbone.body.layer2.1"
+  │     │     │    │    ├── conv1       "model.backbone.body.layer2.1.conv1",         // def: Conv2d(in_channels=512, out_channels=128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    ├── bn1         "model.backbone.body.layer2.1.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv2       "model.backbone.body.layer2.1.conv2",         // def: Conv2d(in_channels=128, out_channels=128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │    │    ├── bn2         "model.backbone.body.layer2.1.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv3       "model.backbone.body.layer2.1.conv3",         // def: Conv2d(in_channels=128, out_channels=512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    └── bn3         "model.backbone.body.layer2.1.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │
+  │     │     │    ├─── 2   "model.backbone.body.layer2.2"
+  │     │     │    │    ├── conv1       "model.backbone.body.layer2.2.conv1",         // def: Conv2d(in_channels=512, out_channels=128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    ├── bn1         "model.backbone.body.layer2.2.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv2       "model.backbone.body.layer2.2.conv2",         // def: Conv2d(in_channels=128, out_channels=128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │    │    ├── bn2         "model.backbone.body.layer2.2.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv3       "model.backbone.body.layer2.2.conv3",         // def: Conv2d(in_channels=128, out_channels=512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    └── bn3         "model.backbone.body.layer2.2.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │
+  │     │     │    └─── 3 "model.backbone.body.layer2.3"
+  │     │     │         ├── conv1       "model.backbone.body.layer2.3.conv1",         // def: Conv2d(in_channels=512, out_channels=128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │         ├── bn1         "model.backbone.body.layer2.3.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │         ├── conv2       "model.backbone.body.layer2.3.conv2",         // def: Conv2d(in_channels=128, out_channels=128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │         ├── bn2         "model.backbone.body.layer2.3.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │         ├── conv3       "model.backbone.body.layer2.3.conv3",         // def: Conv2d(in_channels=128, out_channels=512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │         └── bn3         "model.backbone.body.layer2.3.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu "==> C2, Input to FPN"
+  │     │     │
+  │     │     ├── layer3 "model.backbone.body.layer3"
+  │     │     │    │
+  │     │     │    ├─── 0 "model.backbone.body.layer3.0"
+  │     │     │    │    ├── downsample "model.backbone.body.layer3.0.downsamples"
+  │     │     │    │    │    │
+  │     │     │    │    │    ├── 0      "model.backbone.body.layer3.0.downsamples.0", // def: Conv2d(in_channels=512, out_channels=1024, kernel_size=(1, 1), stride=(2, 2), bias=False)
+  │     │     │    │    │    └── 1      "model.backbone.body.layer3.0.downsamples.0", // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv1       "model.backbone.body.layer3.0.conv1",         // def: Conv2d(in_channels=512, out_channels=256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+  │     │     │    │    ├── bn1         "model.backbone.body.layer3.0.bn1",           // def: # FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv2       "model.backbone.body.layer3.0.conv2",         // def: Conv2d(in_channels=256, out_channels=256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │    │    ├── bn2         "model.backbone.body.layer3.0.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv3       "model.backbone.body.layer3.0.conv3",         // def: Conv2d(in_channels=256, out_channels=1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    └── bn3         "model.backbone.body.layer3.0.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │
+  │     │     │    ├─── 1 "model.backbone.body.layer3.1"
+  │     │     │    │    ├── conv1       "model.backbone.body.layer3.1.conv1",         // def: Conv2d(in_channels=1024, out_channels=256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    ├── bn1         "model.backbone.body.layer3.1.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv2       "model.backbone.body.layer3.1.conv2",         // def: Conv2d(in_channels=256,  out_channels=256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │    │    ├── bn2         "model.backbone.body.layer3.1.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv3       "model.backbone.body.layer3.1.conv3",         // def: Conv2d(in_channels=256,  out_channels=1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    └── bn3         "model.backbone.body.layer3.1.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │
+  │     │     │    ├─── 2 "model.backbone.body.layer3.2"
+  │     │     │    │    ├── conv1       "model.backbone.body.layer3.2.conv1",         // def: Conv2d(in_channels=1024, out_channels=256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    ├── bn1         "model.backbone.body.layer3.2.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv2       "model.backbone.body.layer3.2.conv2",         // def: Conv2d(in_channels=256,  out_channels=256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │    │    ├── bn2         "model.backbone.body.layer3.2.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv3       "model.backbone.body.layer3.2.conv3",         // def: Conv2d(in_channels=256,  out_channels=1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    └── bn3         "model.backbone.body.layer3.2.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │
+  │     │     │    ├─── 3 "model.backbone.body.layer3.3"
+  │     │     │    │    ├── conv1       "model.backbone.body.layer3.3.conv1",         // def: Conv2d(in_channels=1024, out_channels=256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    ├── bn1         "model.backbone.body.layer3.3.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv2       "model.backbone.body.layer3.3.conv2",         // def: Conv2d(in_channels=256,  out_channels=256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │    │    ├── bn2         "model.backbone.body.layer3.3.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv3       "model.backbone.body.layer3.3.conv3",         // def: Conv2d(in_channels=256,  out_channels=1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    └── bn3         "model.backbone.body.layer3.3.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │
+  │     │     │    ├─── 4 "model.backbone.body.layer3.4"
+  │     │     │    │    ├── conv1       "model.backbone.body.layer3.4.conv1",         // def: Conv2d(in_channels=1024, out_channels=256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    ├── bn1         "model.backbone.body.layer3.4.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv2       "model.backbone.body.layer3.4.conv2",         // def: Conv2d(in_channels=256,  out_channels=256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │    │    ├── bn2         "model.backbone.body.layer3.4.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │    ├── conv3       "model.backbone.body.layer3.4.conv3",         // def: Conv2d(in_channels=256,  out_channels=1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │    │    └── bn3         "model.backbone.body.layer3.4.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │    │
+  │     │     │    └─── 5 "model.backbone.body.layer3.5"
+  │     │     │         ├── conv1       "model.backbone.body.layer3.5.conv1",         // def: Conv2d(in_channels=1024, out_channels=256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │         ├── bn1         "model.backbone.body.layer3.5.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │         ├── conv2       "model.backbone.body.layer3.5.conv2",         // def: Conv2d(in_channels=256,  out_channels=256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │     │         ├── bn2         "model.backbone.body.layer3.5.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │     │         ├── conv3       "model.backbone.body.layer3.5.conv3",         // def: Conv2d(in_channels=256,  out_channels=1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │     │         └── bn3         "model.backbone.body.layer3.5.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu "==> C3 : Input to FPN"
+  │     │     │
+  │     │     └── layer4 "model.backbone.body.layer4"
+  │     │          │
+  │     │          ├─── 0 "model.backbone.body.layer4.0"
+  │     │          │    ├── downsample  "model.backbone.body.layer4.0.downsample"
+  │     │          │    │   │
+  │     │          │    │   ├── 0       "model.backbone.body.layer4.0.downsample.0",  // def: Conv2d(in_channels=1024, out_channels=2048, kernel_size=(1, 1), stride=(2, 2), bias=False)
+  │     │          │    │   └── 1       "model.backbone.body.layer4.0.downsample.1",  // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │          │    ├── conv1       "model.backbone.body.layer4.0.conv1",         // def: Conv2d(in_channels=1024, out_channels=512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+  │     │          │    ├── bn1         "model.backbone.body.layer4.0.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │          │    ├── conv2       "model.backbone.body.layer4.0.conv2",         // def: Conv2d(in_channels=512,  out_channels=512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │          │    ├── bn2         "model.backbone.body.layer4.0.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │          │    ├── conv3       "model.backbone.body.layer4.0.conv3",         // def: Conv2d(in_channels=512,  out_channels=2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │          │    └── bn3         "model.backbone.body.layer4.0.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │          │
+  │     │          ├─── 1 "model.backbone.body.layer4.1"
+  │     │          │    ├── conv1       "model.backbone.body.layer4.1.conv1",         // def: Conv2d(in_channels=2048, out_channels=512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │          │    ├── bn1         "model.backbone.body.layer4.1.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │          │    ├── conv2       "model.backbone.body.layer4.1.conv2",         // def: Conv2d(in_channels=512,  out_channels=512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │          │    ├── bn2         "model.backbone.body.layer4.1.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │          │    ├── conv3       "model.backbone.body.layer4.1.conv3",         // def: Conv2d(in_channels=512,  out_channels=2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │          │    └── bn3         "model.backbone.body.layer4.1.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │          │
+  │     │          └─── 2 "model.backbone.body.layer4.2"
+  │     │               ├── conv1       "model.backbone.body.layer4.2.conv1",         // def: Conv2d(in_channels=2048, out_channels=512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │               ├── bn1         "model.backbone.body.layer4.2.bn1",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │               ├── conv2       "model.backbone.body.layer4.2.conv2",         // def: Conv2d(in_channels=512,  out_channels=512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  │     │               ├── bn2         "model.backbone.body.layer4.2.bn2",           // def: FrozenBatchNorm2d() : bn -> scale -> relu
+  │     │               ├── conv3       "model.backbone.body.layer4.2.conv3",         // def: Conv2d(in_channels=512,  out_channels=2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  │     │               └── bn3         "model.backbone.body.layer4.2.bn3",           // def: FrozenBatchNorm2d() : bn -> scale -> relu "==> C4 : Input to FPN"
+  │     │
+  │     └─── fpn "model.backbone.fpn"
+  │           ├── fpn_inner2            "model.backbone.fpn.fpn_inner2",              // def: Conv2d(in_channels=512,  out_channels=1024, kernel_size=(1, 1), stride=(1, 1))
+  │           ├── fpn_layer2            "model.backbone.fpn.fpn_layer2",              // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  │           │
+  │           ├── fpn_inner3            "model.backbone.fpn.fpn_inner3",              // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(1, 1), stride=(1, 1))
+  │           ├── fpn_layer3            "model.backbone.fpn.fpn_layer3",              // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  │           │
+  │           ├── fpn_inner4            "model.backbone.fpn.fpn_inner4",              // def: Conv2d(in_channels=2048, out_channels=1024, kernel_size=(1, 1), stride=(1, 1))
+  │           ├── fpn_layer4            "model.backbone.fpn.fpn_layer4",              // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  │           │
+  │           └── top_blocks "model.backbone.fpn.topblocks"
+  │                 │
+  │                 ├─── p6             "model.backbone.fpn.topblocks.p6",            // def: Conv2d(in_channels=2048, out_channels=1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  │                 └─── p7             "model.backbone.fpn.topblocks.p7",            // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  │
+  └─── rpn          "model.rpn"
+        │
+        ├─── anchor_generator "model.rpn.anchor_generator"
+        │           │
+        │           └─── cell_anchors   "model.rpn.anchor_generator.cell_achors",     // def: BufferList()
+        │
+        ├─── head  "model.rpn.head"
+        │           │
+        │           ├─── cls_tower      "model.rpn.head.cls_tower",
+        │           │     ├─── 0        "model.rpn.head.cls_tower.0",                 // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        │           │     ├─── 1        "model.rpn.head.cls_tower.1",                 // def: ReLU()
+        │           │     ├─── 2        "model.rpn.head.cls_tower.2",                 // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        │           │     ├─── 3        "model.rpn.head.cls_tower.3",                 // def: ReLU()
+        │           │     ├─── 4        "model.rpn.head.cls_tower.4",                 // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)) ReLU()
+        │           │     ├─── 5        "model.rpn.head.cls_tower.5",                 // def: ReLU()
+        │           │     ├─── 6        "model.rpn.head.cls_tower.6",                 // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        │           │     └─── 7        "model.rpn.head.cls_tower.7",                 // def: ReLU()
+        │           │
+        │           ├─── bbox_tower     "model.rpn.head.bbox_tower"
+        │           │     ├─── 0        "model.rpn.head.bbox_tower.0",                // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        │           │     ├─── 1        "model.rpn.head.bbox_tower.1",                // def: ReLU()
+        │           │     ├─── 2        "model.rpn.head.bbox_tower.2",                // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        │           │     ├─── 3        "model.rpn.head.bbox_tower.3",                // def: ReLU()
+        │           │     ├─── 4        "model.rpn.head.bbox_tower.4",                // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)) ReLU()
+        │           │     ├─── 5        "model.rpn.head.bbox_tower.5",                // def: ReLU()
+        │           │     ├─── 6        "model.rpn.head.bbox_tower.6",                // def: Conv2d(in_channels=1024, out_channels=1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        │           │     └─── 7        "model.rpn.head.bbox_tower.7",                // def: ReLU()
+        │           │
+        │           ├─── cls_logits     "model.rpn.head.cls_logits",                  // def: Conv2d(in_channels=1024, out_channels=9, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        │           │
+        │           └─── bbox_pred      "model.rpn.head.bbox_pre",                    // def: Conv2d(in_channels=1024, out_channels=36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        │
+        └─── box_selector_test "model.rpn.box_selector_test",                         // def: RetinaNetPostProcessor()

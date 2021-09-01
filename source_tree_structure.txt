@@ -1,0 +1,168 @@
+(base) kimkk@alpha ~/work/lomin $ tree
+.
+├── demo_e2e.sh        # sh script for calling demo_e2e.py with cmd argument
+├── demo_e2e.py        # end to end demo py script
+├── demo.py            # demo script for detection and recognition by cmd argument
+├── requirements.txt   # dependency requirement
+├── setup.py           # maskrcnn_benchmark rebuild, if any source file modified│
+│
+│
+├── etc
+│   ├── fonts
+│   └── labels        # classification result label info
+│       ├── eng_capital.txt
+│       ├── eng_lower.txt
+│       ├── kor_2350.txt
+│       ├── numbers.txt
+│       └── symbols.txt
+│
+│
+│   # --------------------------------------------
+│   # Mask-RCNN source
+│   # --------------------------------------------
+├── maskrcnn_benchmark
+│   │                                 # ---------------------
+│   ├── config                        # overall configuration
+│   │   └── defaults.py               # ---------------------
+│   │
+│   ├── csrc
+│   │   ├── cpu
+│   │   │   ├── nms_cpu.cpp
+│   │   │   ├── ROIAlign_cpu.cpp
+│   │   │   └── vision.h
+│   │   │
+│   │   ├── cuda
+│   │   │   ├── deform_conv_cuda.cu
+│   │   │   ├── deform_conv_kernel_cuda.cu
+│   │   │   ├── deform_pool_cuda.cu
+│   │   │   ├── deform_pool_kernel_cuda.cu
+│   │   │   ├── nms.cu
+│   │   │   ├── ROIAlign_cuda.cu
+│   │   │   ├── ROIPool_cuda.cu
+│   │   │   └── vision.h
+│   │   │
+│   │   ├── deform_conv.h
+│   │   ├── deform_pool.h
+│   │   ├── nms.h
+│   │   ├── ROIAlign.h
+│   │   ├── ROIPool.h
+│   │   └── vision.cpp
+│   │
+│   │                                 # ---------------------
+│   ├── data                          # input data transform
+│   │   └── transforms                # ---------------------
+│   │       ├── build.py
+│   │       └── transforms.py
+│   │ 
+│   │                                 # ---------------------
+│   ├── layers                        # layers in modelling
+│   │   │                             #----------------------
+│   │   │
+│   │   ├── batch_norm.py             // FronzenBatchNorm2d
+│   │   ├── cython_nms.cpp
+│   │   ├── cython_nms.pyx
+│   │   ├── misc.py
+│   │   ├── nms.py
+│   │   ├── roi_align.py
+│   │   ├── roi_pool.py
+│   │   └── _utils.py
+│   │
+│   │                                  # ---------------------
+│   ├── modeling                       # modelling
+│   │   │                              # ---------------------
+│   │   │
+│   │   ├── backbone                   # backbone model
+│   │   │   ├── backbone.py            // backbone net
+│   │   │   ├── fpn.py                 // fpn: feature pyramid net
+│   │   │   └── resnet.py              // resnet
+│   │   │ 
+│   │   │ 
+│   │   ├── detector                   # detector net
+│   │   │   ├── detectors.py           // build_detection_model(cfg)
+│   │   │   ├── generalized_rcnn.py    // build_backbone() + buid_rpn()  for detection model v2
+│   │   │   └── text_recognizer.py
+│   │   │
+│   │   │
+│   │   ├── rpn                        # rpn : region proposal net
+│   │   │   ├── anchor_generator.py
+│   │   │   ├── inference.py
+│   │   │   ├── retinanet              // retinanet
+│   │   │   │   ├── inference.py
+│   │   │   │   └── retinanet.py
+│   │   │   ├── rpn.py                 // rpn : region proposal net
+│   │   │   └── utils.py
+│   │   │
+│   │   │
+│   │   ├── sequence                   # sequence
+│   │   │   └── bidirectional_transformer.py
+│   │   │
+│   │   ├── box_coder.py
+│   │   ├── utils.py
+│   │   ├── make_layers.py
+│   │   ├── poolers.py
+│   │   └── registry.py                // ../utils.registry
+│   │
+│   │
+│   ├── structures                     # data structure
+│   │   ├── bounding_box.p
+│   │   ├── boxlist_ops.py
+│   │   └── image_list.py
+│   │   └── image_list.py
+│   │
+│   └── utils                          # utilities
+│       ├── c2_model_loading.py
+│       ├── checkpoint.py
+│       ├── collect_env.py
+│       ├── comm.py
+│       ├── converter.py
+│       ├── cv2_util.py
+│       ├── label_catalog.py
+│       ├── model_serialization.py
+│       ├── model_zoo.py
+│       └── registry.py               // helper clas for managing registering modules
+│
+│   # --------------------------------------------
+│   # pre-trained model for detection/recognition
+│   # --------------------------------------------
+├── model
+│   │
+│   ├── detection
+│   │   ├── config_det_v1_200723_001_180k.yaml
+│   │   ├── config_det_v2_200924_002_180k.yaml
+│   │   ├── config.yaml -> ./config_det_v2_200924_002_180k.yaml
+│   │   ├── model_det_v1_200723_001_180k.pth
+│   │   ├── model_det_v2_200924_002_180k.pth
+│   │   └── model.pth -> ./model_det_v2_200924_002_180k.pth
+│   │
+│   └── recognition
+│       ├── config_rec_v1_200627_001_100k.yaml
+│       ├── config_rec_v2_200828_001_1.2M.yaml
+│       ├── config_rec_v3_200924_001_038k.yaml
+│       ├── config.yaml -> ./config_rec_v3_200924_001_038k.yaml
+│       ├── model.pth -> ./model_rec_v3_200924_001_038k.pth
+│       ├── model_rec_v1_200627_001_100k.pth
+│       ├── model_rec_v2_200828_001_1.2M.pth
+│       └── model_rec_v3_200924_001_038k.pth
+│
+│
+│   # --------------------------------------------
+│   # test image for detection and recognition
+│   # --------------------------------------------
+├── sample_images
+    ├── detection
+    │   ├── 1594202471809.jpg
+    │   └── 1596537103856.jpeg
+    ├── recognition
+    │   ├── 001.png
+    │   ├── 002.png
+    │   ├── 003.png
+    │   ├── 004.png
+    │   └── 005.png
+    └── video_frames
+        ├── frame000000.png
+        ├── frame000001.png
+        ...
+				...
+        ├── frame000410.png
+        └── frame000411.png
+

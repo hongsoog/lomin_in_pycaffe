@@ -1,0 +1,9 @@
+# make multiple tgz
+# github single file size limit: 100M
+tar cvfz - ./model_det*.pth | split -b 90M - ./model_det_pth.tgz
+
+# for uncompressing multiple tgz.*, use following command to make one tgz
+cat ./model_det_pth.tgz* >> model_det_pth.tgz
+
+# uncomressing the tgz file
+tar xvfz model_det_pth.tgz

@@ -1,0 +1,473 @@
+conv_with_kaiming_uniform()
+	return make_conv
+LastLevelP6P7 constructor with
+	in_channles: 2048
+	out_channles: 1024
+	p6
+	p7
+	use_p5 : False
+FPN constructor
+	in_channel_list: [0, 512, 1024, 2048]
+	out_channels: 1024
+	conv_block: <function conv_with_kaiming_uniform.<locals>.make_conv at 0x7fd81134ec80>
+	top_blocks: LastLevelP6P7(
+  (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+)
+	for idx, in_channels in enumerate(in_channels_list, 1):
+		inner_block_module = conv_block(in_channels=512, out_channels=1024, 1)
+
+=================================================
+		conv_with_kaiming_uniform().make_conv()
+			use_gn: False
+			use_relut: False
+			in_channels: 512
+			out_channels: 1024
+			kernel_size: 1
+			stride: 1
+			dilation: 1
+			Conv2d(in_channles=512, out_channels=1024, kernel_size=1, stride=1
+			       padding=0, dilation=1, bias=True,
+			nn.init.kaiming_uniform_(conv.weight, a=1)
+			if not use_gn:
+				nn.init.constant_(conv.bias, 0)
+			module = [conv,]
+			return conv
+=================================================
+
+		layer_block_module = conv_block(out_channels=1024, out_channels=1024, 3,1)
+
+=================================================
+		conv_with_kaiming_uniform().make_conv()
+			use_gn: False
+			use_relut: False
+			in_channels: 1024
+			out_channels: 1024
+			kernel_size: 3
+			stride: 1
+			dilation: 1
+			Conv2d(in_channles=1024, out_channels=1024, kernel_size=3, stride=1
+			       padding=1, dilation=1, bias=True,
+			nn.init.kaiming_uniform_(conv.weight, a=1)
+			if not use_gn:
+				nn.init.constant_(conv.bias, 0)
+			module = [conv,]
+			return conv
+=================================================
+
+		self.add_module(fpn_inner2, inner_block_module)
+		self.add_module(fpn_layer2, layer_block_module)
+		self.inner_blocks.append(fpn_inner2)
+		self.layer_blocks.append(fpn_layer2)
+		inner_block_module = conv_block(in_channels=1024, out_channels=1024, 1)
+
+=================================================
+		conv_with_kaiming_uniform().make_conv()
+			use_gn: False
+			use_relut: False
+			in_channels: 1024
+			out_channels: 1024
+			kernel_size: 1
+			stride: 1
+			dilation: 1
+			Conv2d(in_channles=1024, out_channels=1024, kernel_size=1, stride=1
+			       padding=0, dilation=1, bias=True,
+			nn.init.kaiming_uniform_(conv.weight, a=1)
+			if not use_gn:
+				nn.init.constant_(conv.bias, 0)
+			module = [conv,]
+			return conv
+=================================================
+
+		layer_block_module = conv_block(out_channels=1024, out_channels=1024, 3,1)
+
+=================================================
+		conv_with_kaiming_uniform().make_conv()
+			use_gn: False
+			use_relut: False
+			in_channels: 1024
+			out_channels: 1024
+			kernel_size: 3
+			stride: 1
+			dilation: 1
+			Conv2d(in_channles=1024, out_channels=1024, kernel_size=3, stride=1
+			       padding=1, dilation=1, bias=True,
+			nn.init.kaiming_uniform_(conv.weight, a=1)
+			if not use_gn:
+				nn.init.constant_(conv.bias, 0)
+			module = [conv,]
+			return conv
+=================================================
+
+		self.add_module(fpn_inner3, inner_block_module)
+		self.add_module(fpn_layer3, layer_block_module)
+		self.inner_blocks.append(fpn_inner3)
+		self.layer_blocks.append(fpn_layer3)
+		inner_block_module = conv_block(in_channels=2048, out_channels=1024, 1)
+
+=================================================
+		conv_with_kaiming_uniform().make_conv()
+			use_gn: False
+			use_relut: False
+			in_channels: 2048
+			out_channels: 1024
+			kernel_size: 1
+			stride: 1
+			dilation: 1
+			Conv2d(in_channles=2048, out_channels=1024, kernel_size=1, stride=1
+			       padding=0, dilation=1, bias=True,
+			nn.init.kaiming_uniform_(conv.weight, a=1)
+			if not use_gn:
+				nn.init.constant_(conv.bias, 0)
+			module = [conv,]
+			return conv
+=================================================
+
+		layer_block_module = conv_block(out_channels=1024, out_channels=1024, 3,1)
+
+=================================================
+		conv_with_kaiming_uniform().make_conv()
+			use_gn: False
+			use_relut: False
+			in_channels: 1024
+			out_channels: 1024
+			kernel_size: 3
+			stride: 1
+			dilation: 1
+			Conv2d(in_channles=1024, out_channels=1024, kernel_size=3, stride=1
+			       padding=1, dilation=1, bias=True,
+			nn.init.kaiming_uniform_(conv.weight, a=1)
+			if not use_gn:
+				nn.init.constant_(conv.bias, 0)
+			module = [conv,]
+			return conv
+=================================================
+
+		self.add_module(fpn_inner4, inner_block_module)
+		self.add_module(fpn_layer4, layer_block_module)
+		self.inner_blocks.append(fpn_inner4)
+		self.layer_blocks.append(fpn_layer4)
+	inner_blocks: ['fpn_inner2', 'fpn_inner3', 'fpn_inner4']
+	layer_blocks: ['fpn_layer2', 'fpn_layer3', 'fpn_layer4']
+	top_blocks: LastLevelP6P7(
+  (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+)
+[<maskrcnn_benchmark.data.transforms.transforms.Resize object at 0x7fd81138b080>, <maskrcnn_benchmark.data.transforms.transforms.ToTensor object at 0x7fd81138b128>, <maskrcnn_benchmark.data.transforms.transforms.Normalize object at 0x7fd81138b0b8>]
+in to_image_list 2, type(batched_imgs): <class 'torch.Tensor'>
+in to_image_list 2, batched_imgs.shape: torch.Size([1, 3, 480, 576])
+in to_image_list 2, image_sizes: [torch.Size([480, 561])]
+images.image_sizes: [torch.Size([480, 561])]
+images.tensors.shape: torch.Size([1, 3, 480, 576])
+-------------------------------------
+ResNet forward() start
+	stem (layer0) output shape: torch.Size([1, 64, 120, 144])
+		layer1 output shape: torch.Size([1, 256, 120, 144])
+			outputs.append(x) stage_name: layer1
+			x.shape: torch.Size([1, 256, 120, 144])
+		layer2 output shape: torch.Size([1, 512, 60, 72])
+			outputs.append(x) stage_name: layer2
+			x.shape: torch.Size([1, 512, 60, 72])
+		layer3 output shape: torch.Size([1, 1024, 30, 36])
+			outputs.append(x) stage_name: layer3
+			x.shape: torch.Size([1, 1024, 30, 36])
+		layer4 output shape: torch.Size([1, 2048, 15, 18])
+			outputs.append(x) stage_name: layer4
+			x.shape: torch.Size([1, 2048, 15, 18])
+-------------------------------------
+ResNet::forward return value
+		outputs[0]: torch.Size([1, 256, 120, 144])
+		outputs[1]: torch.Size([1, 512, 60, 72])
+		outputs[2]: torch.Size([1, 1024, 30, 36])
+		outputs[3]: torch.Size([1, 2048, 15, 18])
+-------------------------------------
+fpn forward(self, x)
+	len(x) = 4
+	x[0].shape : torch.Size([1, 256, 120, 144])
+	x[1].shape : torch.Size([1, 512, 60, 72])
+	x[2].shape : torch.Size([1, 1024, 30, 36])
+	x[3].shape : torch.Size([1, 2048, 15, 18])
+	x[-1].shape = torch.Size([1, 2048, 15, 18])
+	last_inner = fpn_inner4
+	results = []
+	results.append(fpn_layer4(last_inner))
+	fpn forward() for loop
+		feature: 
+		inner_block: fpn_inner3
+		layer_block: fpn_layer3
+		last_inner.shape: torch.Size([1, 1024, 15, 18])
+		inner_top_down = interpolate(last_inner, scale_factor=2, mode='nearest')
+		inner_top_down.shape : torch.Size([1, 1024, 30, 36])
+		 inner_lateral: fpn_inner3(feature)
+		 inner_lateral.shape: torch.Size([1, 1024, 30, 36])
+	 last_inner = inner_lateral + inner_top_down
+	 last_inner.shape : torch.Size([1, 1024, 30, 36])
+	call with fpn_layer3(last_inner)
+	results.insert() 
+	fpn forward() for loop
+		feature: 
+		inner_block: fpn_inner2
+		layer_block: fpn_layer2
+		last_inner.shape: torch.Size([1, 1024, 30, 36])
+		inner_top_down = interpolate(last_inner, scale_factor=2, mode='nearest')
+		inner_top_down.shape : torch.Size([1, 1024, 60, 72])
+		 inner_lateral: fpn_inner2(feature)
+		 inner_lateral.shape: torch.Size([1, 1024, 60, 72])
+	 last_inner = inner_lateral + inner_top_down
+	 last_inner.shape : torch.Size([1, 1024, 60, 72])
+	call with fpn_layer2(last_inner)
+	results.insert() 
+	if isinstance(self.top_blocks, LastLevelP6P7):
+LastLevelP6P7 forward()
+	c5:
+	p5:
+	x
+	p6 = self.p6(x)
+	p7 = self.p7(F.relu(p6)
+	returns [p6, p7]
+		last_result = LastLevelP6P7(
+  (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+)(x[-1], results[-1])
+		results.extend(last_results)
+	return tuple(results)
+-------------------------------------QXcbConnection: XCB error: 145 (Unknown), sequence: 171, resource id: 0, major code: 140 (Unknown), minor code: 20
+/home/kimkk/work/lomin/maskrcnn_benchmark/modeling/backbone/resnet.py:289: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  print(f"\tstem (layer0) output shape: {x.shape}")
+/home/kimkk/work/lomin/maskrcnn_benchmark/modeling/backbone/resnet.py:297: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  print(f"\t\t{stage_name} output shape: {x.shape}")
+/home/kimkk/work/lomin/maskrcnn_benchmark/modeling/backbone/resnet.py:302: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  print(f"\t\t\tx.shape: {x.shape}")
+/home/kimkk/work/lomin/maskrcnn_benchmark/modeling/backbone/resnet.py:310: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  print(f"\t\toutputs[{idx}]: {e.shape}")
+/home/kimkk/work/lomin/maskrcnn_benchmark/modeling/backbone/fpn.py:112: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  print(f"\tx[{idx}].shape : {element.shape}")
+/home/kimkk/work/lomin/maskrcnn_benchmark/modeling/backbone/fpn.py:114: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  print(f"\tx[-1].shape = {x[-1].shape}")
+/home/kimkk/work/lomin/maskrcnn_benchmark/modeling/backbone/fpn.py:142: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  print(f"\t\tlast_inner.shape: {last_inner.shape}")
+/home/kimkk/work/lomin/maskrcnn_benchmark/modeling/backbone/fpn.py:148: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  print(f"\t\tinner_top_down.shape : {inner_top_down.shape}")
+/home/kimkk/work/lomin/maskrcnn_benchmark/modeling/backbone/fpn.py:153: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  print(f"\t\t inner_lateral.shape: {inner_lateral.shape}")
+/home/kimkk/work/lomin/maskrcnn_benchmark/modeling/backbone/fpn.py:162: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  print(f"\t last_inner.shape : {last_inner.shape}")
+/home/kimkk/miniconda3/envs/lomin/lib/python3.6/site-packages/torch/jit/__init__.py:1044: TracerWarning: Output nr 1. of the traced function does not match the corresponding output of the Python function. Detailed error:
+Not within tolerance rtol=1e-05 atol=1e-05 at input[0, 719, 27, 57] (0.06862227618694305 vs. 0.06861035525798798) and 1 other locations (0.00%)
+  check_tolerance, _force_outplace, True, _module_class)
+
+ResNet forward() start
+	stem (layer0) output shape: torch.Size([1, 64, 120, 144])
+		layer1 output shape: torch.Size([1, 256, 120, 144])
+			outputs.append(x) stage_name: layer1
+			x.shape: torch.Size([1, 256, 120, 144])
+		layer2 output shape: torch.Size([1, 512, 60, 72])
+			outputs.append(x) stage_name: layer2
+			x.shape: torch.Size([1, 512, 60, 72])
+		layer3 output shape: torch.Size([1, 1024, 30, 36])
+			outputs.append(x) stage_name: layer3
+			x.shape: torch.Size([1, 1024, 30, 36])
+		layer4 output shape: torch.Size([1, 2048, 15, 18])
+			outputs.append(x) stage_name: layer4
+			x.shape: torch.Size([1, 2048, 15, 18])
+-------------------------------------
+ResNet::forward return value
+		outputs[0]: torch.Size([1, 256, 120, 144])
+		outputs[1]: torch.Size([1, 512, 60, 72])
+		outputs[2]: torch.Size([1, 1024, 30, 36])
+		outputs[3]: torch.Size([1, 2048, 15, 18])
+-------------------------------------
+fpn forward(self, x)
+	len(x) = 4
+	x[0].shape : torch.Size([1, 256, 120, 144])
+	x[1].shape : torch.Size([1, 512, 60, 72])
+	x[2].shape : torch.Size([1, 1024, 30, 36])
+	x[3].shape : torch.Size([1, 2048, 15, 18])
+	x[-1].shape = torch.Size([1, 2048, 15, 18])
+	last_inner = fpn_inner4
+	results = []
+	results.append(fpn_layer4(last_inner))
+	fpn forward() for loop
+		feature: 
+		inner_block: fpn_inner3
+		layer_block: fpn_layer3
+		last_inner.shape: torch.Size([1, 1024, 15, 18])
+		inner_top_down = interpolate(last_inner, scale_factor=2, mode='nearest')
+		inner_top_down.shape : torch.Size([1, 1024, 30, 36])
+		 inner_lateral: fpn_inner3(feature)
+		 inner_lateral.shape: torch.Size([1, 1024, 30, 36])
+	 last_inner = inner_lateral + inner_top_down
+	 last_inner.shape : torch.Size([1, 1024, 30, 36])
+	call with fpn_layer3(last_inner)
+	results.insert() 
+	fpn forward() for loop
+		feature: 
+		inner_block: fpn_inner2
+		layer_block: fpn_layer2
+		last_inner.shape: torch.Size([1, 1024, 30, 36])
+		inner_top_down = interpolate(last_inner, scale_factor=2, mode='nearest')
+		inner_top_down.shape : torch.Size([1, 1024, 60, 72])
+		 inner_lateral: fpn_inner2(feature)
+		 inner_lateral.shape: torch.Size([1, 1024, 60, 72])
+	 last_inner = inner_lateral + inner_top_down
+	 last_inner.shape : torch.Size([1, 1024, 60, 72])
+	call with fpn_layer2(last_inner)
+	results.insert() 
+	if isinstance(self.top_blocks, LastLevelP6P7):
+LastLevelP6P7 forward()
+	c5:
+	p5:
+	x
+	p6 = self.p6(x)
+	p7 = self.p7(F.relu(p6)
+	returns [p6, p7]
+		last_result = LastLevelP6P7(
+  (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+)(x[-1], results[-1])
+		results.extend(last_results)
+	return tuple(results)
+-------------------------------------
+ResNet forward() start
+	stem (layer0) output shape: torch.Size([1, 64, 120, 144])
+		layer1 output shape: torch.Size([1, 256, 120, 144])
+			outputs.append(x) stage_name: layer1
+			x.shape: torch.Size([1, 256, 120, 144])
+		layer2 output shape: torch.Size([1, 512, 60, 72])
+			outputs.append(x) stage_name: layer2
+			x.shape: torch.Size([1, 512, 60, 72])
+		layer3 output shape: torch.Size([1, 1024, 30, 36])
+			outputs.append(x) stage_name: layer3
+			x.shape: torch.Size([1, 1024, 30, 36])
+		layer4 output shape: torch.Size([1, 2048, 15, 18])
+			outputs.append(x) stage_name: layer4
+			x.shape: torch.Size([1, 2048, 15, 18])
+-------------------------------------
+ResNet::forward return value
+		outputs[0]: torch.Size([1, 256, 120, 144])
+		outputs[1]: torch.Size([1, 512, 60, 72])
+		outputs[2]: torch.Size([1, 1024, 30, 36])
+		outputs[3]: torch.Size([1, 2048, 15, 18])
+-------------------------------------
+fpn forward(self, x)
+	len(x) = 4
+	x[0].shape : torch.Size([1, 256, 120, 144])
+	x[1].shape : torch.Size([1, 512, 60, 72])
+	x[2].shape : torch.Size([1, 1024, 30, 36])
+	x[3].shape : torch.Size([1, 2048, 15, 18])
+	x[-1].shape = torch.Size([1, 2048, 15, 18])
+	last_inner = fpn_inner4
+	results = []
+	results.append(fpn_layer4(last_inner))
+	fpn forward() for loop
+		feature: 
+		inner_block: fpn_inner3
+		layer_block: fpn_layer3
+		last_inner.shape: torch.Size([1, 1024, 15, 18])
+		inner_top_down = interpolate(last_inner, scale_factor=2, mode='nearest')
+		inner_top_down.shape : torch.Size([1, 1024, 30, 36])
+		 inner_lateral: fpn_inner3(feature)
+		 inner_lateral.shape: torch.Size([1, 1024, 30, 36])
+	 last_inner = inner_lateral + inner_top_down
+	 last_inner.shape : torch.Size([1, 1024, 30, 36])
+	call with fpn_layer3(last_inner)
+	results.insert() 
+	fpn forward() for loop
+		feature: 
+		inner_block: fpn_inner2
+		layer_block: fpn_layer2
+		last_inner.shape: torch.Size([1, 1024, 30, 36])
+		inner_top_down = interpolate(last_inner, scale_factor=2, mode='nearest')
+		inner_top_down.shape : torch.Size([1, 1024, 60, 72])
+		 inner_lateral: fpn_inner2(feature)
+		 inner_lateral.shape: torch.Size([1, 1024, 60, 72])
+	 last_inner = inner_lateral + inner_top_down
+	 last_inner.shape : torch.Size([1, 1024, 60, 72])
+	call with fpn_layer2(last_inner)
+	results.insert() 
+	if isinstance(self.top_blocks, LastLevelP6P7):
+LastLevelP6P7 forward()
+	c5:
+	p5:
+	x
+	p6 = self.p6(x)
+	p7 = self.p7(F.relu(p6)
+	returns [p6, p7]
+		last_result = LastLevelP6P7(
+  (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+)(x[-1], results[-1])
+		results.extend(last_results)
+	return tuple(results)
+-------------------------------------
+ResNet forward() start
+	stem (layer0) output shape: torch.Size([1, 64, 120, 144])
+		layer1 output shape: torch.Size([1, 256, 120, 144])
+			outputs.append(x) stage_name: layer1
+			x.shape: torch.Size([1, 256, 120, 144])
+		layer2 output shape: torch.Size([1, 512, 60, 72])
+			outputs.append(x) stage_name: layer2
+			x.shape: torch.Size([1, 512, 60, 72])
+		layer3 output shape: torch.Size([1, 1024, 30, 36])
+			outputs.append(x) stage_name: layer3
+			x.shape: torch.Size([1, 1024, 30, 36])
+		layer4 output shape: torch.Size([1, 2048, 15, 18])
+			outputs.append(x) stage_name: layer4
+			x.shape: torch.Size([1, 2048, 15, 18])
+-------------------------------------
+ResNet::forward return value
+		outputs[0]: torch.Size([1, 256, 120, 144])
+		outputs[1]: torch.Size([1, 512, 60, 72])
+		outputs[2]: torch.Size([1, 1024, 30, 36])
+		outputs[3]: torch.Size([1, 2048, 15, 18])
+-------------------------------------
+fpn forward(self, x)
+	len(x) = 4
+	x[0].shape : torch.Size([1, 256, 120, 144])
+	x[1].shape : torch.Size([1, 512, 60, 72])
+	x[2].shape : torch.Size([1, 1024, 30, 36])
+	x[3].shape : torch.Size([1, 2048, 15, 18])
+	x[-1].shape = torch.Size([1, 2048, 15, 18])
+	last_inner = fpn_inner4
+	results = []
+	results.append(fpn_layer4(last_inner))
+	fpn forward() for loop
+		feature: 
+		inner_block: fpn_inner3
+		layer_block: fpn_layer3
+		last_inner.shape: torch.Size([1, 1024, 15, 18])
+		inner_top_down = interpolate(last_inner, scale_factor=2, mode='nearest')
+		inner_top_down.shape : torch.Size([1, 1024, 30, 36])
+		 inner_lateral: fpn_inner3(feature)
+		 inner_lateral.shape: torch.Size([1, 1024, 30, 36])
+	 last_inner = inner_lateral + inner_top_down
+	 last_inner.shape : torch.Size([1, 1024, 30, 36])
+	call with fpn_layer3(last_inner)
+	results.insert() 
+	fpn forward() for loop
+		feature: 
+		inner_block: fpn_inner2
+		layer_block: fpn_layer2
+		last_inner.shape: torch.Size([1, 1024, 30, 36])
+		inner_top_down = interpolate(last_inner, scale_factor=2, mode='nearest')
+		inner_top_down.shape : torch.Size([1, 1024, 60, 72])
+		 inner_lateral: fpn_inner2(feature)
+		 inner_lateral.shape: torch.Size([1, 1024, 60, 72])
+	 last_inner = inner_lateral + inner_top_down
+	 last_inner.shape : torch.Size([1, 1024, 60, 72])
+	call with fpn_layer2(last_inner)
+	results.insert() 
+	if isinstance(self.top_blocks, LastLevelP6P7):
+LastLevelP6P7 forward()
+	c5:
+	p5:
+	x
+	p6 = self.p6(x)
+	p7 = self.p7(F.relu(p6)
+	returns [p6, p7]
+		last_result = LastLevelP6P7(
+  (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+)(x[-1], results[-1])
+		results.extend(last_results)
+	return tuple(results)

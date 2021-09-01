@@ -1,0 +1,427 @@
+build_resnet_fpn_p3p7_backbone(cfg) ====== BEGIN
+	body = resnet.ResNet(cfg)
+
+
+=========================================== Resnet.__init__ BEGIN
+
+	=========================================== Resnet.__freeze_backbone() START
+	=========================================== Resnet.__freeze_backbone() END
+
+=========================================== Resnet.__init__ END
+
+	in_channels_stage2 = 256
+	out_channels = 1024
+	in_channels_p6p7 = 2048
+
+	fpn = fpn_module.FPN()
+
+		conv_with_kaiming_uniform(use_gn=False, use_relut=False) ======== BEGIN
+			return make_conv
+		tconv_with_kaiming_uniform(use_gn=False, use_relut=False) ======== END
+
+
+
+		LastLevelP6P7.__init__(self, in_channels=2048, out_channels=1024) ====== BEGIN
+			super(LastLevelP6P7, self).__init__()
+			self.p6 = nn.Conv2d(in_channels=2048, out_channels=1024, 3, 2, 1)
+			self.p7 = nn.Conv2d(out_channels=1024, out_channels=1024, 3, 2, 1)
+			for module in [self.p6, self.p7]:
+				module=Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+				nn.init.kaiming_uniform_(module.weight=module.weight, a=1)
+				nn.init.constant_(module.bias=module.bias, 0)
+				module=Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+				nn.init.kaiming_uniform_(module.weight=module.weight, a=1)
+				nn.init.constant_(module.bias=module.bias, 0)
+			self.use_p5 : False
+
+		LastLevelP6P7.__init__(self, in_channels=2048, out_channels=1024) ====== END
+
+
+
+
+=========================================== FPN.__init__ begin
+	======constructor params
+		in_channels_list: [0, 512, 1024, 2048]
+		out_channels: 1024
+		conv_block: <function conv_with_kaiming_uniform.<locals>.make_conv at 0x7f1e2cbd7bf8>
+		top_blocks: LastLevelP6P7(
+  (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+)
+	======constructor params
+	super(FPN, self).__init__()
+
+	for idx, in_channels in enumerate(in_channels_list, 1):
+
+		==> iteration with idx:1, in_channels:0
+		if in_channels ==0, skip
+
+
+		==> iteration with idx:2, in_channels:512
+		inner_block: fpn_inner2
+		layer_block: fpn_layer2
+		inner_block_module = conv_block(in_channels=512, out_channels=1024, 1)
+
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+				Conv2d(in_channles=512, out_channels=1024, kernel_size=1, stride=1
+				       padding=0, dilation=1, bias=True,
+				nn.init.kaiming_uniform_(conv.weight, a=1)
+				if not use_gn:
+					nn.init.constant_(conv.bias, 0)
+				module = [conv,]
+				return conv
+
+			conv_with_kaiming_uniform().make_conv() ====== END
+
+		layer_block_module = conv_block(out_channels=1024, out_channels=1024, 3,1)
+
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+				Conv2d(in_channles=1024, out_channels=1024, kernel_size=3, stride=1
+				       padding=1, dilation=1, bias=True,
+				nn.init.kaiming_uniform_(conv.weight, a=1)
+				if not use_gn:
+					nn.init.constant_(conv.bias, 0)
+				module = [conv,]
+				return conv
+
+			conv_with_kaiming_uniform().make_conv() ====== END
+
+		self.add_module(fpn_inner2, inner_block_module)
+		self.add_module(fpn_layer2, layer_block_module)
+		self.inner_blocks.append(fpn_inner2)
+		self.layer_blocks.append(fpn_layer2)
+
+		==> iteration with idx:3, in_channels:1024
+		inner_block: fpn_inner3
+		layer_block: fpn_layer3
+		inner_block_module = conv_block(in_channels=1024, out_channels=1024, 1)
+
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+				Conv2d(in_channles=1024, out_channels=1024, kernel_size=1, stride=1
+				       padding=0, dilation=1, bias=True,
+				nn.init.kaiming_uniform_(conv.weight, a=1)
+				if not use_gn:
+					nn.init.constant_(conv.bias, 0)
+				module = [conv,]
+				return conv
+
+			conv_with_kaiming_uniform().make_conv() ====== END
+
+		layer_block_module = conv_block(out_channels=1024, out_channels=1024, 3,1)
+
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+				Conv2d(in_channles=1024, out_channels=1024, kernel_size=3, stride=1
+				       padding=1, dilation=1, bias=True,
+				nn.init.kaiming_uniform_(conv.weight, a=1)
+				if not use_gn:
+					nn.init.constant_(conv.bias, 0)
+				module = [conv,]
+				return conv
+
+			conv_with_kaiming_uniform().make_conv() ====== END
+
+		self.add_module(fpn_inner3, inner_block_module)
+		self.add_module(fpn_layer3, layer_block_module)
+		self.inner_blocks.append(fpn_inner3)
+		self.layer_blocks.append(fpn_layer3)
+
+		==> iteration with idx:4, in_channels:2048
+		inner_block: fpn_inner4
+		layer_block: fpn_layer4
+		inner_block_module = conv_block(in_channels=2048, out_channels=1024, 1)
+
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+				Conv2d(in_channles=2048, out_channels=1024, kernel_size=1, stride=1
+				       padding=0, dilation=1, bias=True,
+				nn.init.kaiming_uniform_(conv.weight, a=1)
+				if not use_gn:
+					nn.init.constant_(conv.bias, 0)
+				module = [conv,]
+				return conv
+
+			conv_with_kaiming_uniform().make_conv() ====== END
+
+		layer_block_module = conv_block(out_channels=1024, out_channels=1024, 3,1)
+
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+				Conv2d(in_channles=1024, out_channels=1024, kernel_size=3, stride=1
+				       padding=1, dilation=1, bias=True,
+				nn.init.kaiming_uniform_(conv.weight, a=1)
+				if not use_gn:
+					nn.init.constant_(conv.bias, 0)
+				module = [conv,]
+				return conv
+
+			conv_with_kaiming_uniform().make_conv() ====== END
+
+		self.add_module(fpn_inner4, inner_block_module)
+		self.add_module(fpn_layer4, layer_block_module)
+		self.inner_blocks.append(fpn_inner4)
+		self.layer_blocks.append(fpn_layer4)
+
+	self.inner_blocks: ['fpn_inner2', 'fpn_inner3', 'fpn_inner4']
+		self.fpn_inner2: Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1))
+		self.fpn_inner3: Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+		self.fpn_inner4: Conv2d(2048, 1024, kernel_size=(1, 1), stride=(1, 1))
+
+	self.layer_blocks: ['fpn_layer2', 'fpn_layer3', 'fpn_layer4']
+		self.fpn_layer2: Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+		self.fpn_layer3: Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+		self.fpn_layer4: Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+
+	self.top_blocks: LastLevelP6P7(
+  (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+)
+=========================================== FPN.__init__ end
+
+
+	model = nn.Sequential(OrderedDict([("body", body), ("fpn", fpn)]))
+	model.out_channels = 1024
+	return model
+build_resnet_fpn_p3p7_backbone(cfg) ====== END
+
+
+compute_prediction(self, image)
+
+	image: H, W=(438,512)
+
+	image_tensor = self.transforms(image)
+
+		transforms.py Compose class __call__  ====== BEGIN
+
+		for t in self.transforms:
+			image = <maskrcnn_benchmark.data.transforms.transforms.Resize object at 0x7f1e13c02080>(image)
+			image = <maskrcnn_benchmark.data.transforms.transforms.ToTensor object at 0x7f1e13c02128>(image)
+			image = <maskrcnn_benchmark.data.transforms.transforms.Normalize object at 0x7f1e13c020b8>(image)
+
+		return image
+		transforms.py Compose class __call__  ====== END
+
+	image_tensor.shape: torch.Size([3, 480, 561])
+
+	padding images for 32 divisible size on width and height
+	image_list = to_image_list(image_tensor, 32).to(self.device)
+
+	to_image_list(tensors, size_divisible=32) ====== BEGIN
+		type(batched_imgs): <class 'torch.Tensor'>
+		batched_imgs.shape: torch.Size([1, 3, 480, 576])
+		image_sizes: [torch.Size([480, 561])]
+		return ImageList(batched_imgs, image_sizes)
+	to_image_list(tensors, size_divisible=32) ====== END
+
+	image_list.image_sizes: [torch.Size([480, 561])]
+	image_list.tensors.shape: torch.Size([1, 3, 480, 576])
+	pred = self.model(image_list)
+
+	to_image_list(tensors, size_divisible=0) ====== BEGIN
+		if isinstance(tensors, ImageList):
+		return tensors
+	to_image_list(tensors, size_divisible=0) ====== END
+
+images.image_sizes: [torch.Size([480, 561])]
+images.tensors.shape: torch.Size([1, 3, 480, 576])
+
+=========================================== Resnet.forward(self.x) BEGIN
+	param x.shape=torch.Size([1, 3, 480, 576]) 
+	x = self.stem(x)
+	x.shape: torch.Size([1, 64, 120, 144])
+	for stage_name in self.stages:
+		stage_name: layer1
+		toutput shape of layer1: torch.Size([1, 256, 120, 144])
+			outputs.append(x) stage_name: layer1
+			x.shape: torch.Size([1, 256, 120, 144])
+		stage_name: layer2
+		toutput shape of layer2: torch.Size([1, 512, 60, 72])
+			outputs.append(x) stage_name: layer2
+			x.shape: torch.Size([1, 512, 60, 72])
+		stage_name: layer3
+		toutput shape of layer3: torch.Size([1, 1024, 30, 36])
+			outputs.append(x) stage_name: layer3
+			x.shape: torch.Size([1, 1024, 30, 36])
+		stage_name: layer4
+		toutput shape of layer4: torch.Size([1, 2048, 15, 18])
+			outputs.append(x) stage_name: layer4
+			x.shape: torch.Size([1, 2048, 15, 18])
+
+	ResNet::forward return value
+		outputs[0]: torch.Size([1, 256, 120, 144])
+		outputs[1]: torch.Size([1, 512, 60, 72])
+		outputs[2]: torch.Size([1, 1024, 30, 36])
+		outputs[3]: torch.Size([1, 2048, 15, 18])
+
+	return outputs
+
+=========================================== Resnet.forward() END
+
+
+FPN.forward(self,x) ====== BEGIN
+	======forward param: x  = [C1, C2, C3, C4] 
+	len(x) = 4
+	C[1].shape : torch.Size([1, 256, 120, 144])
+	C[2].shape : torch.Size([1, 512, 60, 72])
+	C[3].shape : torch.Size([1, 1024, 30, 36])
+	C[4].shape : torch.Size([1, 2048, 15, 18])
+
+	x[-1].shape = torch.Size([1, 2048, 15, 18])
+
+	last_inner = fpn_inner4(C4)
+		self.innerblocks[-1] = Conv2d(2048, 1024, kernel_size=(1, 1), stride=(1, 1))
+		last_inner.shape = torch.Size([1, 1024, 15, 18])
+
+
+	results.append(fpn_layer4(last_inner))
+		self.layer_blocks[-1]: Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+		results[0].shape: torch.Size([1, 1024, 15, 18])
+
+	for feature, inner_block, layer_block
+			in zip[(x[:-1][::-1], self.inner_blocks[:-1][::-1], self.layer_blocks[:-1][::-1]):
+
+		====================================
+		iteration 0 summary
+		====================================
+		feature.shape: torch.Size([1, 1024, 30, 36])
+		inner_block: fpn_inner3 ==> Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+		layer_block: fpn_layer3 ==> Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+		last_inner.shape: torch.Size([1, 1024, 15, 18])
+		====================================
+
+		--------------------------------------------------
+		0.1 Upsample : replace with Decovolution in caffe
+		layer name in caffe: fpn_inner3_upsample = Deconvolution(last_inner)
+		--------------------------------------------------
+		inner_top_down = interpolate(last_inner, scale_factor=2, mode='nearest')
+
+		last_inner.shape: torch.Size([1, 1024, 15, 18])
+		inner_top_down.shape : torch.Size([1, 1024, 30, 36])
+		--------------------------------------------------
+
+		--------------------------------------------------
+		0.2 inner_lateral = Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))(feature)
+		layer name in caffe: fpn_inner3_lateral=Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))(feature)
+		--------------------------------------------------
+			inner_block: fpn_inner3 ==> Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+			input: feature.shape: torch.Size([1, 1024, 30, 36])
+			output: inner_lateral.shape: torch.Size([1, 1024, 30, 36])
+
+		--------------------------------------------------
+
+		--------------------------------------------------
+		0.3 Elementwise Addition: replaced with eltwise in caffe
+		layer in caffe: eltwise_3 = eltwise(fpn_inner3_lateral, fpn_inner3_upsample )
+		--------------------------------------------------
+		last_inner = inner_lateral + inner_top_down
+			inner_lateral.shape: torch.Size([1, 1024, 30, 36])
+			inner_top_down.shape: torch.Size([1, 1024, 30, 36])
+			last_inner.shape : torch.Size([1, 1024, 30, 36])
+		--------------------------------------------------
+
+		--------------------------------------------------
+		0.4 results.insert(0, Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))(last_inner)
+		layer in caffe: fpn_layer3 = Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))(eltwise_3)
+		--------------------------------------------------
+			layer_block: fpn_layer3 ==> Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+			input: last_inner.shape = torch.Size([1, 1024, 30, 36])
+		--------------------------------------------------
+
+		--------------------------------------------------
+		results after iteration 0
+		--------------------------------------------------
+			results[0].shape: torch.Size([1, 1024, 30, 36])
+			results[1].shape: torch.Size([1, 1024, 15, 18])
+		--------------------------------------------------
+
+		====================================
+		iteration 1 summary
+		====================================
+		feature.shape: torch.Size([1, 512, 60, 72])
+		inner_block: fpn_inner2 ==> Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1))
+		layer_block: fpn_layer2 ==> Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+		last_inner.shape: torch.Size([1, 1024, 30, 36])
+		====================================
+
+		--------------------------------------------------
+		1.1 Upsample : replace with Decovolution in caffe
+		layer name in caffe: fpn_inner2_upsample = Deconvolution(last_inner)
+		--------------------------------------------------
+		inner_top_down = interpolate(last_inner, scale_factor=2, mode='nearest')
+
+		last_inner.shape: torch.Size([1, 1024, 30, 36])
+		inner_top_down.shape : torch.Size([1, 1024, 60, 72])
+		--------------------------------------------------
+
+		--------------------------------------------------
+		1.2 inner_lateral = Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1))(feature)
+		layer name in caffe: fpn_inner2_lateral=Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1))(feature)
+		--------------------------------------------------
+			inner_block: fpn_inner2 ==> Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1))
+			input: feature.shape: torch.Size([1, 512, 60, 72])
+			output: inner_lateral.shape: torch.Size([1, 1024, 60, 72])
+
+		--------------------------------------------------
+
+		--------------------------------------------------
+		1.3 Elementwise Addition: replaced with eltwise in caffe
+		layer in caffe: eltwise_2 = eltwise(fpn_inner2_lateral, fpn_inner2_upsample )
+		--------------------------------------------------
+		last_inner = inner_lateral + inner_top_down
+			inner_lateral.shape: torch.Size([1, 1024, 60, 72])
+			inner_top_down.shape: torch.Size([1, 1024, 60, 72])
+			last_inner.shape : torch.Size([1, 1024, 60, 72])
+		--------------------------------------------------
+
+		--------------------------------------------------
+		1.4 results.insert(0, Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))(last_inner)
+		layer in caffe: fpn_layer2 = Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))(eltwise_2)
+		--------------------------------------------------
+			layer_block: fpn_layer2 ==> Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+			input: last_inner.shape = torch.Size([1, 1024, 60, 72])
+		--------------------------------------------------
+
+		--------------------------------------------------
+		results after iteration 1
+		--------------------------------------------------
+			results[0].shape: torch.Size([1, 1024, 60, 72])
+			results[1].shape: torch.Size([1, 1024, 30, 36])
+			results[2].shape: torch.Size([1, 1024, 15, 18])
+		--------------------------------------------------
+
+	for loop END
+
+
+	if isinstance(self.top_blocks, LastLevelP6P7):
+		last_result = self.top_blocks(x[-1], results[-1])
+
+		LastLevelP6P7.forward(self, c5, p5) ============= BEGIN 
+			c5.shape: torch.Size([1, 2048, 15, 18])
+			p5.shape: torch.Size([1, 1024, 15, 18])
+
+			if (self.use_P5 == False)
+				x=c5
+			x.shape = torch.Size([1, 2048, 15, 18])
+			p6 = self.p6(x)
+				self.p6: Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+				p6.shape: torch.Size([1, 1024, 8, 9])
+
+			p7 = self.p7(F.relu(p6))
+				self.p7: Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+				p7.shape: torch.Size([1, 1024, 4, 5])
+
+			returns [p6, p7]
+		LastLevelP6P7.forward(self, c5, p5) ============= END
+
+
+		results.extend(last_results)
+
+		results
+		result[0].shape: torch.Size([1, 1024, 60, 72])
+		result[1].shape: torch.Size([1, 1024, 30, 36])
+		result[2].shape: torch.Size([1, 1024, 15, 18])QXcbConnection: XCB error: 145 (Unknown), sequence: 171, resource id: 0, major code: 140 (Unknown), minor code: 20
+
+		result[3].shape: torch.Size([1, 1024, 8, 9])
+		result[4].shape: torch.Size([1, 1024, 4, 5])
+
+	return tuple(results)
+
+
+FPN.forward(self,x) ====== END

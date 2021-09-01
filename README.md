@@ -9,13 +9,13 @@ repository for keeping source codes for FAIR Mask RCNN conversion to Caffe
 
 # main source files
 
-> `./caffe_detection_v2_model.py`
+> [./caffe_detection_v2_model.py](https://github.com/hongsoog/lomin_in_pycaffe/blob/master/caffe_detection_v2_model.py)
 *  detection v2 model in caffe implementaion
 
-> `./caffe_detection_v2_model.ipynb`
+> [./caffe_detection_v2_model.ipynb](https://github.com/hongsoog/lomin_in_pycaffe/blob/master/caffe_detection_v2_model.ipynb)
 * jupyter lab file for line by line testing codes in `./caffe_detection_v2_model.py`
 
-> `./pytorch_detection_v2_model.ipynb`
+> [./pytorch_detection_v2_model.ipynb](https://github.com/hongsoog/lomin_in_pycaffe/blob/master/pytorch_detection_v2_model.ipynb)
 * jupyter lab file for generating files which contains learnable parameters in PyTorch Detection V2 model
   
 # Saving and Loading learnable parameters between PyTorch and Caffe
@@ -26,4 +26,4 @@ Each learnable parameter is saved into separated numpy file with file naming con
 > In pytorch, model and submodel and layer name is concatenated with dot. ex.) model.backbone.body.stem.conv1
 > In caffe, learnable parameters name is concatednated with unders score. ex.) model_backbone_bondy_stem_conv1
 
-Hence file name for learnable paramter is `model_backbone_bondy_stem_conv1.npy`
+Hence file name for learnable paramter is `./npy_save/model_backbone_bondy_stem_conv1.npy`

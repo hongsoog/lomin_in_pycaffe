@@ -8,7 +8,6 @@ import torch
 from maskrcnn_benchmark.utils.model_serialization import load_state_dict
 from maskrcnn_benchmark.utils.registry import Registry
 
-
 def _rename_basic_resnet_weights(layer_keys):
     layer_keys = [k.replace("_", ".") for k in layer_keys]
     layer_keys = [k.replace(".w", ".weight") for k in layer_keys]
@@ -200,7 +199,6 @@ def load_resnet_c2_format(cfg, f):
     state_dict = _rename_conv_weights_for_deformable_conv_layers(state_dict, cfg)
     # ***********************************
     return dict(model=state_dict)
-
 
 def load_c2_format(cfg, f):
     return C2_FORMAT_LOADER[cfg.MODEL.BACKBONE.CONV_BODY](cfg, f)

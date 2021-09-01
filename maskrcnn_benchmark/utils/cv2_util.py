@@ -3,7 +3,7 @@ Module for cv2 utility functions and maintaining version compatibility
 between 3.x and 4.x
 """
 import cv2
-
+from PIL import Image
 
 def findContours(*args, **kwargs):
     """

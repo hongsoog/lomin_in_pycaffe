@@ -10,6 +10,8 @@ from maskrcnn_benchmark.config import cfg
 from maskrcnn_benchmark.layers import Conv2d
 from maskrcnn_benchmark.modeling.poolers import Pooler
 
+# for model debugging log
+from model_log import  logger
 
 def get_group_gn(dim, dim_per_gp, num_groups):
     """get number of groups used by GroupNorm, based on number of channels."""
@@ -28,17 +30,6 @@ def get_group_gn(dim, dim_per_gp, num_groups):
     return group_gn
 
 
-def group_norm(out_channels, affine=True, divisor=1):
-    out_channels = out_channels // divisor
-    dim_per_gp = cfg.MODEL.GROUP_NORM.DIM_PER_GP // divisor
-    num_groups = cfg.MODEL.GROUP_NORM.NUM_GROUPS // divisor
-    eps = cfg.MODEL.GROUP_NORM.EPSILON # default: 1e-5
-    return torch.nn.GroupNorm(
-        get_group_gn(out_channels, dim_per_gp, num_groups),
-        out_channels,
-        eps,
-        affine
-    )
 
 
 def make_conv3x3(
@@ -48,8 +39,9 @@ def make_conv3x3(
     stride=1,
     use_gn=False,
     use_relu=False,
-    kaiming_init=True
+    kaiming_init=True,
 ):
+    # TODO: config check
     conv = Conv2d(
         in_channels,
         out_channels,
@@ -57,7 +49,7 @@ def make_conv3x3(
         stride=stride,
         padding=dilation,
         dilation=dilation,
-        bias=False if use_gn else True
+        bias=False if use_gn else True,
     )
     if kaiming_init:
         nn.init.kaiming_normal_(
@@ -82,20 +74,38 @@ def make_fc(dim_in, hidden_dim, use_gn=False):
         Caffe2 implementation uses XavierFill, which in fact
         corresponds to kaiming_uniform_ in PyTorch
     '''
+    logger.debug(f"make_fc(dim_in={dim_in}, hidden_dim={hidden_dim}, use_gn={use_gn}) called")
     if use_gn:
+        logger.debug(f"\tif use_gn = {use_gn}:")
+
+        logger.debug(f"\t\tfc = nn.Linear(dim_in, hidden_dim, bias=False)")
         fc = nn.Linear(dim_in, hidden_dim, bias=False)
+
+        logger.debug(f"\t\tnn.init.kaiming_uniform_(fc.weight, a=1)")
         nn.init.kaiming_uniform_(fc.weight, a=1)
+
+        logger.debug(f"\t\treturn nn.Sequential(fc, group_norm(hidden_dim))")
         return nn.Sequential(fc, group_norm(hidden_dim))
+
+    logger.debug(f"\tuse_gn = {use_gn}")
+    logger.debug(f"\tfc = nn.Linear(dim_in, hidden_dim)")
     fc = nn.Linear(dim_in, hidden_dim)
+    logger.debug(f"\tnn.init.kaiming_uniform_(fc.weight, a=1)")
     nn.init.kaiming_uniform_(fc.weight, a=1)
+    logger.debug(f"\tnn.init.constant_(fc.bias, 0)")
     nn.init.constant_(fc.bias, 0)
+
+    logger.debug(f"\treturn fc")
     return fc
 
-
 def conv_with_kaiming_uniform(use_gn=False, use_relu=False):
+
+    logger.debug(f"\n\t\tconv_with_kaiming_uniform(use_gn={use_gn}, use_relut={use_relu}) ======== BEGIN")
+
     def make_conv(
         in_channels, out_channels, kernel_size, stride=1, dilation=1
     ):
+        # TODO: config check
         conv = Conv2d(
             in_channels,
             out_channels,
@@ -103,20 +113,54 @@ def conv_with_kaiming_uniform(use_gn=False, use_relu=False):
             stride=stride,
             padding=dilation * (kernel_size - 1) // 2,
             dilation=dilation,
-            bias=False if use_gn else True
+            bias=False if use_gn else True,
         )
+
+        logger.debug(f"\n\t\t\tconv_with_kaiming_uniform().make_conv() ====== BEGIN")
+        """
+        logger.debug(f"\t\t\t\tuse_gn: {use_gn}")
+        logger.debug(f"\t\t\t\tuse_relu: {use_relu}")
+        logger.debug(f"\t\t\t\tin_channels: {in_channels}")
+        logger.debug(f"\t\t\t\tout_channels: {out_channels}")
+        logger.debug(f"\t\t\t\tkernel_size: {kernel_size}")
+        logger.debug(f"\t\t\t\tstride: {stride}")
+        logger.debug(f"\t\t\t\tdilation: {dilation}")
+        """
+
+        logger.debug(f"\t\t\t\tConv2d(in_channles={in_channels}, out_channels={out_channels}, kernel_size={kernel_size}, stride={stride}")
+        logger.debug(f"\t\t\t\t       padding={dilation*(kernel_size -1) //2}, dilation={dilation}, bias={False if use_gn else True},")
+
+
         # Caffe2 implementation uses XavierFill, which in fact
         # corresponds to kaiming_uniform_ in PyTorch
         nn.init.kaiming_uniform_(conv.weight, a=1)
+        logger.debug(f"\t\t\t\tnn.init.kaiming_uniform_(conv.weight, a=1)")
         if not use_gn:
+            logger.debug(f"\t\t\t\tif not use_gn:")
             nn.init.constant_(conv.bias, 0)
+            logger.debug(f"\t\t\t\t\tnn.init.constant_(conv.bias, 0)")
+
         module = [conv,]
+        logger.debug(f"\t\t\t\tmodule = [conv,]")
         if use_gn:
+            logger.debug(f"\t\t\t\tif use_gn:")
+            logger.debug(f"\t\t\t\t\tmodule.append(group_norm(out_channels={out_channels}))")
             module.append(group_norm(out_channels))
+
         if use_relu:
+            logger.debug(f"\t\t\t\tif use_relu:")
+            logger.debug(f"\t\t\t\t\tmodule.append(nn.ReLU(inplace=True))")
             module.append(nn.ReLU(inplace=True))
+
         if len(module) > 1:
+            logger.debug(f"\t\t\t\tif len(module) > 1:")
+            logger.debug(f"\t\t\t\t\treturn nn.Sequential(*module)")
             return nn.Sequential(*module)
+
+        logger.debug("\t\t\t\treturn conv\n")
+        logger.debug(f"\t\t\tconv_with_kaiming_uniform().make_conv() ====== END\n")
         return conv
 
+    logger.debug("\t\t\treturn make_conv")
+    logger.debug(f"\t\ttconv_with_kaiming_uniform(use_gn={use_gn}, use_relut={use_relu}) ======== END\n")
     return make_conv

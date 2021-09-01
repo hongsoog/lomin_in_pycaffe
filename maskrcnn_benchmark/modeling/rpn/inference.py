@@ -10,6 +10,10 @@ from maskrcnn_benchmark.structures.boxlist_ops import remove_small_boxes
 from ..utils import cat
 from .utils import permute_and_flatten
 
+#for model debugging loe
+import logging
+from model_log import logger
+
 class RPNPostProcessor(torch.nn.Module):
     """
     Performs post-processing on the outputs of the RPN boxes, before feeding the
@@ -26,15 +30,10 @@ class RPNPostProcessor(torch.nn.Module):
         fpn_post_nms_top_n=None,
         fpn_post_nms_per_batch=True,
     ):
-        """
-        Arguments:
-            pre_nms_top_n (int)
-            post_nms_top_n (int)
-            nms_thresh (float)
-            min_size (int)
-            box_coder (BoxCoder)
-            fpn_post_nms_top_n (int)
-        """
+
+        if logger.level == logging.DEBUG:
+            logger.debug(f"========== RPNPostProcessing.__init__() BEGIN")
+
         super(RPNPostProcessor, self).__init__()
         self.pre_nms_top_n = pre_nms_top_n
         self.post_nms_top_n = post_nms_top_n
@@ -50,12 +49,18 @@ class RPNPostProcessor(torch.nn.Module):
         self.fpn_post_nms_top_n = fpn_post_nms_top_n
         self.fpn_post_nms_per_batch = fpn_post_nms_per_batch
 
+        if logger.level == logging.DEBUG:
+            logger.debug(f"========== RPNPostProcessing.__init__() END")
+
     def add_gt_proposals(self, proposals, targets):
         """
         Arguments:
             proposals: list[BoxList]
             targets: list[BoxList]
         """
+        if logger.level == logging.DEBUG:
+            logger.debug(f"========== RPNPostProcessing.add_gt_proposals() BEGIN")
+
         # Get the device we're operating on
         device = proposals[0].bbox.device
 
@@ -71,6 +76,8 @@ class RPNPostProcessor(torch.nn.Module):
             for proposal, gt_box in zip(proposals, gt_boxes)
         ]
 
+        if logger.level == logging.DEBUG:
+            logger.debug(f"========== RPNPostProcessing.add_gt_proposals() END")
         return proposals
 
     def forward_for_single_feature_map(self, anchors, objectness, box_regression):
@@ -80,6 +87,9 @@ class RPNPostProcessor(torch.nn.Module):
             objectness: tensor of size N, A, H, W
             box_regression: tensor of size N, A * 4, H, W
         """
+        if logger.level == logging.DEBUG:
+            logger.debug(f"========== RPNPostProcessing.forward_for_single_feature_map() BEGIN")
+
         device = objectness.device
         N, A, H, W = objectness.shape
 
@@ -120,6 +130,10 @@ class RPNPostProcessor(torch.nn.Module):
                 score_field="objectness",
             )
             result.append(boxlist)
+
+        if logger.level == logging.DEBUG:
+            logger.debug(f"========== RPNPostProcessing.forward_for_single_feature_map() END")
+
         return result
 
     def forward(self, anchors, objectness, box_regression, targets=None):
@@ -133,6 +147,9 @@ class RPNPostProcessor(torch.nn.Module):
             boxlists (list[BoxList]): the post-processed anchors, after
                 applying box decoding and NMS
         """
+        if logger.level == logging.DEBUG:
+            logger.debug(f"========== RPNPostProcessing.forward() BEGIN")
+
         sampled_boxes = []
         num_levels = len(objectness)
         anchors = list(zip(*anchors))
@@ -149,9 +166,16 @@ class RPNPostProcessor(torch.nn.Module):
         if self.training and targets is not None:
             boxlists = self.add_gt_proposals(boxlists, targets)
 
+        if logger.level == logging.DEBUG:
+            logger.debug(f"========== RPNPostProcessing.forward() END")
+
         return boxlists
 
     def select_over_all_levels(self, boxlists):
+
+        if logger.level == logging.DEBUG:
+            logger.debug(f"========== RPNPostProcessing.fselect_over_all_levels() BEGIN")
+
         num_images = len(boxlists)
         # different behavior during training and during testing:
         # during training, post_nms_top_n is over *all* the proposals combined, while
@@ -166,7 +190,7 @@ class RPNPostProcessor(torch.nn.Module):
             post_nms_top_n = min(self.fpn_post_nms_top_n, len(objectness))
             _, inds_sorted = torch.topk(objectness, post_nms_top_n, dim=0, sorted=True)
             inds_mask = torch.zeros_like(objectness, dtype=torch.bool)
-            inds_mask[inds_sorted] = 1
+            inds_mask[inds_sorted] = True
             inds_mask = inds_mask.split(box_sizes)
             for i in range(num_images):
                 boxlists[i] = boxlists[i][inds_mask[i]]
@@ -178,19 +202,21 @@ class RPNPostProcessor(torch.nn.Module):
                     objectness, post_nms_top_n, dim=0, sorted=True
                 )
                 boxlists[i] = boxlists[i][inds_sorted]
+
+        if logger.level == logging.DEBUG:
+            logger.debug(f"========== RPNPostProcessing.fselect_over_all_levels() BEGIN")
+
         return boxlists
 
 
-def make_rpn_postprocessor(config, rpn_box_coder, is_train):
-    fpn_post_nms_top_n = config.MODEL.RPN.FPN_POST_NMS_TOP_N_TRAIN
-    if not is_train:
-        fpn_post_nms_top_n = config.MODEL.RPN.FPN_POST_NMS_TOP_N_TEST
+def make_rpn_postprocessor(config, rpn_box_coder):
 
-    pre_nms_top_n = config.MODEL.RPN.PRE_NMS_TOP_N_TRAIN
-    post_nms_top_n = config.MODEL.RPN.POST_NMS_TOP_N_TRAIN
-    if not is_train:
-        pre_nms_top_n = config.MODEL.RPN.PRE_NMS_TOP_N_TEST
-        post_nms_top_n = config.MODEL.RPN.POST_NMS_TOP_N_TEST
+    if logger.level == logging.DEBUG:
+        logger.debug(f"========== make_rpn_postprocessor() BEGIN")
+
+    fpn_post_nms_top_n = config.MODEL.RPN.FPN_POST_NMS_TOP_N_TEST
+    pre_nms_top_n = config.MODEL.RPN.PRE_NMS_TOP_N_TEST
+    post_nms_top_n = config.MODEL.RPN.POST_NMS_TOP_N_TEST
     fpn_post_nms_per_batch = config.MODEL.RPN.FPN_POST_NMS_PER_BATCH
     nms_thresh = config.MODEL.RPN.NMS_THRESH
     min_size = config.MODEL.RPN.MIN_SIZE
@@ -203,4 +229,8 @@ def make_rpn_postprocessor(config, rpn_box_coder, is_train):
         fpn_post_nms_top_n=fpn_post_nms_top_n,
         fpn_post_nms_per_batch=fpn_post_nms_per_batch,
     )
+
+    if logger.level == logging.DEBUG:
+        logger.debug(f"========== make_rpn_postprocessor() END")
+
     return box_selector

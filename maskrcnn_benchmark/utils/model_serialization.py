@@ -4,8 +4,6 @@ import logging
 
 import torch
 
-from maskrcnn_benchmark.utils.imports import import_file
-
 
 def align_and_update_state_dicts(model_state_dict, loaded_state_dict):
     """
@@ -70,11 +68,6 @@ def strip_prefix_if_present(state_dict, prefix):
 
 def load_state_dict(model, loaded_state_dict):
     model_state_dict = model.state_dict()
-    # if the state_dict comes from a model that was wrapped in a
-    # DataParallel or DistributedDataParallel during serialization,
-    # remove the "module" prefix before performing the matching
     loaded_state_dict = strip_prefix_if_present(loaded_state_dict, prefix="module.")
     align_and_update_state_dicts(model_state_dict, loaded_state_dict)
-
-    # use strict loading
     model.load_state_dict(model_state_dict)

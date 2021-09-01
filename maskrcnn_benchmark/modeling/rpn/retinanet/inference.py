@@ -20,24 +20,20 @@ class RetinaNetPostProcessor(RPNPostProcessor):
         self,
         pre_nms_thresh,
         pre_nms_top_n,
+        post_nms_top_n,
         nms_thresh,
-        fpn_post_nms_top_n,
         min_size,
+        box_coder,
         num_classes,
-        box_coder=None,
+        fpn_post_nms_top_n,
     ):
-        """
-        Arguments:
-            pre_nms_thresh (float)
-            pre_nms_top_n (int)
-            nms_thresh (float)
-            fpn_post_nms_top_n (int)
-            min_size (int)
-            num_classes (int)
-            box_coder (BoxCoder)
-        """
         super(RetinaNetPostProcessor, self).__init__(
-            pre_nms_thresh, 0, nms_thresh, min_size
+            pre_nms_top_n=pre_nms_top_n,
+            post_nms_top_n=post_nms_top_n,
+            nms_thresh=nms_thresh,
+            min_size=min_size,
+            box_coder=box_coder,
+            fpn_post_nms_top_n=fpn_post_nms_top_n,
         )
         self.pre_nms_thresh = pre_nms_thresh
         self.pre_nms_top_n = pre_nms_top_n
@@ -74,6 +70,7 @@ class RetinaNetPostProcessor(RPNPostProcessor):
         box_cls = box_cls.sigmoid()
 
         box_regression = permute_and_flatten(box_regression, N, A, 4, H, W)
+        box_regression = box_regression.reshape(N, -1, 4)
 
         num_anchors = A * H * W
 
@@ -173,21 +170,23 @@ class RetinaNetPostProcessor(RPNPostProcessor):
         return results
 
 
-def make_retinanet_postprocessor(config, rpn_box_coder, is_train):
+def make_retinanet_postprocessor(config, rpn_box_coder):
     pre_nms_thresh = config.MODEL.RETINANET.INFERENCE_TH
     pre_nms_top_n = config.MODEL.RETINANET.PRE_NMS_TOP_N
+    post_nms_top_n = config.MODEL.RPN.POST_NMS_TOP_N_TEST
     nms_thresh = config.MODEL.RETINANET.NMS_TH
     fpn_post_nms_top_n = config.TEST.DETECTIONS_PER_IMG
+    num_classes = config.MODEL.RETINANET.NUM_CLASSES
     min_size = 0
 
     box_selector = RetinaNetPostProcessor(
         pre_nms_thresh=pre_nms_thresh,
         pre_nms_top_n=pre_nms_top_n,
+        post_nms_top_n=post_nms_top_n,
         nms_thresh=nms_thresh,
-        fpn_post_nms_top_n=fpn_post_nms_top_n,
         min_size=min_size,
-        num_classes=config.MODEL.RETINANET.NUM_CLASSES,
         box_coder=rpn_box_coder,
+        num_classes=num_classes,
+        fpn_post_nms_top_n=fpn_post_nms_top_n,
     )
-
     return box_selector

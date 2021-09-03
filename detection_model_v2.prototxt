@@ -26,15 +26,6 @@ layer {
 }
 layer {
   name: "backbone_body_stem_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_stem_conv1"
-  top: "backbone_body_stem_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_stem_scale"
   type: "Scale"
   bottom: "backbone_body_stem_conv1"
   top: "backbone_body_stem_conv1"
@@ -74,15 +65,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer1_0_downsample_1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer1_0_downsample_0"
-  top: "backbone_body_layer1_0_downsample_0"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer1_0_downsample_scale"
   type: "Scale"
   bottom: "backbone_body_layer1_0_downsample_0"
   top: "backbone_body_layer1_0_downsample_0"
@@ -105,15 +87,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer1_0_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer1_0_conv1"
-  top: "backbone_body_layer1_0_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer1_0_scale1"
   type: "Scale"
   bottom: "backbone_body_layer1_0_conv1"
   top: "backbone_body_layer1_0_conv1"
@@ -142,15 +115,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer1_0_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer1_0_conv2"
-  top: "backbone_body_layer1_0_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer1_0_scale2"
   type: "Scale"
   bottom: "backbone_body_layer1_0_conv2"
   top: "backbone_body_layer1_0_conv2"
@@ -179,15 +143,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer1_0_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer1_0_conv3"
-  top: "backbone_body_layer1_0_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer1_0_scale3"
   type: "Scale"
   bottom: "backbone_body_layer1_0_conv3"
   top: "backbone_body_layer1_0_conv3"
@@ -223,15 +178,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer1_1_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer1_1_conv1"
-  top: "backbone_body_layer1_1_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer1_1_scale1"
   type: "Scale"
   bottom: "backbone_body_layer1_1_conv1"
   top: "backbone_body_layer1_1_conv1"
@@ -260,15 +206,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer1_1_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer1_1_conv2"
-  top: "backbone_body_layer1_1_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer1_1_scale2"
   type: "Scale"
   bottom: "backbone_body_layer1_1_conv2"
   top: "backbone_body_layer1_1_conv2"
@@ -297,15 +234,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer1_1_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer1_1_conv3"
-  top: "backbone_body_layer1_1_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer1_1_scale3"
   type: "Scale"
   bottom: "backbone_body_layer1_1_conv3"
   top: "backbone_body_layer1_1_conv3"
@@ -341,15 +269,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer1_2_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer1_2_conv1"
-  top: "backbone_body_layer1_2_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer1_2_scale1"
   type: "Scale"
   bottom: "backbone_body_layer1_2_conv1"
   top: "backbone_body_layer1_2_conv1"
@@ -378,15 +297,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer1_2_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer1_2_conv2"
-  top: "backbone_body_layer1_2_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer1_2_scale2"
   type: "Scale"
   bottom: "backbone_body_layer1_2_conv2"
   top: "backbone_body_layer1_2_conv2"
@@ -415,15 +325,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer1_2_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer1_2_conv3"
-  top: "backbone_body_layer1_2_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer1_2_scale3"
   type: "Scale"
   bottom: "backbone_body_layer1_2_conv3"
   top: "backbone_body_layer1_2_conv3"
@@ -459,15 +360,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_0_downsample_1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_0_downsample_0"
-  top: "backbone_body_layer2_0_downsample_0"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_0_downsample_scale"
   type: "Scale"
   bottom: "backbone_body_layer2_0_downsample_0"
   top: "backbone_body_layer2_0_downsample_0"
@@ -490,15 +382,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_0_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_0_conv1"
-  top: "backbone_body_layer2_0_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_0_scale1"
   type: "Scale"
   bottom: "backbone_body_layer2_0_conv1"
   top: "backbone_body_layer2_0_conv1"
@@ -527,15 +410,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_0_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_0_conv2"
-  top: "backbone_body_layer2_0_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_0_scale2"
   type: "Scale"
   bottom: "backbone_body_layer2_0_conv2"
   top: "backbone_body_layer2_0_conv2"
@@ -564,15 +438,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_0_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_0_conv3"
-  top: "backbone_body_layer2_0_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_0_scale3"
   type: "Scale"
   bottom: "backbone_body_layer2_0_conv3"
   top: "backbone_body_layer2_0_conv3"
@@ -608,15 +473,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_1_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_1_conv1"
-  top: "backbone_body_layer2_1_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_1_scale1"
   type: "Scale"
   bottom: "backbone_body_layer2_1_conv1"
   top: "backbone_body_layer2_1_conv1"
@@ -645,15 +501,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_1_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_1_conv2"
-  top: "backbone_body_layer2_1_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_1_scale2"
   type: "Scale"
   bottom: "backbone_body_layer2_1_conv2"
   top: "backbone_body_layer2_1_conv2"
@@ -682,15 +529,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_1_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_1_conv3"
-  top: "backbone_body_layer2_1_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_1_scale3"
   type: "Scale"
   bottom: "backbone_body_layer2_1_conv3"
   top: "backbone_body_layer2_1_conv3"
@@ -726,15 +564,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_2_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_2_conv1"
-  top: "backbone_body_layer2_2_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_2_scale1"
   type: "Scale"
   bottom: "backbone_body_layer2_2_conv1"
   top: "backbone_body_layer2_2_conv1"
@@ -763,15 +592,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_2_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_2_conv2"
-  top: "backbone_body_layer2_2_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_2_scale2"
   type: "Scale"
   bottom: "backbone_body_layer2_2_conv2"
   top: "backbone_body_layer2_2_conv2"
@@ -800,15 +620,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_2_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_2_conv3"
-  top: "backbone_body_layer2_2_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_2_scale3"
   type: "Scale"
   bottom: "backbone_body_layer2_2_conv3"
   top: "backbone_body_layer2_2_conv3"
@@ -844,15 +655,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_3_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_3_conv1"
-  top: "backbone_body_layer2_3_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_3_scale1"
   type: "Scale"
   bottom: "backbone_body_layer2_3_conv1"
   top: "backbone_body_layer2_3_conv1"
@@ -881,15 +683,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_3_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_3_conv2"
-  top: "backbone_body_layer2_3_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_3_scale2"
   type: "Scale"
   bottom: "backbone_body_layer2_3_conv2"
   top: "backbone_body_layer2_3_conv2"
@@ -918,15 +711,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer2_3_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer2_3_conv3"
-  top: "backbone_body_layer2_3_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer2_3_scale3"
   type: "Scale"
   bottom: "backbone_body_layer2_3_conv3"
   top: "backbone_body_layer2_3_conv3"
@@ -962,15 +746,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_0_downsample_1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_0_downsample_0"
-  top: "backbone_body_layer3_0_downsample_0"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_0_downsample_scale"
   type: "Scale"
   bottom: "backbone_body_layer3_0_downsample_0"
   top: "backbone_body_layer3_0_downsample_0"
@@ -993,15 +768,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_0_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_0_conv1"
-  top: "backbone_body_layer3_0_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_0_scale1"
   type: "Scale"
   bottom: "backbone_body_layer3_0_conv1"
   top: "backbone_body_layer3_0_conv1"
@@ -1030,15 +796,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_0_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_0_conv2"
-  top: "backbone_body_layer3_0_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_0_scale2"
   type: "Scale"
   bottom: "backbone_body_layer3_0_conv2"
   top: "backbone_body_layer3_0_conv2"
@@ -1067,15 +824,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_0_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_0_conv3"
-  top: "backbone_body_layer3_0_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_0_scale3"
   type: "Scale"
   bottom: "backbone_body_layer3_0_conv3"
   top: "backbone_body_layer3_0_conv3"
@@ -1111,15 +859,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_1_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_1_conv1"
-  top: "backbone_body_layer3_1_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_1_scale1"
   type: "Scale"
   bottom: "backbone_body_layer3_1_conv1"
   top: "backbone_body_layer3_1_conv1"
@@ -1148,15 +887,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_1_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_1_conv2"
-  top: "backbone_body_layer3_1_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_1_scale2"
   type: "Scale"
   bottom: "backbone_body_layer3_1_conv2"
   top: "backbone_body_layer3_1_conv2"
@@ -1185,15 +915,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_1_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_1_conv3"
-  top: "backbone_body_layer3_1_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_1_scale3"
   type: "Scale"
   bottom: "backbone_body_layer3_1_conv3"
   top: "backbone_body_layer3_1_conv3"
@@ -1229,15 +950,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_2_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_2_conv1"
-  top: "backbone_body_layer3_2_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_2_scale1"
   type: "Scale"
   bottom: "backbone_body_layer3_2_conv1"
   top: "backbone_body_layer3_2_conv1"
@@ -1266,15 +978,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_2_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_2_conv2"
-  top: "backbone_body_layer3_2_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_2_scale2"
   type: "Scale"
   bottom: "backbone_body_layer3_2_conv2"
   top: "backbone_body_layer3_2_conv2"
@@ -1303,15 +1006,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_2_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_2_conv3"
-  top: "backbone_body_layer3_2_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_2_scale3"
   type: "Scale"
   bottom: "backbone_body_layer3_2_conv3"
   top: "backbone_body_layer3_2_conv3"
@@ -1347,15 +1041,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_3_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_3_conv1"
-  top: "backbone_body_layer3_3_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_3_scale1"
   type: "Scale"
   bottom: "backbone_body_layer3_3_conv1"
   top: "backbone_body_layer3_3_conv1"
@@ -1384,15 +1069,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_3_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_3_conv2"
-  top: "backbone_body_layer3_3_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_3_scale2"
   type: "Scale"
   bottom: "backbone_body_layer3_3_conv2"
   top: "backbone_body_layer3_3_conv2"
@@ -1421,15 +1097,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_3_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_3_conv3"
-  top: "backbone_body_layer3_3_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_3_scale3"
   type: "Scale"
   bottom: "backbone_body_layer3_3_conv3"
   top: "backbone_body_layer3_3_conv3"
@@ -1465,15 +1132,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_4_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_4_conv1"
-  top: "backbone_body_layer3_4_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_4_scale1"
   type: "Scale"
   bottom: "backbone_body_layer3_4_conv1"
   top: "backbone_body_layer3_4_conv1"
@@ -1502,15 +1160,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_4_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_4_conv2"
-  top: "backbone_body_layer3_4_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_4_scale2"
   type: "Scale"
   bottom: "backbone_body_layer3_4_conv2"
   top: "backbone_body_layer3_4_conv2"
@@ -1539,15 +1188,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_4_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_4_conv3"
-  top: "backbone_body_layer3_4_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_4_scale3"
   type: "Scale"
   bottom: "backbone_body_layer3_4_conv3"
   top: "backbone_body_layer3_4_conv3"
@@ -1583,15 +1223,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_5_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_5_conv1"
-  top: "backbone_body_layer3_5_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_5_scale1"
   type: "Scale"
   bottom: "backbone_body_layer3_5_conv1"
   top: "backbone_body_layer3_5_conv1"
@@ -1620,15 +1251,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_5_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_5_conv2"
-  top: "backbone_body_layer3_5_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_5_scale2"
   type: "Scale"
   bottom: "backbone_body_layer3_5_conv2"
   top: "backbone_body_layer3_5_conv2"
@@ -1657,15 +1279,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer3_5_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer3_5_conv3"
-  top: "backbone_body_layer3_5_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer3_5_scale3"
   type: "Scale"
   bottom: "backbone_body_layer3_5_conv3"
   top: "backbone_body_layer3_5_conv3"
@@ -1701,15 +1314,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer4_0_downsample_1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer4_0_downsample_0"
-  top: "backbone_body_layer4_0_downsample_0"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer4_0_downsample_scale"
   type: "Scale"
   bottom: "backbone_body_layer4_0_downsample_0"
   top: "backbone_body_layer4_0_downsample_0"
@@ -1732,15 +1336,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer4_0_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer4_0_conv1"
-  top: "backbone_body_layer4_0_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer4_0_scale1"
   type: "Scale"
   bottom: "backbone_body_layer4_0_conv1"
   top: "backbone_body_layer4_0_conv1"
@@ -1769,15 +1364,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer4_0_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer4_0_conv2"
-  top: "backbone_body_layer4_0_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer4_0_scale2"
   type: "Scale"
   bottom: "backbone_body_layer4_0_conv2"
   top: "backbone_body_layer4_0_conv2"
@@ -1806,15 +1392,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer4_0_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer4_0_conv3"
-  top: "backbone_body_layer4_0_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer4_0_scale3"
   type: "Scale"
   bottom: "backbone_body_layer4_0_conv3"
   top: "backbone_body_layer4_0_conv3"
@@ -1850,15 +1427,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer4_1_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer4_1_conv1"
-  top: "backbone_body_layer4_1_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer4_1_scale1"
   type: "Scale"
   bottom: "backbone_body_layer4_1_conv1"
   top: "backbone_body_layer4_1_conv1"
@@ -1887,15 +1455,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer4_1_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer4_1_conv2"
-  top: "backbone_body_layer4_1_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer4_1_scale2"
   type: "Scale"
   bottom: "backbone_body_layer4_1_conv2"
   top: "backbone_body_layer4_1_conv2"
@@ -1924,15 +1483,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer4_1_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer4_1_conv3"
-  top: "backbone_body_layer4_1_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer4_1_scale3"
   type: "Scale"
   bottom: "backbone_body_layer4_1_conv3"
   top: "backbone_body_layer4_1_conv3"
@@ -1968,15 +1518,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer4_2_bn1"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer4_2_conv1"
-  top: "backbone_body_layer4_2_conv1"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer4_2_scale1"
   type: "Scale"
   bottom: "backbone_body_layer4_2_conv1"
   top: "backbone_body_layer4_2_conv1"
@@ -2005,15 +1546,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer4_2_bn2"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer4_2_conv2"
-  top: "backbone_body_layer4_2_conv2"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer4_2_scale2"
   type: "Scale"
   bottom: "backbone_body_layer4_2_conv2"
   top: "backbone_body_layer4_2_conv2"
@@ -2042,15 +1574,6 @@ layer {
 }
 layer {
   name: "backbone_body_layer4_2_bn3"
-  type: "BatchNorm"
-  bottom: "backbone_body_layer4_2_conv3"
-  top: "backbone_body_layer4_2_conv3"
-  batch_norm_param {
-    use_global_stats: true
-  }
-}
-layer {
-  name: "backbone_body_layer4_2_scale3"
   type: "Scale"
   bottom: "backbone_body_layer4_2_conv3"
   top: "backbone_body_layer4_2_conv3"

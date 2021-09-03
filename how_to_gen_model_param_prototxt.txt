@@ -1,0 +1,6 @@
+protoc --decode=caffe.NetParameter caffe.proto < ./detection_model_v2.caffemodel > detection_model_v2_params.prototxt
+
+* caffe source distribution에 포함된 `caffe.proto` 파일을 복사해놓고 위의 명령을 실행한다.
+* `protoc`의 `--decode` 옵션에 디코딩할 최상위 레벨 메시지 타입을 지정하고, protobuf 정의 파일을 지정하고 표준 입력 재지정으로 바이너리로 저장한 파일을 지정해주면
+디코딩을 통하여 텍스트 포맷으로 저장된 내용을 보여준다.
+* 디버깅시에 유용한 옵션이다.

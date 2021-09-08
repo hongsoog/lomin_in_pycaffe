@@ -7,9 +7,9 @@ import torchvision
 from PIL import Image
 
 # added by kimkk for model visualization in tensorboard
-from torch.utils.tensorboard import SummaryWriter
+#from torch.utils.tensorboard import SummaryWriter
 # default `log_dir` is "runs"
-writer = SummaryWriter('runs/lomin_detect')
+#writer = SummaryWriter('runs/lomin_detect')
 
 import numpy as np
 

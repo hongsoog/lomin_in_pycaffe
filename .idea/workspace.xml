@@ -5,10 +5,74 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c28a4c1-c0ed-46a3-9e6a-82ebdec4e883" name="Default Changelist" comment="Subject:&#10;&#10;&#10;Details:&#10;&#10;&#10;&#10;[Related Issue: ]">
-      <change afterPath="$PROJECT_DIR$/runs/lomin_detect/events.out.tfevents.1630409021.alpha.9734.0" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/runs/lomin_detect/events.out.tfevents.1630409021.alpha.9734.1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.detection_model_v2_layer_params.prototxt.swp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/detection_model_v2.caffemodel" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/detection_model_v2_params.prototxt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/detection_v2.caffemodel" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/how_to_save_detection_model_v2_debug_messages.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_archive/log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210720.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210720_clean.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210721.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210907.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210908.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_clean_20210722.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_info_20210720.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_v2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_detection_model_debug_20210908_2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_detection_model_debug_20210908_3.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/P6.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/P7.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/fpn_inner2_ouptut_plus_inner_topdown.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/fpn_inner2_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/fpn_inner3_ouptut_plus_inner_topdown.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/fpn_inner3_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/fpn_inner4_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/fpn_layer2_ouptut.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/fpn_layer3_ouptut.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/fpn_layer4_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/inner_top_down_forfpn_inner2.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/inner_top_down_forfpn_inner3.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/layer1_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/layer2_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/layer3_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/layer4_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/stem_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/padded_tensor.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/load_backbone_body_params_log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/load_backbone_fpn_params_log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/my_name_with_inspect_currentframe.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/my_name_with_inspect_stack.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/my_name_with_sys.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transformed_tensor.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/caffe_detection_v2_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/caffe_detection_v2_model.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/convert_to_caffe.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/convert_to_caffe.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection_model_v2.prototxt" beforeDir="false" afterPath="$PROJECT_DIR$/detection_model_v2.prototxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection_model_v2_in_caffe.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/detection_model_v2_in_caffe.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection_v2_caffe.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/detection_v2_caffe.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210719.txt" beforeDir="false" afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210719.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210722.txt" beforeDir="false" afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210722.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_detection_model_debug.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_detection_model_debug.txt1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210719.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210720.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210720_clean.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210721.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210722.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_clean_20210722.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_detection_model_info_20210719.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_detection_model_info_20210720.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/log_detection_model_v2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lomin_caffe_version.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/lomin_caffe_version.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_log.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_summary_with_tb.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_summary_with_tb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pycaffe_api_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/pycaffe_api_test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytoch_detection_v2_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/pytoch_detection_v2_model.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +110,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/miniconda3/pkgs/pytorch-1.8.0-py3.6_cuda10.2_cudnn7.6.5_0/lib/python3.6/site-packages/torch/lib" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -203,7 +267,7 @@
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/maskrcnn_benchmark/modeling/backbone/resnet.py</url>
-          <line>461</line>
+          <line>470</line>
           <option name="timeStamp" value="69" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
@@ -218,7 +282,7 @@
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/maskrcnn_benchmark/modeling/backbone/fpn.py</url>
-          <line>195</line>
+          <line>206</line>
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

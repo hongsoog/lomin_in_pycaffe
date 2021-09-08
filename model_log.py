@@ -11,4 +11,5 @@ logger = logging.getLogger()
 
 # logging level DEBUG
 # include DEBUG and above
-logger.setLevel(logging.CRITICAL)
+#logger.setLevel(logging.CRITICAL)
+logger.setLevel(logging.DEBUG)

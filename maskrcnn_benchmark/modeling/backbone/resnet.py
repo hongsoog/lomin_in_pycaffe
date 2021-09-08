@@ -17,6 +17,7 @@ Custom implementations may be written in user code and hooked in via the
 `register_*` functions.
 """
 import logging
+import numpy as np
 from collections import namedtuple
 
 import torch
@@ -424,6 +425,10 @@ class ResNet(nn.Module):
 
         if logger.level == logging.DEBUG:
             logger.debug(f"\tx.shape: {x.shape}")
+            file_path = f"./npy_save/stem_output"
+            arr = x.cpu().numpy()
+            np.save(file_path, arr)
+            logger.debug(f"\tstem output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
         # Then calculate the results of layer 1 ~ 4 in turn
         #logger.debug(f"\tfor stage_name in self.stages")
@@ -447,6 +452,10 @@ class ResNet(nn.Module):
                 if logger.level == logging.DEBUG:
                     logger.debug(f"\t\t\toutputs.append(x) stage_name: {stage_name}")
                     logger.debug(f"\t\t\tx.shape: {x.shape}")
+                    file_path = f"./npy_save/{stage_name}_output"
+                    arr = x.cpu().numpy()
+                    np.save(file_path, arr)
+                    logger.debug(f"\t{stage_name} output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
 
         # Return the results, outputs are in the form of a list, and the elements are the feature maps of each stage,

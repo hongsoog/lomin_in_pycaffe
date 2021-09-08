@@ -1,0 +1,32 @@
+
+-----------------------------
+layer index: 190/300
+layer name: 'backbone_fpn_fpn_inner4''
+layer type: 'Convolution'
+2 learnable parameters in 'Convolution' type
+	p[0]: (1024, 2048, 1, 1) of float32
+	load ./npy_save/backbone_fpn_fpn_inner4_weight.npy
+	set backbone_fpn_fpn_inner4_weight with arr:shape (1024, 2048, 1, 1), type float32
+	p[1]: (1024,) of float32
+	load ./npy_save/backbone_fpn_fpn_inner4_bias.npy
+	set backbone_fpn_fpn_inner4_bias with arr:shape (1024,), type float32
+
+-----------------------------
+layer index: 192/300
+layer name: 'backbone_fpn_fpn_layer4''
+layer type: 'Convolution'
+2 learnable parameters in 'Convolution' type
+	p[0]: (1024, 1024, 3, 3) of float32
+	load ./npy_save/backbone_fpn_fpn_layer4_weight.npy
+	set backbone_fpn_fpn_layer4_weight with arr:shape (1024, 1024, 3, 3), type float32
+	p[1]: (1024,) of float32
+	load ./npy_save/backbone_fpn_fpn_layer4_bias.npy
+	set backbone_fpn_fpn_layer4_bias with arr:shape (1024,), type float32
+
+-----------------------------
+layer index: 194/300
+layer name: 'backbone_fpn_fpn_inner3_upsample''
+layer type: 'Deconvolution'
+1 learnable parameters in 'Deconvolution' type
+	p[0]: (1024, 1024, 4, 4) of float32
+./npy_save/backbone_fpn_fpn_inner3_upsample_weight.npy is not exits!!

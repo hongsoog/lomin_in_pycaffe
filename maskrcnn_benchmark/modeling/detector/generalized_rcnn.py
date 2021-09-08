@@ -13,7 +13,7 @@ from ..backbone import build_backbone
 from ..rpn.rpn import build_rpn
 
 # added by kimkk for model visualization in tensorboard
-from torch.utils.tensorboard import SummaryWriter
+# from torch.utils.tensorboard import SummaryWriter
 import torchvision
 
 # disable FutureWarning related to NumPy and tensorflow's numpy version
@@ -28,7 +28,9 @@ from model_log import  logger
 # default `log_dir` is "runs"
 if logger.level > logging.DEBUG:
     logger.info("SummaryWrite created ... runs/lomin_detect")
-    writer = SummaryWriter('runs/lomin_detect')
+
+    # for tensorboard visualization
+    #writer = SummaryWriter('runs/lomin_detect')
 
 # define the specific implementation of the class
 class GeneralizedRCNN(nn.Module):
@@ -138,6 +140,7 @@ class GeneralizedRCNN(nn.Module):
 
         grid = torchvision.utils.make_grid(images.tensors)
         if logger.level > logging.DEBUG:
+            """
             writer.add_image("\tinput_image_to_self.backbone", grid, 0)
 
             tensors_shape = f"{images.tensors.shape}"
@@ -147,6 +150,7 @@ class GeneralizedRCNN(nn.Module):
             writer.add_text("images.images_sizes", images_sizes)
 
             writer.add_graph(self.backbone, images.tensors, True)
+            """
         # ---------- for debug with tensorboard -------------
         if logger.level == logging.DEBUG:
             logger.debug(f"\tmodel.backbone.forward(images.tensors) BEFORE")

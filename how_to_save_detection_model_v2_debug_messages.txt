@@ -1,0 +1,11 @@
+open ./model_log.py
+
+modify following line
+
+#logger.setLevel(logging.CRITICAL)   # do not generate log message
+logger.setLevel(logging.DEBUG)       # generate log message with DEBUG
+
+
+and run as follows:
+
+$ python detection_model_debug.py |& tee log_detection_model_debug_20210907.txt

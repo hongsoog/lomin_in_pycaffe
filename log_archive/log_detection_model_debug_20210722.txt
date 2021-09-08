@@ -2,9 +2,116 @@ DEBUG:root:GeneralizedRCNN.__init(self, cfg) ====================== BEGIN
 DEBUG:root:	super(GeneralizedRCNN, self).__init__()
 
 DEBUG:root:	==== backbone build ====
-DEBUG:root:	build_backbone: <function build_backbone at 0x7f5152ea6158>
+DEBUG:root:	build_backbone: <function build_backbone at 0x7f3d47f5d158>
 DEBUG:root:	self.backbone = build_backbone(cfg)
-DEBUG:root:build_resnet_fpn_p3p7_backbone(cfg) ====== BEGIN
+DEBUG:root:build_backbone(cfg) ====== BEGIN
+DEBUG:root:	registry.BACKBONES: {'TIMM-MOBILENETV2-100': <function build_timm_backbone at 0x7f3d4c9a7f28>, 'R-101-FPN-RETINANET': <function build_resnet_fpn_p3p7_backbone at 0x7f3d47f5d510>, 'R-50-FPN-RETINANET': <function build_resnet_fpn_p3p7_backbone at 0x7f3d47f5d510>}
+DEBUG:root:	cfg.MODEL.BACKBONE.CONV_BODY: R-50-FPN-RETINANET
+DEBUG:root:	cfg: DATALOADER:
+  SIZE_DIVISIBILITY: 32
+INPUT:
+  FIXED_SIZE: (-1, -1)
+  MAX_SIZE_TEST: 640
+  MIN_SIZE_TEST: 480
+  PIXEL_MEAN: [102.9801, 115.9465, 122.7717]
+  PIXEL_STD: [1.0, 1.0, 1.0]
+  RESIZE_MODE: keep_ratio
+  TARGET_INTERPOLATION: bilinear
+  TO_BGR255: True
+  TO_N1P1: False
+MODEL:
+  BACKBONE:
+    CONV_BODY: R-50-FPN-RETINANET
+    FREEZE_CONV_BODY_AT: 2
+  DEVICE: cuda
+  FPN:
+    USE_GN: False
+    USE_RELU: False
+  GROUP_NORM:
+    DIM_PER_GP: -1
+    EPSILON: 1e-05
+    NUM_GROUPS: 32
+  MASK_ON: False
+  META_ARCHITECTURE: GeneralizedRCNN
+  RECOGNITION: False
+  RESNETS:
+    BACKBONE_OUT_CHANNELS: 1024
+    DEFORMABLE_GROUPS: 1
+    NUM_GROUPS: 1
+    RES2_OUT_CHANNELS: 256
+    RES5_DILATION: 1
+    STAGE_WITH_DCN: (False, False, False, False)
+    STEM_FUNC: StemWithFixedBatchNorm
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: True
+    TRANS_FUNC: BottleneckWithFixedBatchNorm
+    WIDTH_PER_GROUP: 64
+    WITH_MODULATED_DCN: False
+  RETINANET:
+    ANCHOR_SIZES: (32, 64, 128, 256, 512)
+    ANCHOR_STRIDES: (8, 16, 32, 64, 128)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BBOX_REG_BETA: 0.11
+    BBOX_REG_WEIGHT: 4.0
+    BG_IOU_THRESHOLD: 0.4
+    FG_IOU_THRESHOLD: 0.5
+    INFERENCE_TH: 0.05
+    LOSS_ALPHA: 0.25
+    LOSS_GAMMA: 2.0
+    NMS_TH: 0.4
+    NUM_CLASSES: 2
+    NUM_CONVS: 4
+    OCTAVE: 2.0
+    PRE_NMS_TOP_N: 1000
+    PRIOR_PROB: 0.01
+    SCALES_PER_OCTAVE: 3
+    STRADDLE_THRESH: -1
+    USE_C5: True
+  RETINANET_ON: True
+  RPN:
+    ANCHOR_SIZES: (32, 64, 128, 256, 512)
+    ANCHOR_STRIDE: (4, 8, 16, 32, 64)
+    ASPECT_RATIOS: (0.5, 1.0, 2.0)
+    BATCH_SIZE_PER_IMAGE: 256
+    BG_IOU_THRESHOLD: 0.4
+    FG_IOU_THRESHOLD: 0.5
+    FPN_POST_NMS_PER_BATCH: True
+    FPN_POST_NMS_TOP_N_TEST: 1000
+    FPN_POST_NMS_TOP_N_TRAIN: 2000
+    MIN_SIZE: 0
+    NMS_THRESH: 0.7
+    POSITIVE_FRACTION: 0.5
+    POST_NMS_TOP_N_TEST: 1000
+    POST_NMS_TOP_N_TRAIN: 2000
+    PRE_NMS_TOP_N_TEST: 1000
+    PRE_NMS_TOP_N_TRAIN: 2000
+    RPN_HEAD: SingleConvRPNHead
+    STRADDLE_THRESH: 0
+    USE_FPN: True
+  RPN_ONLY: True
+  TEXT_RECOGNIZER:
+    BATCH_MAX_LENGTH: 25
+    CHARACTER: ('num', 'eng_cap', 'eng_low', 'kor_2350')
+    CNN_CHANNELS: 512
+    CNN_NUM_POOLING: 4
+    OUTCONV_KS: (1, 1)
+    TRANSFORMER_DECODER_MODULE_NO: -1
+    TRANSFORMER_ENCODER_MODULE_NO: -1
+    TRANSFORMER_FSIZE: 512
+    TRANSFORMER_MODULE_NO: 6
+    TRANSFORMER_NO_RECURRENT_PATH: False
+    USE_PROJECTION: False
+  TIMM:
+    BACKBONE_OUT_CHANNELS: 256
+    OUT_INDICES: (2, 3, 4)
+    USE_PRETRAINED: True
+TEST:
+  DETECTIONS_PER_IMG: 100
+  EXPECTED_RESULTS: []
+  EXPECTED_RESULTS_SIGMA_TOL: 4
+  IMS_PER_BATCH: 8
+  NMS_THRESH: 0.5
+  SCORE_THRESHOLD: 0.3
 DEBUG:root:build_resnet_fpn_p3p7_backbone(cfg) ====== BEGIN
 DEBUG:root:
 =========================================== Resnet.__init__ BEGIN
@@ -540,7 +647,1030 @@ DEBUG:root:
 DEBUG:root:	======constructor params
 DEBUG:root:		in_channels_list: [0, 512, 1024, 2048]
 DEBUG:root:		out_channels: 1024
-DEBUG:root:		conv_block: <function conv_with_kaiming_uniform.<locals>.make_conv at 0x7f5126f33a60>
+DEBUG:root:		conv_block: <function conv_with_kaiming_uniform.<locals>.make_conv at 0x7f3d1fff5a60>
+DEBUG:root:		top_blocks: LastLevelP6P7(
+  (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+)
+DEBUG:root:	======constructor params
+DEBUG:root:	super(FPN, self).__init__()
+
+DEBUG:root:	for idx, in_channels in enumerate(in_channels_list, 1):
+DEBUG:root:
+		==> iteration with idx:1, in_channels:0
+DEBUG:root:		if in_channels ==0, skip
+
+DEBUG:root:
+		==> iteration with idx:2, in_channels:512
+DEBUG:root:		inner_block: fpn_inner2
+DEBUG:root:		layer_block: fpn_layer2
+DEBUG:root:		inner_block_module = conv_block(in_channels=512, out_channels=1024, 1)
+DEBUG:root:
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+DEBUG:root:				Conv2d(in_channles=512, out_channels=1024, kernel_size=1, stride=1
+DEBUG:root:				       padding=0, dilation=1, bias=True,
+DEBUG:root:				nn.init.kaiming_uniform_(conv.weight, a=1)
+DEBUG:root:				if not use_gn:
+DEBUG:root:					nn.init.constant_(conv.bias, 0)
+DEBUG:root:				module = [conv,]
+DEBUG:root:				return conv
+
+DEBUG:root:			conv_with_kaiming_uniform().make_conv() ====== END
+
+DEBUG:root:		layer_block_module = conv_block(out_channels=1024, out_channels=1024, 3,1)
+DEBUG:root:
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+DEBUG:root:				Conv2d(in_channles=1024, out_channels=1024, kernel_size=3, stride=1
+DEBUG:root:				       padding=1, dilation=1, bias=True,
+DEBUG:root:				nn.init.kaiming_uniform_(conv.weight, a=1)
+DEBUG:root:				if not use_gn:
+DEBUG:root:					nn.init.constant_(conv.bias, 0)
+DEBUG:root:				module = [conv,]
+DEBUG:root:				return conv
+
+DEBUG:root:			conv_with_kaiming_uniform().make_conv() ====== END
+
+DEBUG:root:		self.add_module(fpn_inner2, inner_block_module)
+DEBUG:root:		self.add_module(fpn_layer2, layer_block_module)
+DEBUG:root:		self.inner_blocks.append(fpn_inner2)
+DEBUG:root:		self.layer_blocks.append(fpn_layer2)
+DEBUG:root:
+		==> iteration with idx:3, in_channels:1024
+DEBUG:root:		inner_block: fpn_inner3
+DEBUG:root:		layer_block: fpn_layer3
+DEBUG:root:		inner_block_module = conv_block(in_channels=1024, out_channels=1024, 1)
+DEBUG:root:
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+DEBUG:root:				Conv2d(in_channles=1024, out_channels=1024, kernel_size=1, stride=1
+DEBUG:root:				       padding=0, dilation=1, bias=True,
+DEBUG:root:				nn.init.kaiming_uniform_(conv.weight, a=1)
+DEBUG:root:				if not use_gn:
+DEBUG:root:					nn.init.constant_(conv.bias, 0)
+DEBUG:root:				module = [conv,]
+DEBUG:root:				return conv
+
+DEBUG:root:			conv_with_kaiming_uniform().make_conv() ====== END
+
+DEBUG:root:		layer_block_module = conv_block(out_channels=1024, out_channels=1024, 3,1)
+DEBUG:root:
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+DEBUG:root:				Conv2d(in_channles=1024, out_channels=1024, kernel_size=3, stride=1
+DEBUG:root:				       padding=1, dilation=1, bias=True,
+DEBUG:root:				nn.init.kaiming_uniform_(conv.weight, a=1)
+DEBUG:root:				if not use_gn:
+DEBUG:root:					nn.init.constant_(conv.bias, 0)
+DEBUG:root:				module = [conv,]
+DEBUG:root:				return conv
+
+DEBUG:root:			conv_with_kaiming_uniform().make_conv() ====== END
+
+DEBUG:root:		self.add_module(fpn_inner3, inner_block_module)
+DEBUG:root:		self.add_module(fpn_layer3, layer_block_module)
+DEBUG:root:		self.inner_blocks.append(fpn_inner3)
+DEBUG:root:		self.layer_blocks.append(fpn_layer3)
+DEBUG:root:
+		==> iteration with idx:4, in_channels:2048
+DEBUG:root:		inner_block: fpn_inner4
+DEBUG:root:		layer_block: fpn_layer4
+DEBUG:root:		inner_block_module = conv_block(in_channels=2048, out_channels=1024, 1)
+DEBUG:root:
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+DEBUG:root:				Conv2d(in_channles=2048, out_channels=1024, kernel_size=1, stride=1
+DEBUG:root:				       padding=0, dilation=1, bias=True,
+DEBUG:root:				nn.init.kaiming_uniform_(conv.weight, a=1)
+DEBUG:root:				if not use_gn:
+DEBUG:root:					nn.init.constant_(conv.bias, 0)
+DEBUG:root:				module = [conv,]
+DEBUG:root:				return conv
+
+DEBUG:root:			conv_with_kaiming_uniform().make_conv() ====== END
+
+DEBUG:root:		layer_block_module = conv_block(out_channels=1024, out_channels=1024, 3,1)
+DEBUG:root:
+			conv_with_kaiming_uniform().make_conv() ====== BEGIN
+DEBUG:root:				Conv2d(in_channles=1024, out_channels=1024, kernel_size=3, stride=1
+DEBUG:root:				       padding=1, dilation=1, bias=True,
+DEBUG:root:				nn.init.kaiming_uniform_(conv.weight, a=1)
+DEBUG:root:				if not use_gn:
+DEBUG:root:					nn.init.constant_(conv.bias, 0)
+DEBUG:root:				module = [conv,]
+DEBUG:root:				return conv
+
+DEBUG:root:			conv_with_kaiming_uniform().make_conv() ====== END
+
+DEBUG:root:		self.add_module(fpn_inner4, inner_block_module)
+DEBUG:root:		self.add_module(fpn_layer4, layer_block_module)
+DEBUG:root:		self.inner_blocks.append(fpn_inner4)
+DEBUG:root:		self.layer_blocks.append(fpn_layer4)
+DEBUG:root:
+	self.inner_blocks: ['fpn_inner2', 'fpn_inner3', 'fpn_inner4']
+DEBUG:root:		self.fpn_inner2: Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1))
+DEBUG:root:		self.fpn_inner3: Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+DEBUG:root:		self.fpn_inner4: Conv2d(2048, 1024, kernel_size=(1, 1), stride=(1, 1))
+DEBUG:root:
+	self.layer_blocks: ['fpn_layer2', 'fpn_layer3', 'fpn_layer4']
+DEBUG:root:		self.fpn_layer2: Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+DEBUG:root:		self.fpn_layer3: Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+DEBUG:root:		self.fpn_layer4: Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+DEBUG:root:
+	self.top_blocks: LastLevelP6P7(
+  (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+)
+DEBUG:root:=========================================== FPN.__init__ end
+
+
+DEBUG:root:
+	fpn: {fpn}
+DEBUG:root:	model = nn.Sequential(OrderedDict([("body", body), ("fpn", fpn)]))
+DEBUG:root:	model: Sequential(
+  (body): ResNet(
+    (stem): StemWithFixedBatchNorm(
+      (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+      (bn1): FrozenBatchNorm2d()
+    )
+    (layer1): Sequential(
+      (0): BottleneckWithFixedBatchNorm(
+        (downsample): Sequential(
+          (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): FrozenBatchNorm2d()
+        )
+        (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (1): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (2): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+    )
+    (layer2): Sequential(
+      (0): BottleneckWithFixedBatchNorm(
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): FrozenBatchNorm2d()
+        )
+        (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (1): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (2): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (3): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+    )
+    (layer3): Sequential(
+      (0): BottleneckWithFixedBatchNorm(
+        (downsample): Sequential(
+          (0): Conv2d(512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): FrozenBatchNorm2d()
+        )
+        (conv1): Conv2d(512, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (1): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (2): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (3): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (4): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (5): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+    )
+    (layer4): Sequential(
+      (0): BottleneckWithFixedBatchNorm(
+        (downsample): Sequential(
+          (0): Conv2d(1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): FrozenBatchNorm2d()
+        )
+        (conv1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (1): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (2): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+    )
+  )
+  (fpn): FPN(
+    (fpn_inner2): Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1))
+    (fpn_layer2): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (fpn_inner3): Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+    (fpn_layer3): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (fpn_inner4): Conv2d(2048, 1024, kernel_size=(1, 1), stride=(1, 1))
+    (fpn_layer4): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (top_blocks): LastLevelP6P7(
+      (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+      (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    )
+  )
+)
+DEBUG:root:	model.out_channels = out_channels
+DEBUG:root:	model.out_channels: 1024
+DEBUG:root:	return model
+DEBUG:root:build_resnet_fpn_p3p7_backbone(cfg) ====== END
+
+
+DEBUG:root:	registry.BACKBONES[cfg.MODEL.BACKBONE.CONV_BODY](cfg): Sequential(
+  (body): ResNet(
+    (stem): StemWithFixedBatchNorm(
+      (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+      (bn1): FrozenBatchNorm2d()
+    )
+    (layer1): Sequential(
+      (0): BottleneckWithFixedBatchNorm(
+        (downsample): Sequential(
+          (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): FrozenBatchNorm2d()
+        )
+        (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (1): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (2): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+    )
+    (layer2): Sequential(
+      (0): BottleneckWithFixedBatchNorm(
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): FrozenBatchNorm2d()
+        )
+        (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (1): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (2): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (3): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+    )
+    (layer3): Sequential(
+      (0): BottleneckWithFixedBatchNorm(
+        (downsample): Sequential(
+          (0): Conv2d(512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): FrozenBatchNorm2d()
+        )
+        (conv1): Conv2d(512, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (1): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (2): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (3): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (4): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (5): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+    )
+    (layer4): Sequential(
+      (0): BottleneckWithFixedBatchNorm(
+        (downsample): Sequential(
+          (0): Conv2d(1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): FrozenBatchNorm2d()
+        )
+        (conv1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (1): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+      (2): BottleneckWithFixedBatchNorm(
+        (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): FrozenBatchNorm2d()
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): FrozenBatchNorm2d()
+        (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): FrozenBatchNorm2d()
+      )
+    )
+  )
+  (fpn): FPN(
+    (fpn_inner2): Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1))
+    (fpn_layer2): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (fpn_inner3): Conv2d(1024, 1024, kernel_size=(1, 1), stride=(1, 1))
+    (fpn_layer3): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (fpn_inner4): Conv2d(2048, 1024, kernel_size=(1, 1), stride=(1, 1))
+    (fpn_layer4): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (top_blocks): LastLevelP6P7(
+      (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+      (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    )
+  )
+)
+DEBUG:root:	return registry.BACKBONES[cfg.MODEL.BACKBONE.CONV_BODY](cfg)
+DEBUG:root:build_backbone(cfg) ====== END
+DEBUG:root:build_resnet_fpn_p3p7_backbone(cfg) ====== BEGIN
+DEBUG:root:
+=========================================== Resnet.__init__ BEGIN
+DEBUG:root:	_STEM_MODULES: {'StemWithFixedBatchNorm': <class 'maskrcnn_benchmark.modeling.backbone.resnet.StemWithFixedBatchNorm'>}
+DEBUG:root:	_cfg.MODEL.RESNETS.STEM_FUNC: StemWithFixedBatchNorm
+DEBUG:root:	stem_module = _STEM_MODULES[cfg.MODEL.RESNETS.STEM_FUNC]
+DEBUG:root:	stem_module: <class 'maskrcnn_benchmark.modeling.backbone.resnet.StemWithFixedBatchNorm'>
+DEBUG:root:	_STAGE_SPECS: {'R-50-C4': (StageSpec(index=1, block_count=3, return_features=False), StageSpec(index=2, block_count=4, return_features=False), StageSpec(index=3, block_count=6, return_features=True)), 'R-50-C5': (StageSpec(index=1, block_count=3, return_features=False), StageSpec(index=2, block_count=4, return_features=False), StageSpec(index=3, block_count=6, return_features=False), StageSpec(index=4, block_count=3, return_features=True)), 'R-101-C4': (StageSpec(index=1, block_count=3, return_features=False), StageSpec(index=2, block_count=4, return_features=False), StageSpec(index=3, block_count=23, return_features=True)), 'R-101-C5': (StageSpec(index=1, block_count=3, return_features=False), StageSpec(index=2, block_count=4, return_features=False), StageSpec(index=3, block_count=23, return_features=False), StageSpec(index=4, block_count=3, return_features=True)), 'R-50-FPN': (StageSpec(index=1, block_count=3, return_features=True), StageSpec(index=2, block_count=4, return_features=True), StageSpec(index=3, block_count=6, return_features=True), StageSpec(index=4, block_count=3, return_features=True)), 'R-50-FPN-RETINANET': (StageSpec(index=1, block_count=3, return_features=True), StageSpec(index=2, block_count=4, return_features=True), StageSpec(index=3, block_count=6, return_features=True), StageSpec(index=4, block_count=3, return_features=True)), 'R-101-FPN': (StageSpec(index=1, block_count=3, return_features=True), StageSpec(index=2, block_count=4, return_features=True), StageSpec(index=3, block_count=23, return_features=True), StageSpec(index=4, block_count=3, return_features=True)), 'R-101-FPN-RETINANET': (StageSpec(index=1, block_count=3, return_features=True), StageSpec(index=2, block_count=4, return_features=True), StageSpec(index=3, block_count=23, return_features=True), StageSpec(index=4, block_count=3, return_features=True)), 'R-152-FPN': (StageSpec(index=1, block_count=3, return_features=True), StageSpec(index=2, block_count=8, return_features=True), StageSpec(index=3, block_count=36, return_features=True), StageSpec(index=4, block_count=3, return_features=True))}
+DEBUG:root:	cfg.MODEL.BACKBONE.CONV_BODY: R-50-FPN-RETINANET
+DEBUG:root:	stage_specs = _STAGE_SPECS[cfg.MODEL.BACKBONE.CONV_BODY]
+DEBUG:root:	stage_specs: (StageSpec(index=1, block_count=3, return_features=True), StageSpec(index=2, block_count=4, return_features=True), StageSpec(index=3, block_count=6, return_features=True), StageSpec(index=4, block_count=3, return_features=True))
+DEBUG:root:	_TRANSFORMATION_MODULES: {'BottleneckWithFixedBatchNorm': <class 'maskrcnn_benchmark.modeling.backbone.resnet.BottleneckWithFixedBatchNorm'>}
+DEBUG:root:	cfg.MODEL.RESNETS.TRANS_FUNC: BottleneckWithFixedBatchNorm
+DEBUG:root:	transformation_module = _TRANSFORMATION_MODULES[cfg.MODEL.RESNETS.TRANS_FUNC]
+DEBUG:root:	transformation_module: <class 'maskrcnn_benchmark.modeling.backbone.resnet.BottleneckWithFixedBatchNorm'>
+DEBUG:root:	self.stem = stem_module(cfg)
+DEBUG:root:	self.stem: StemWithFixedBatchNorm(
+  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+  (bn1): FrozenBatchNorm2d()
+)
+DEBUG:root:	num_groups = cfg.MODEL.RESNETS.NUM_GROUPS
+DEBUG:root:	num_groups.stem: 1
+DEBUG:root:	width_per_group = cfg.MODEL.RESNETS.WIDTH_PER_GROUP
+DEBUG:root:	width_per_group: 64
+DEBUG:root:	in_channels = cfg.MODEL.RESNETS.STEM_OUT_CHANNELS
+DEBUG:root:	in_channels: 64
+DEBUG:root:	stage2_bottleneck_channels = num_groups * width_per_group
+DEBUG:root:	stage2_bottleneck_channels: 64
+DEBUG:root:	stage2_out_channels = cfg.MODEL.RESNETS.RES2_OUT_CHANNELS
+DEBUG:root:	stage2_out_channels: 256
+DEBUG:root:	self.stages = []
+DEBUG:root:	self.return_features = {}
+DEBUG:root:	for stage_spec in stage_specs:
+DEBUG:root:		stage_spec: StageSpec(index=1, block_count=3, return_features=True)
+DEBUG:root:		stage_spec.index: 1
+DEBUG:root:		name = "layer" + str(stage_spec.index)
+DEBUG:root:		name: layer1
+DEBUG:root:		stage2_relative_factor = 2 ** (stage_spec.index - 1)
+DEBUG:root:		stage2_relative_factor: 1
+DEBUG:root:		bottleneck_channels = stage2_bottleneck_channels * stage2_relative_factor
+DEBUG:root:		bottlenec_channels: 64
+DEBUG:root:		out_channels = stage2_out_channels * stage2_relative_factor
+DEBUG:root:		out_channels: 256
+DEBUG:root:		stage_with_dcn = cfg.MODEL.RESNETS.STAGE_WITH_DCN[stage_spec.index - 1]
+DEBUG:root:		stage_wid_dcn: False
+DEBUG:root:		module = _make_stage(
+DEBUG:root:			transformation_module = <class 'maskrcnn_benchmark.modeling.backbone.resnet.BottleneckWithFixedBatchNorm'>,
+DEBUG:root:			in_channels = 64,
+DEBUG:root:			bottleneck_channels = 64,
+DEBUG:root:			out_channels = 256,
+DEBUG:root:			stage_spec.block_count = 3,
+DEBUG:root:			num_groups = 1,
+DEBUG:root:			cfg.MODEL.RESNETS.STRIDE_IN_1X1 : True,
+DEBUG:root:			first_stride=int(stage_spec.index > 1) + 1: 1,
+DEBUG:root:			dcn_config={
+DEBUG:root:				'stage_with_dcn': False,
+DEBUG:root:				'with_modulated_dcn': False,
+DEBUG:root:				'deformable_groups': 1,
+DEBUG:root:				}
+DEBUG:root:			)
+DEBUG:root:		in_channels = out_channels
+DEBUG:root:		in_channels: 256
+DEBUG:root:		self.add_module(name=layer1, module=Sequential(
+  (0): BottleneckWithFixedBatchNorm(
+    (downsample): Sequential(
+      (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (1): FrozenBatchNorm2d()
+    )
+    (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (1): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (2): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+))
+DEBUG:root:		self.stages.append(name=layer1)
+DEBUG:root:		name: layer1
+DEBUG:root:		stage_spec.return_features: True
+DEBUG:root:		self.return_features[name] = stage_spec.return_features
+DEBUG:root:		stage_spec: StageSpec(index=2, block_count=4, return_features=True)
+DEBUG:root:		stage_spec.index: 2
+DEBUG:root:		name = "layer" + str(stage_spec.index)
+DEBUG:root:		name: layer2
+DEBUG:root:		stage2_relative_factor = 2 ** (stage_spec.index - 1)
+DEBUG:root:		stage2_relative_factor: 2
+DEBUG:root:		bottleneck_channels = stage2_bottleneck_channels * stage2_relative_factor
+DEBUG:root:		bottlenec_channels: 128
+DEBUG:root:		out_channels = stage2_out_channels * stage2_relative_factor
+DEBUG:root:		out_channels: 512
+DEBUG:root:		stage_with_dcn = cfg.MODEL.RESNETS.STAGE_WITH_DCN[stage_spec.index - 1]
+DEBUG:root:		stage_wid_dcn: False
+DEBUG:root:		module = _make_stage(
+DEBUG:root:			transformation_module = <class 'maskrcnn_benchmark.modeling.backbone.resnet.BottleneckWithFixedBatchNorm'>,
+DEBUG:root:			in_channels = 256,
+DEBUG:root:			bottleneck_channels = 128,
+DEBUG:root:			out_channels = 512,
+DEBUG:root:			stage_spec.block_count = 4,
+DEBUG:root:			num_groups = 1,
+DEBUG:root:			cfg.MODEL.RESNETS.STRIDE_IN_1X1 : True,
+DEBUG:root:			first_stride=int(stage_spec.index > 1) + 1: 2,
+DEBUG:root:			dcn_config={
+DEBUG:root:				'stage_with_dcn': False,
+DEBUG:root:				'with_modulated_dcn': False,
+DEBUG:root:				'deformable_groups': 1,
+DEBUG:root:				}
+DEBUG:root:			)
+DEBUG:root:		in_channels = out_channels
+DEBUG:root:		in_channels: 512
+DEBUG:root:		self.add_module(name=layer2, module=Sequential(
+  (0): BottleneckWithFixedBatchNorm(
+    (downsample): Sequential(
+      (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      (1): FrozenBatchNorm2d()
+    )
+    (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (1): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (2): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (3): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+))
+DEBUG:root:		self.stages.append(name=layer2)
+DEBUG:root:		name: layer2
+DEBUG:root:		stage_spec.return_features: True
+DEBUG:root:		self.return_features[name] = stage_spec.return_features
+DEBUG:root:		stage_spec: StageSpec(index=3, block_count=6, return_features=True)
+DEBUG:root:		stage_spec.index: 3
+DEBUG:root:		name = "layer" + str(stage_spec.index)
+DEBUG:root:		name: layer3
+DEBUG:root:		stage2_relative_factor = 2 ** (stage_spec.index - 1)
+DEBUG:root:		stage2_relative_factor: 4
+DEBUG:root:		bottleneck_channels = stage2_bottleneck_channels * stage2_relative_factor
+DEBUG:root:		bottlenec_channels: 256
+DEBUG:root:		out_channels = stage2_out_channels * stage2_relative_factor
+DEBUG:root:		out_channels: 1024
+DEBUG:root:		stage_with_dcn = cfg.MODEL.RESNETS.STAGE_WITH_DCN[stage_spec.index - 1]
+DEBUG:root:		stage_wid_dcn: False
+DEBUG:root:		module = _make_stage(
+DEBUG:root:			transformation_module = <class 'maskrcnn_benchmark.modeling.backbone.resnet.BottleneckWithFixedBatchNorm'>,
+DEBUG:root:			in_channels = 512,
+DEBUG:root:			bottleneck_channels = 256,
+DEBUG:root:			out_channels = 1024,
+DEBUG:root:			stage_spec.block_count = 6,
+DEBUG:root:			num_groups = 1,
+DEBUG:root:			cfg.MODEL.RESNETS.STRIDE_IN_1X1 : True,
+DEBUG:root:			first_stride=int(stage_spec.index > 1) + 1: 2,
+DEBUG:root:			dcn_config={
+DEBUG:root:				'stage_with_dcn': False,
+DEBUG:root:				'with_modulated_dcn': False,
+DEBUG:root:				'deformable_groups': 1,
+DEBUG:root:				}
+DEBUG:root:			)
+DEBUG:root:		in_channels = out_channels
+DEBUG:root:		in_channels: 1024
+DEBUG:root:		self.add_module(name=layer3, module=Sequential(
+  (0): BottleneckWithFixedBatchNorm(
+    (downsample): Sequential(
+      (0): Conv2d(512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      (1): FrozenBatchNorm2d()
+    )
+    (conv1): Conv2d(512, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (1): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (2): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (3): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (4): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (5): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+))
+DEBUG:root:		self.stages.append(name=layer3)
+DEBUG:root:		name: layer3
+DEBUG:root:		stage_spec.return_features: True
+DEBUG:root:		self.return_features[name] = stage_spec.return_features
+DEBUG:root:		stage_spec: StageSpec(index=4, block_count=3, return_features=True)
+DEBUG:root:		stage_spec.index: 4
+DEBUG:root:		name = "layer" + str(stage_spec.index)
+DEBUG:root:		name: layer4
+DEBUG:root:		stage2_relative_factor = 2 ** (stage_spec.index - 1)
+DEBUG:root:		stage2_relative_factor: 8
+DEBUG:root:		bottleneck_channels = stage2_bottleneck_channels * stage2_relative_factor
+DEBUG:root:		bottlenec_channels: 512
+DEBUG:root:		out_channels = stage2_out_channels * stage2_relative_factor
+DEBUG:root:		out_channels: 2048
+DEBUG:root:		stage_with_dcn = cfg.MODEL.RESNETS.STAGE_WITH_DCN[stage_spec.index - 1]
+DEBUG:root:		stage_wid_dcn: False
+DEBUG:root:		module = _make_stage(
+DEBUG:root:			transformation_module = <class 'maskrcnn_benchmark.modeling.backbone.resnet.BottleneckWithFixedBatchNorm'>,
+DEBUG:root:			in_channels = 1024,
+DEBUG:root:			bottleneck_channels = 512,
+DEBUG:root:			out_channels = 2048,
+DEBUG:root:			stage_spec.block_count = 3,
+DEBUG:root:			num_groups = 1,
+DEBUG:root:			cfg.MODEL.RESNETS.STRIDE_IN_1X1 : True,
+DEBUG:root:			first_stride=int(stage_spec.index > 1) + 1: 2,
+DEBUG:root:			dcn_config={
+DEBUG:root:				'stage_with_dcn': False,
+DEBUG:root:				'with_modulated_dcn': False,
+DEBUG:root:				'deformable_groups': 1,
+DEBUG:root:				}
+DEBUG:root:			)
+DEBUG:root:		in_channels = out_channels
+DEBUG:root:		in_channels: 2048
+DEBUG:root:		self.add_module(name=layer4, module=Sequential(
+  (0): BottleneckWithFixedBatchNorm(
+    (downsample): Sequential(
+      (0): Conv2d(1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      (1): FrozenBatchNorm2d()
+    )
+    (conv1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (1): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+  (2): BottleneckWithFixedBatchNorm(
+    (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn1): FrozenBatchNorm2d()
+    (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn2): FrozenBatchNorm2d()
+    (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn3): FrozenBatchNorm2d()
+  )
+))
+DEBUG:root:		self.stages.append(name=layer4)
+DEBUG:root:		name: layer4
+DEBUG:root:		stage_spec.return_features: True
+DEBUG:root:		self.return_features[name] = stage_spec.return_features
+DEBUG:root:		cfg.MODEL.BACKBONE.FREEZE_CONV_BODY_AT: 2)
+DEBUG:root:		self._freeze_backbone(cfg.MODEL.BACKBONE.FREEZE_CONV_BODY_AT)
+DEBUG:root:
+	=========================================== Resnet.__freeze_backbone() START
+DEBUG:root:	=========================================== Resnet.__freeze_backbone() END
+
+DEBUG:root:=========================================== Resnet.__init__ END
+
+DEBUG:root:	body = resnet.ResNet(cfg)
+DEBUG:root:	body: ResNet(
+  (stem): StemWithFixedBatchNorm(
+    (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    (bn1): FrozenBatchNorm2d()
+  )
+  (layer1): Sequential(
+    (0): BottleneckWithFixedBatchNorm(
+      (downsample): Sequential(
+        (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): FrozenBatchNorm2d()
+      )
+      (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (1): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (2): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+  )
+  (layer2): Sequential(
+    (0): BottleneckWithFixedBatchNorm(
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): FrozenBatchNorm2d()
+      )
+      (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (1): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (2): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (3): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+  )
+  (layer3): Sequential(
+    (0): BottleneckWithFixedBatchNorm(
+      (downsample): Sequential(
+        (0): Conv2d(512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): FrozenBatchNorm2d()
+      )
+      (conv1): Conv2d(512, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (1): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (2): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (3): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (4): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (5): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+  )
+  (layer4): Sequential(
+    (0): BottleneckWithFixedBatchNorm(
+      (downsample): Sequential(
+        (0): Conv2d(1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): FrozenBatchNorm2d()
+      )
+      (conv1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (1): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+    (2): BottleneckWithFixedBatchNorm(
+      (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): FrozenBatchNorm2d()
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): FrozenBatchNorm2d()
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): FrozenBatchNorm2d()
+    )
+  )
+)
+
+DEBUG:root:	cfg.MODEL.RESNETS.RES2_OUT_CHANNELS: 256
+DEBUG:root:	in_channels_stage2 = cfg.MODEL.RESNETS.RES2_OUT_CHANNELS
+DEBUG:root:	in_channels_stage2 = 256
+DEBUG:root:	cfg.MODEL.RESNETS.BACKBONE_OUT_CHANNELS:1024
+DEBUG:root:	out_channels = cfg.MODEL.RESNETS.BACKBONE_OUT_CHANNELS
+DEBUG:root:	out_channels = 1024
+DEBUG:root:	in_channels_stage2: 256
+DEBUG:root:	out_channels: 1024
+DEBUG:root:	cfg.MODEL.RETINANET.USE_C5: True
+DEBUG:root:	in_channels_p6p7 = in_channels_stage2 * 8 if cfg.MODEL.RETINANET.USE_C5 else out_channels
+DEBUG:root:	in_channels_p6p7 = 2048
+DEBUG:root:
+	fpn = fpn_module.FPN(
+DEBUG:root:
+			in_channels_list = [0, 512, 1024, 2048],
+DEBUG:root:
+			out_channels = 1024, 
+DEBUG:root:
+			conv_block=conv_with_kaiming_uniform( cfg.MODEL.FPN.USE_GN =False, cfg.MODEL.FPN.USE_RELU =False ),
+DEBUG:root:
+			top_blocks=fpn_module.LastLevelP6P7(in_channels_p6p7=2048, out_channels=1024,)
+DEBUG:root:
+		conv_with_kaiming_uniform(use_gn=False, use_relut=False) ======== BEGIN
+DEBUG:root:			return make_conv
+DEBUG:root:		tconv_with_kaiming_uniform(use_gn=False, use_relut=False) ======== END
+
+DEBUG:root:
+
+		LastLevelP6P7.__init__(self, in_channels=2048, out_channels=1024) ====== BEGIN
+DEBUG:root:			super(LastLevelP6P7, self).__init__()
+DEBUG:root:			self.p6 = nn.Conv2d(in_channels=2048, out_channels=1024, 3, 2, 1)
+DEBUG:root:			self.p7 = nn.Conv2d(out_channels=1024, out_channels=1024, 3, 2, 1)
+DEBUG:root:			for module in [self.p6, self.p7]:
+DEBUG:root:				module=Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+DEBUG:root:				nn.init.kaiming_uniform_(module.weight=module.weight, a=1)
+DEBUG:root:				nn.init.constant_(module.bias=module.bias, 0)
+DEBUG:root:				module=Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+DEBUG:root:				nn.init.kaiming_uniform_(module.weight=module.weight, a=1)
+DEBUG:root:				nn.init.constant_(module.bias=module.bias, 0)
+DEBUG:root:			self.use_p5 : False
+DEBUG:root:
+		LastLevelP6P7.__init__(self, in_channels=2048, out_channels=1024) ====== END
+
+
+DEBUG:root:
+
+=========================================== FPN.__init__ begin
+DEBUG:root:	======constructor params
+DEBUG:root:		in_channels_list: [0, 512, 1024, 2048]
+DEBUG:root:		out_channels: 1024
+DEBUG:root:		conv_block: <function conv_with_kaiming_uniform.<locals>.make_conv at 0x7f3d1ffcda60>
 DEBUG:root:		top_blocks: LastLevelP6P7(
   (p6): Conv2d(2048, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
   (p7): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
@@ -856,7 +1986,7 @@ DEBUG:root:build_resnet_fpn_p3p7_backbone(cfg) ====== END
 
 DEBUG:root:==== rpn build ==== 
 DEBUG:root:self.backbone.out_channels: 1024
-DEBUG:root:build_rpn : <function build_rpn at 0x7f5152ea6488>
+DEBUG:root:build_rpn : <function build_rpn at 0x7f3d47f5d488>
 DEBUG:root:self.rpn = build_rpn(cfg, self.backbone.out_channels)
 DEBUG:root:
 
@@ -1983,9 +3113,9 @@ DEBUG:root:
 		transforms.py Compose class __call__  ====== BEGIN
 DEBUG:root:
 		for t in self.transforms:
-DEBUG:root:			image = <maskrcnn_benchmark.data.transforms.transforms.Resize object at 0x7f51144a1080>(image)
-DEBUG:root:			image = <maskrcnn_benchmark.data.transforms.transforms.ToTensor object at 0x7f51144a1128>(image)
-DEBUG:root:			image = <maskrcnn_benchmark.data.transforms.transforms.Normalize object at 0x7f51144a10b8>(image)
+DEBUG:root:			image = <maskrcnn_benchmark.data.transforms.transforms.Resize object at 0x7f3d20438080>(image)
+DEBUG:root:			image = <maskrcnn_benchmark.data.transforms.transforms.ToTensor object at 0x7f3d20438128>(image)
+DEBUG:root:			image = <maskrcnn_benchmark.data.transforms.transforms.Normalize object at 0x7f3d204380b8>(image)
 DEBUG:root:
 		return image
 DEBUG:root:		transforms.py Compose class __call__  ====== END

@@ -8,11 +8,11 @@ import torchvision
 from torchvision.transforms import functional as F
 
 # added by kimkk for model visualization in tensorboard
-from torch.utils.tensorboard import SummaryWriter
+#from torch.utils.tensorboard import SummaryWriter
 import torchvision
 
 # default `log_dir` is "runs"
-writer = SummaryWriter('runs/lomin_detect')
+# writer = SummaryWriter('runs/lomin_detect')
 
 from maskrcnn_benchmark.structures.bounding_box import BoxList
 

@@ -1595,10 +1595,10 @@ layer {
   top: "backbone_body_layer4_2_eltwise"
 }
 layer {
-  name: "backbone_fpn_inner4"
+  name: "backbone_fpn_fpn_inner4"
   type: "Convolution"
   bottom: "backbone_body_layer4_2_eltwise"
-  top: "backbone_fpn_inner4"
+  top: "backbone_fpn_fpn_inner4"
   convolution_param {
     num_output: 1024
     kernel_size: 1
@@ -1606,10 +1606,10 @@ layer {
   }
 }
 layer {
-  name: "backbone_fpn_layer4"
+  name: "backbone_fpn_fpn_layer4"
   type: "Convolution"
-  bottom: "backbone_fpn_inner4"
-  top: "backbone_fpn_layer4"
+  bottom: "backbone_fpn_fpn_inner4"
+  top: "backbone_fpn_fpn_layer4"
   convolution_param {
     num_output: 1024
     pad: 1
@@ -1618,10 +1618,10 @@ layer {
   }
 }
 layer {
-  name: "backbone_fpn_inner3_upsample"
+  name: "backbone_fpn_fpn_inner3_upsample"
   type: "Deconvolution"
-  bottom: "backbone_fpn_inner4"
-  top: "backbone_fpn_inner3_upsample"
+  bottom: "backbone_fpn_fpn_inner4"
+  top: "backbone_fpn_fpn_inner3_upsample"
   convolution_param {
     num_output: 1024
     bias_term: false
@@ -1634,10 +1634,10 @@ layer {
   }
 }
 layer {
-  name: "backbone_fpn_inner3_lateral"
+  name: "backbone_fpn_fpn_inner3_lateral"
   type: "Convolution"
   bottom: "backbone_body_layer3_5_eltwise"
-  top: "backbone_fpn_inner3_lateral"
+  top: "backbone_fpn_fpn_inner3_lateral"
   convolution_param {
     num_output: 1024
     kernel_size: 1
@@ -1645,17 +1645,17 @@ layer {
   }
 }
 layer {
-  name: "backbone_fpn_inner3_lateral_sum"
+  name: "backbone_fpn_fpn_inner3_lateral_sum"
   type: "Eltwise"
-  bottom: "backbone_fpn_inner3_lateral"
-  bottom: "backbone_fpn_inner3_upsample"
-  top: "backbone_fpn_inner3_lateral_sum"
+  bottom: "backbone_fpn_fpn_inner3_lateral"
+  bottom: "backbone_fpn_fpn_inner3_upsample"
+  top: "backbone_fpn_fpn_inner3_lateral_sum"
 }
 layer {
-  name: "backbone_fpn_layer3"
+  name: "backbone_fpn_fpn_layer3"
   type: "Convolution"
-  bottom: "backbone_fpn_inner3_lateral_sum"
-  top: "backbone_fpn_layer3"
+  bottom: "backbone_fpn_fpn_inner3_lateral_sum"
+  top: "backbone_fpn_fpn_layer3"
   convolution_param {
     num_output: 1024
     pad: 1
@@ -1664,10 +1664,10 @@ layer {
   }
 }
 layer {
-  name: "backbone_fpn_inner2_upsample"
+  name: "backbone_fpn_fpn_inner2_upsample"
   type: "Deconvolution"
-  bottom: "backbone_fpn_inner3_lateral_sum"
-  top: "backbone_fpn_inner2_upsample"
+  bottom: "backbone_fpn_fpn_inner3_lateral_sum"
+  top: "backbone_fpn_fpn_inner2_upsample"
   convolution_param {
     num_output: 1024
     bias_term: false
@@ -1680,10 +1680,10 @@ layer {
   }
 }
 layer {
-  name: "backbone_fpn_inner2_lateral"
+  name: "backbone_fpn_fpn_inner2_lateral"
   type: "Convolution"
   bottom: "backbone_body_layer2_3_eltwise"
-  top: "backbone_fpn_inner2_lateral"
+  top: "backbone_fpn_fpn_inner2_lateral"
   convolution_param {
     num_output: 1024
     kernel_size: 1
@@ -1691,17 +1691,17 @@ layer {
   }
 }
 layer {
-  name: "backbone_fpn_inner2_lateral_sum"
+  name: "backbone_fpn_fpn_inner2_lateral_sum"
   type: "Eltwise"
-  bottom: "backbone_fpn_inner2_lateral"
-  bottom: "backbone_fpn_inner2_upsample"
-  top: "backbone_fpn_inner2_lateral_sum"
+  bottom: "backbone_fpn_fpn_inner2_lateral"
+  bottom: "backbone_fpn_fpn_inner2_upsample"
+  top: "backbone_fpn_fpn_inner2_lateral_sum"
 }
 layer {
-  name: "backbone_fpn_layer2"
+  name: "backbone_fpn_fpn_layer2"
   type: "Convolution"
-  bottom: "backbone_fpn_inner2_lateral_sum"
-  top: "backbone_fpn_layer2"
+  bottom: "backbone_fpn_fpn_inner2_lateral_sum"
+  top: "backbone_fpn_fpn_layer2"
   convolution_param {
     num_output: 1024
     pad: 1
@@ -1742,7 +1742,7 @@ layer {
 layer {
   name: "rpn_head_cls_tower_p2_0"
   type: "Convolution"
-  bottom: "backbone_fpn_layer2"
+  bottom: "backbone_fpn_fpn_layer2"
   top: "rpn_head_cls_tower_p2_0"
   convolution_param {
     num_output: 1024
@@ -1831,7 +1831,7 @@ layer {
 layer {
   name: "rpn_head_bbox_tower_p2_0"
   type: "Convolution"
-  bottom: "backbone_fpn_layer2"
+  bottom: "backbone_fpn_fpn_layer2"
   top: "rpn_head_bbox_tower_p2_0"
   convolution_param {
     num_output: 1024
@@ -1920,7 +1920,7 @@ layer {
 layer {
   name: "rpn_head_cls_tower_p3_0"
   type: "Convolution"
-  bottom: "backbone_fpn_layer3"
+  bottom: "backbone_fpn_fpn_layer3"
   top: "rpn_head_cls_tower_p3_0"
   convolution_param {
     num_output: 1024
@@ -2009,7 +2009,7 @@ layer {
 layer {
   name: "rpn_head_bbox_tower_p3_0"
   type: "Convolution"
-  bottom: "backbone_fpn_layer3"
+  bottom: "backbone_fpn_fpn_layer3"
   top: "rpn_head_bbox_tower_p3_0"
   convolution_param {
     num_output: 1024
@@ -2098,7 +2098,7 @@ layer {
 layer {
   name: "rpn_head_cls_tower_p4_0"
   type: "Convolution"
-  bottom: "backbone_fpn_layer4"
+  bottom: "backbone_fpn_fpn_layer4"
   top: "rpn_head_cls_tower_p4_0"
   convolution_param {
     num_output: 1024
@@ -2187,7 +2187,7 @@ layer {
 layer {
   name: "rpn_head_bbox_tower_p4_0"
   type: "Convolution"
-  bottom: "backbone_fpn_layer4"
+  bottom: "backbone_fpn_fpn_layer4"
   top: "rpn_head_bbox_tower_p4_0"
   convolution_param {
     num_output: 1024

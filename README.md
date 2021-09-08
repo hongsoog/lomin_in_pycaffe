@@ -20,7 +20,7 @@ repository for keeping source codes for FAIR Mask RCNN conversion to Caffe
   
 # Saving and Loading learnable parameters between PyTorch and Caffe
 
-Each learnable parameter is saved into separated numpy file with file naming convention used in caffe Detection Model V2
+Each learnable parameter is saved into separated numpy file at `./npy_save` folder with file naming convention used in caffe Detection Model V2
   * refer to [./detection_v2_prototxt](https://github.com/hongsoog/lomin_in_pycaffe/blob/master/detection_v2.prototxt)
 
 > In pytorch, model and submodel and layer name is concatenated with dot. ex.) model.backbone.body.stem.conv1

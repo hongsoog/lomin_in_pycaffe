@@ -5,6 +5,7 @@ from torch import nn
 
 # for model debugging log
 import logging
+import  numpy as np
 from model_log import  logger
 
 class FPN(nn.Module):
@@ -145,7 +146,7 @@ class FPN(nn.Module):
 
         if logger.level == logging.DEBUG:
             logger.debug(f"\n\nFPN.forward(self,x) ====== BEGIN")
-            logger.debug(f"\t======forward param: x  = [C2, C3, C4, C5] ")
+            logger.debug(f"\t======forward param: x  = [C1, C2, C3, C4] ")
         # first, calculate the FPN result of the last layer (lowest resolution) feature map.
 
         if logger.level == logging.DEBUG:
@@ -156,10 +157,15 @@ class FPN(nn.Module):
 
         # last_inner = fpn_inner4(C4)
         last_inner = getattr(self, self.inner_blocks[-1])(x[-1])
+
         if logger.level == logging.DEBUG:
             logger.debug(f"\n\tlast_inner = {self.inner_blocks[-1]}(C4)")
             logger.debug(f"\t\tself.innerblocks[-1] = {getattr(self, self.inner_blocks[-1])}")
             logger.debug(f"\t\tlast_inner.shape = {last_inner.shape}\n")
+            file_path =f"./npy_save/{self.inner_blocks[-1]}_output"
+            arr = last_inner.cpu().numpy()
+            np.save(file_path, arr)
+            logger.debug(f"\t{self.inner_blocks[-1]}' output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
         # create an empty result list
         results = []
@@ -176,6 +182,11 @@ class FPN(nn.Module):
             logger.debug(f"\n\tresults.append({self.layer_blocks[-1]}(last_inner))")
             logger.debug(f"\t\tself.layer_blocks[-1]: {getattr(self, self.layer_blocks[-1])}")
             logger.debug(f"\t\tresults[0].shape: {results[0].shape}\n")
+
+            file_path =f"./npy_save/{self.layer_blocks[-1]}_output"
+            arr = results[0].cpu().numpy()
+            np.save(file_path, arr)
+            logger.debug(f"\t{self.layer_blocks[-1]} output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
         # [:-1] get the first three items,
         # [::-1] represents slice from beginning to end, the step size is -1, the effect is the list inversion
@@ -207,19 +218,33 @@ class FPN(nn.Module):
             # where scale=2, so it is zoomed in
             eltwise_suffix = inner_block[-1]
 
+            #---------------
+            # 1) Updample
+            #---------------
+            # TODO use size instead of scale to make it robust to different sizes
+            # inner_top_down = F.upsample(last_inner, size=inner_lateral.shape[-2:],
+            # mode='bilinear', align_corners=False)
+            inner_top_down = F.interpolate(last_inner, scale_factor=2, mode="nearest")
             if logger.level == logging.DEBUG:
                 logger.debug(f"\t\t--------------------------------------------------")
                 logger.debug(f"\t\t{it_num}.1 Upsample : replace with Decovolution in caffe")
                 logger.debug(f"\t\tlayer name in caffe: {inner_block}_upsample = Deconvolution(last_inner)")
                 logger.debug(f"\t\t--------------------------------------------------")
-                logger.debug(f"\t\tinner_top_down = interpolate(last_inner, scale_factor=2, mode='nearest')\n")
-            # Updample
-            inner_top_down = F.interpolate(last_inner, scale_factor=2, mode="nearest")
-            if logger.level == logging.DEBUG:
+                logger.debug(f"\t\tinner_top_down = F.interpolate(last_inner, scale_factor=2, mode='nearest'")
                 logger.debug(f"\t\tlast_inner.shape: {last_inner.shape}")
                 logger.debug(f"\t\tinner_top_down.shape : {inner_top_down.shape}")
                 logger.debug(f"\t\t--------------------------------------------------\n")
 
+                file_path = f"./npy_save/inner_top_down_for{inner_block}"
+                arr = inner_top_down.cpu().numpy()
+                np.save(file_path, arr)
+                logger.debug(f"\t\tinner_top_down of shape {arr.shape} saved into {file_path}.npy\n\n")
+
+
+
+            #---------------
+            # 2) inner_block
+            #---------------
             # get the calculation result of inner_block
             inner_lateral = getattr(self, inner_block)(feature)
 
@@ -233,10 +258,15 @@ class FPN(nn.Module):
                 logger.debug(f"\t\t\toutput: inner_lateral.shape: {inner_lateral.shape}\n")
                 logger.debug(f"\t\t--------------------------------------------------\n")
 
-            # TODO use size instead of scale to make it robust to different sizes
-            # inner_top_down = F.upsample(last_inner, size=inner_lateral.shape[-2:],
-            # mode='bilinear', align_corners=False)
+                file_path = f"./npy_save/{inner_block}_output"
+                arr = inner_lateral.cpu().numpy()
+                np.save(file_path, arr)
+                logger.debug(f"\t\t{inner_block} output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
+
+            #----------------------------------------------------
+            # 3) superimpose inner_block output with top_down
+            #----------------------------------------------------
             # Superimpose the two as the output of the current pyramid level and
             # use it as an input to the next pyramid level
             last_inner = inner_lateral + inner_top_down
@@ -252,6 +282,14 @@ class FPN(nn.Module):
                 logger.debug(f"\t\t\tlast_inner.shape : {last_inner.shape}")
                 logger.debug(f"\t\t--------------------------------------------------\n")
 
+                file_path = f"./npy_save/{inner_block}_ouptut_plus_inner_topdown"
+                arr = last_inner.cpu().numpy()
+                np.save(file_path, arr)
+                logger.debug(f"\t\tsuperimposing result of {inner_block} output plus inner topdown of shape {arr.shape} saved into {file_path}.npy\n\n")
+
+            #----------------------------------------------------
+            # 4) prepend result of layer_block on superimposed of inner_block output with top_down
+            #----------------------------------------------------
             # Add the current pyramid level output to the result list,
             # Note that use layer_block to perform convolution calculations at the same time,
             # in order to make the highest resolution first, we need to insert the current
@@ -266,6 +304,11 @@ class FPN(nn.Module):
                 logger.debug(f"\t\t\tlayer_block: {layer_block} ==> {getattr(self, layer_block)}")
                 logger.debug(f"\t\t\tinput: last_inner.shape = {last_inner.shape}")
                 logger.debug(f"\t\t--------------------------------------------------\n")
+
+                file_path = f"./npy_save/{layer_block}_ouptut"
+                arr = results[0].cpu().numpy()
+                np.save(file_path, arr)
+                logger.debug(f"\t\t{layer_block} output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
                 logger.debug(f"\t\t--------------------------------------------------")
                 logger.debug(f"\t\tresults after iteration {it_num}")
@@ -284,14 +327,37 @@ class FPN(nn.Module):
             # LastLevelP6P7: generate extra layers, P6 and P7 in Retinanet
             if logger.level == logging.DEBUG:
                 logger.debug(f"\n\tif isinstance(self.top_blocks, LastLevelP6P7):")
-                logger.debug(f"\t\tlast_result = self.top_blocks(x[-1], results[-1])")
+                logger.debug(f"\t\t\tself.top_blocks: {self.top_blocks}")
+                logger.debug(f"\t\t\tlen(x): {len(x)}")
+                for idx, element in enumerate(x):
+                    logger.debug(f"\t\t\tx[{idx}].shape : {element.shape}")
+                logger.debug(f"\t\t\tx[-1].shape: {x[-1].shape}\n\n")
+
+                logger.debug(f"\t\t\tlen(results): {len(results)}")
+                for idx, element in enumerate(results):
+                    logger.debug(f"\t\t\tresults[{idx}].shape : {element.shape}")
+                logger.debug(f"\t\t\tresults[-1].shape: {results[-1].shape}\n\n")
+
+
             last_results = self.top_blocks(x[-1], results[-1])
+
+            if logger.level == logging.DEBUG:
+                logger.debug(f"\t\tlast_result = self.top_blocks(x[-1], results[-1])")
+                logger.debug(f"\t\t\tx[-1] => c5, results[-1])=> p5")
+                logger.debug(f"\t\t\tlen(last_result):{len(last_results)}")
+                for idx, element in enumerate(last_results):
+                    logger.debug(f"\t\t\tlast_results[{idx}].shape : {element.shape}")
 
             # append the newly calculated result to the list
             results.extend(last_results)
 
             if logger.level == logging.DEBUG:
                 logger.debug(f"\t\tresults.extend(last_results)")
+
+                logger.debug(f"\t\t\tlen(results): {len(results)}")
+                for idx, element in enumerate(results):
+                    logger.debug(f"\t\t\tresults[{idx}].shape : {element.shape}")
+                logger.debug(f"\n\n")
 
 
         elif isinstance(self.top_blocks, LastLevelMaxPool):
@@ -393,11 +459,22 @@ class LastLevelP6P7(nn.Module):
             logger.debug(f"\t\t\t\tself.p6: {self.p6}")
             logger.debug(f"\t\t\t\tp6.shape: {p6.shape}\n")
 
+            file_path = f"./npy_save/P6"
+            arr = p6.cpu().numpy()
+            np.save(file_path, arr)
+            logger.debug(f"\t\tLastLevelP6P7::forward() self.p6 ==> {self.p6} output of shape {arr.shape} saved into {file_path}.npy\n\n")
+
         p7 = self.p7(F.relu(p6))
         if logger.level == logging.DEBUG:
             logger.debug(f"\t\t\tp7 = self.p7(F.relu(p6))")
             logger.debug(f"\t\t\t\tself.p7: {self.p7}")
             logger.debug(f"\t\t\t\tp7.shape: {p7.shape}\n")
+
+            file_path = f"./npy_save/P7"
+            arr = p7.cpu().numpy()
+            np.save(file_path, arr)
+            logger.debug(f"\t\tLastLevelP6P7::forward() self.p7 {self.p7}(F.relu(p6)) output of shape {arr.shape} saved into {file_path}.npy\n\n")
+
             logger.debug(f"\t\t\treturns [p6, p7]")
             logger.debug(f"\t\tLastLevelP6P7.forward(self, c5, p5) ============= END\n\n")
         return [p6, p7]

@@ -1,4 +1,5 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
+import inspect
 import math
 
 import numpy as np
@@ -17,14 +18,45 @@ class BufferList(nn.Module):
     """
 
     def __init__(self, buffers=None):
+        logger.debug(f"BufferList.__init__(slef, buffers=None) {{ // BEGIN")
+        logger.debug(f"// defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"Params")
+        logger.debug(f"\tlen(buffers): {len(buffers)}")
+
         super(BufferList, self).__init__()
+        logger.debug(f"super(BufferList, self).__init__()")
+
         if buffers is not None:
+            logger.debug(f"if buffers is not None:")
             self.extend(buffers)
+            logger.debug(f"self.extend(buffers)")
+            logger.debug(f"\tlen(buffers): {len(buffers)}")
+
+        logger.debug(f"}} // END BufferList.__init__(slef, buffers=None)")
 
     def extend(self, buffers):
+        logger.debug(f"BufferList.extend(self, buffers) {{ // BEGIN")
+        logger.debug(f"// defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"Params")
+        logger.debug(f"\tlen(buffers): {len(buffers)}")
+
         offset = len(self)
+        logger.debug(f"\toffset = len(self)")
+        logger.debug(f"\t>> offset: {offset}")
+
+        logger.debug(f"for i, buffer in enumerate(buffers) {{ // BEGIN")
         for i, buffer in enumerate(buffers):
+
+            logger.debug(f"i: {i}")
+            logger.debug(f"buffer.shape: {buffer.shape}")
+
+            logger.debug(f"self.register_buffer(str(offset + i), buffer)")
             self.register_buffer(str(offset + i), buffer)
+
+        logger.debug(f"}} // END for i, buffer in enumerate(buffers)")
+        logger.debug(f"self: {self}")
+        logger.debug(f"return self")
+        logger.debug(f"}} // END BufferList.extend(self, buffers)")
         return self
 
     def __len__(self):
@@ -76,7 +108,8 @@ class AnchorGenerator(nn.Module):
         straddle_thresh:
         """
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t\t=================   AnchorGenerator.__init__(sizes, apect_ratios, anchor_strides, straddle_thresh) BEGIN")
+            logger.debug(f"\t\tAnchorGenerator.__init__(sizes, aspect_ratios, anchor_strides, straddle_thresh) {{ //BEGIN")
+            logger.debug(f"\t\t// defined in {inspect.getfile(inspect.currentframe())}")
             logger.debug(f"\t\t\tParams")
             logger.debug(f"\t\t\t\tsizes: {sizes}")
             logger.debug(f"\t\t\t\taspect_ratios: {aspect_ratios}")
@@ -98,7 +131,7 @@ class AnchorGenerator(nn.Module):
             ]
         else:
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\telse: i.e, len(anchor_strides) !=1 ")
+                logger.debug(f"\t\telse: i.e, len(anchor_strides) !=1")
                 logger.debug(f"\t\t\tanchor_stride = anchor_strides[0]")
                 logger.debug(f"\t\t\tlen(anchor_strides):{len(anchor_strides)}, len(size): {len(sizes)}")
 
@@ -106,9 +139,11 @@ class AnchorGenerator(nn.Module):
                 raise RuntimeError("FPN should have #anchor_strides == #sizes")
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\telse: i.e, len(anchor_strides) == len(sizes) ")
-                logger.debug(f"\t\tcell_anchors = [ generate_anchors( anchor_stride, size if isinstance(size, (tuple, list)) else (size,), aspect_ratios ).float()")
-                logger.debug(f"\t\t                 for anchor_stride, size in zip(anchor_strides, sizes)")
+                logger.debug(f"\t\telse: i.e, len(anchor_strides) == len(sizes)")
+                logger.debug(f"\t\tcell_anchors = [ generate_anchors( anchor_stride,")
+                logger.debug(f"\t\t                 size if isinstance(size, (tuple, list)) else (size,), ")
+                logger.debug(f"\t\t                 aspect_ratios).float()")
+                logger.debug(f"\t\tfor anchor_stride, size in zip(anchor_strides, sizes)")
 
             cell_anchors = [
                 generate_anchors(
@@ -147,26 +182,30 @@ class AnchorGenerator(nn.Module):
                              [-148., -328.,  211.,  391.]])]
         """
         self.strides = anchor_strides
+        logger.debug(f"\tself.strides = anchor_strides")
+        logger.debug(f"\t>> self.strides: {self.strides}")
+
+        logger.debug(f"\tself.cell_anchors = BufferList(cell_anchors) // CALL")
         self.cell_anchors = BufferList(cell_anchors)
+        logger.debug(f"\tself.cell_anchors = BufferList(cell_anchors) // RETURNED")
+        logger.debug(f"\t>> self.cell_anchors: {self.cell_anchors}")
+
         self.straddle_thresh = straddle_thresh
+        logger.debug(f"\tself.straddle_thresh = straddle_thresh")
+        logger.debug(f"\t>> self.straddle_thresh: {self.straddle_thresh}")
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\tself.strides: {self.strides}")
-            logger.debug(f"\tself.cel_anchors: {self.cell_anchors}")
-            logger.debug(f"\tself.straddle_thresh: {self.straddle_thresh}")
-
-            logger.debug(f"=================   AnchorGenerator.__init__(sizes, apect_ratios, anchor_strides, straddle_thresh) END")
+        logger.debug(f"\t\t}} // END AnchorGenerator.__init__(sizes, aspect_ratios, anchor_strides, straddle_thresh)")
 
     # AnchorGenerator:num_anchors_per_location() method
     def num_anchors_per_location(self):
         if logger.level == logging.DEBUG:
-            logger.debug(f"=================   AnchorGenerator.num_anchors_per_location() BEGIN")
+            logger.debug(f"AnchorGenerator.num_anchors_per_location() {{ //BEGIN")
 
         import pdb; pdb.set_trace()
 
         if logger.level == logging.DEBUG:
-            logger.debut(f"return [len(cell_anchors) for cell_anchors in self.cell_anchors]")
-            logger.debug(f"=================   AnchorGenerator.num_anchors_per_location() END")
+            logger.debut(f"\t\t\treturn [len(cell_anchors) for cell_anchors in self.cell_anchors]")
+            logger.debug(f"\t\t}} // END AnchorGenerator.num_anchors_per_location()\n")
 
         return [len(cell_anchors) for cell_anchors in self.cell_anchors]
 
@@ -174,9 +213,9 @@ class AnchorGenerator(nn.Module):
     # AnchorGenerator:grid_sizes() method
     def grid_anchors(self, grid_sizes):
         if logger.level == logging.DEBUG:
-            logger.debug(f"=================   AnchorGenerator.grid_anchors(grid_sizes) BEGIN")
-            logger.debug(f"\tParam:")
-            logger.debug(f"\t\tgrid_sizes: {grid_sizes}")
+            logger.debug(f"\t\tAnchorGenerator.grid_anchors(grid_sizes) {{ // BEGIN")
+            logger.debug(f"\t\t\tParam:")
+            logger.debug(f"\t\t\tgrid_sizes: {grid_sizes}")
 
         anchors = []
         for size, stride, base_anchors in zip(
@@ -201,12 +240,13 @@ class AnchorGenerator(nn.Module):
 
         if logger.level == logging.DEBUG:
             logger.debug(f"return anchors")
-            logger.debug(f"=================   AnchorGenerator.grid_anchors(grid_sizes) END")
+            logger.debug(f"\t\t}} // END AnchorGenerator.grid_anchors(grid_sizes)\n")
         return anchors
 
     def add_visibility_to(self, boxlist):
         if logger.level == logging.DEBUG:
-            logger.debug(f"=================   AnchorGenerator.add_visibitity_to(boxlist) BEGIN")
+            logger.debug(f"AnchorGenerator.add_visibitity_to(boxlist) {{ // BEGIN")
+            logger.debug(f"// defined in {inspect.getfile(inspect.currentframe())}")
 
         image_width, image_height = boxlist.size
         anchors = boxlist.bbox
@@ -223,20 +263,21 @@ class AnchorGenerator(nn.Module):
         boxlist.add_field("visibility", inds_inside)
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"=================   AnchorGenerator.add_visibitity_to(boxlist) END")
+            logger.debug(f"\t\t}} // END AnchorGenerator.add_visibitity_to(boxlist)\n")
 
     def forward(self, image_list, feature_maps):
         if logger.level == logging.DEBUG:
-            logger.debug(f"=================   AnchorGenerator.forward(image_list, feature_maps) BEGIN")
-            logger.debug(f"\tParams:")
-            logger.debug(f"\t\timage_list:")
-            logger.debug(f"\t\t\tlen(image_list.image_sizes): {len(image_list.image_sizes)}")
-            logger.debug(f"\t\t\timage_list.image_sizes[0]: {image_list.image_sizes[0]}")
-            logger.debug(f"\t\t\tlen(image_list.tensors): {len(image_list.tensors)}")
-            logger.debug(f"\t\t\timage_list.tensors[0].shape: {image_list.tensors[0].shape}")
-            logger.debug(f"\t\tfeature_maps:")
+            logger.debug(f"\n\tAnchorGenerator.forward(image_list, feature_maps) {{ //BEGIN")
+            logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}")
+            logger.debug(f"\t\tParams:")
+            logger.debug(f"\t\t\timage_list:")
+            logger.debug(f"\t\t\t\tlen(image_list.image_sizes): {len(image_list.image_sizes)}")
+            logger.debug(f"\t\t\t\timage_list.image_sizes[0]: {image_list.image_sizes[0]}")
+            logger.debug(f"\t\t\t\tlen(image_list.tensors): {len(image_list.tensors)}")
+            logger.debug(f"\t\t\t\timage_list.tensors[0].shape: {image_list.tensors[0].shape}")
+            logger.debug(f"\t\t\tfeature_maps:")
             for idx, f in enumerate(feature_maps):
-                logger.debug(f"\t\t\tfeature_maps[{idx}].shape: {f.shape}")
+                logger.debug(f"\t\t\t\tfeature_maps[{idx}].shape: {f.shape}")
 
             logger.debug(f"\ngrid_sizes = [feature_map.shape[-2:] for feature_map in feature_maps]")
 
@@ -254,21 +295,25 @@ class AnchorGenerator(nn.Module):
         anchors = []
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"for i, (image_height, image_width) in enumerate(image_list.image_sizes):\n")
+            logger.debug(f"for i, (image_height, image_width) in enumerate(image_list.image_sizes) {{\n")
 
         for i, (image_height, image_width) in enumerate(image_list.image_sizes):
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\tanchors_in_image = []\n")
+                logger.debug(f"\t\tanchors_in_image = []\n")
 
             anchors_in_image = []
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\tfor anchors_per_feature_map in anchors_over_all_feature_maps:\n")
+                logger.debug(f"\t\tfor anchors_per_feature_map in anchors_over_all_feature_maps {{\n")
 
             for anchors_per_feature_map in anchors_over_all_feature_maps:
 
                 if logger.level == logging.DEBUG:
+                    logger.debug(f'\t\t========================')
+                    logger.debug(f'\t\tanchors_per_feature_map.shape: {anchors_per_feature_map.shape}')
+                    logger.debug(f'\t\t========================')
+
                     logger.debug(f'\t\tboxlist = BoxList( anchors_per_feature_map, (image_width, image_height), mode="xyxy" )')
 
                 boxlist = BoxList(
@@ -288,15 +333,20 @@ class AnchorGenerator(nn.Module):
                 anchors_in_image.append(boxlist)
 
             if logger.level == logging.DEBUG:
+                logger.debug(f"\t\t}} // END for anchors_per_feature_map in anchors_over_all_feature_maps\n")
+
+            if logger.level == logging.DEBUG:
                 logger.debug(f"\t\tanchors_in_image:\n\t\t\t{anchors_in_image}\n")
                 logger.debug(f"\t\tanchors.append(anchors_in_image)\n")
 
             anchors.append(anchors_in_image)
+        if logger.level == logging.DEBUG:
+            logger.debug(f"}} // END for i, (image_height, image_width) in enumerate(image_list.image_sizes)\n")
 
         if logger.level == logging.DEBUG:
             logger.debug(f"\t\tanchors:\n\t\t\t{anchors}\n")
             logger.debug(f"return anchors")
-            logger.debug(f"=================   AnchorGenerator.forward(image_list, feature_maps) END")
+            logger.debug(f"\t}} // END AnchorGenerator.forward(image_list, feature_maps)")
         return anchors
 
 
@@ -309,26 +359,28 @@ def make_anchor_generator(config):
     straddle_thresh = config.MODEL.RPN.STRADDLE_THRESH
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"=================   make_anchor_generator(config) BEGIN")
-        logger.debug(f"anchor_sizes: {anchor_sizes}")
-        logger.debug(f"aspect_ratios: {aspect_ratios}")
-        logger.debug(f"anchor_stride: {anchor_stride}")
-        logger.debug(f"straddle_thresh: {straddle_thresh}")
-        logger.debug(f"config.MODEL.RPN_USE_FPN: {config.MODEL.RPN.USE_FPN}")
+        logger.debug(f"\n\n\tmake_anchor_generator(config) {{ // BEGIN")
+        logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"\t\tanchor_sizes: {anchor_sizes}")
+        logger.debug(f"\t\taspect_ratios: {aspect_ratios}")
+        logger.debug(f"\t\tanchor_stride: {anchor_stride}")
+        logger.debug(f"\t\tstraddle_thresh: {straddle_thresh}")
+        logger.debug(f"\t\tconfig.MODEL.RPN_USE_FPN: {config.MODEL.RPN.USE_FPN}")
 
     if config.MODEL.RPN.USE_FPN:
-        assert len(anchor_stride) == len(
-            anchor_sizes
-        ), "FPN should have len(ANCHOR_STRIDE) == len(ANCHOR_SIZES)"
+        assert len(anchor_stride) == len( anchor_sizes ), "FPN should have len(ANCHOR_STRIDE) == len(ANCHOR_SIZES)"
+
     else:
         assert len(anchor_stride) == 1, "Non-FPN should have a single ANCHOR_STRIDE"
-    anchor_generator = AnchorGenerator(
-        anchor_sizes, aspect_ratios, anchor_stride, straddle_thresh
-    )
+
+        anchor_generator = AnchorGenerator( anchor_sizes, aspect_ratios, anchor_stride, straddle_thresh )
+        if logger.level == logging.DEBUG:
+            logger.debug(f"\t\tanchor_generator = AnchorGenerator(anchor_sizes, aspect_ratios, anchor_stride, straddle_thresh)")
+            logger.debug(f"\t\tanchor_generator: {anchor_generator}")
 
     if logger.level == logging.DEBUG:
         logger.debug(f"return anchor_generator")
-        logger.debug(f"=================   make_anchor_generator(config) END")
+        logger.debug(f"\t}} //make_anchor_generator(config) END\n")
 
     return anchor_generator
 
@@ -342,7 +394,8 @@ def make_anchor_generator_retinanet(config):
     scales_per_octave = config.MODEL.RETINANET.SCALES_PER_OCTAVE
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"\t\t=================   make_anchor_generator_retinanet(config) BEGIN")
+        logger.debug(f"\n\t\tmake_anchor_generator_retinanet(config) {{ // BEGIN")
+        logger.debug(f"// defined in {inspect.getfile(inspect.currentframe())}")
         logger.debug(f"\t\tconfig params")
         logger.debug(f"\t\t\tanchor_sizes: {anchor_sizes}")
         logger.debug(f"\t\t\taspect_ratios: {aspect_ratios}")
@@ -359,42 +412,52 @@ def make_anchor_generator_retinanet(config):
     new_anchor_sizes = []
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"\t\tfor size in anchor_sizes:")
+        logger.debug(f"\n\t\tfor size in anchor_sizes {{")
 
     for size in anchor_sizes:  # loop over anchor_sizes
 
         if logger.level == logging.DEBUG:
+            logger.debug(f"\t\t\t-----------")
             logger.debug(f"\t\t\tsize: {size}")
+            logger.debug(f"\t\t\t-----------")
             logger.debug(f"\t\t\tper_layer_anchor_sizes = []")
 
         per_layer_anchor_sizes = []
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t\t\tfor scale_per_octave in range(scales_per_octave):")
+            logger.debug(f"\n\t\t\tfor scale_per_octave in range(scales_per_octave={scales_per_octave}) {{ // BEGIN")
 
         for scale_per_octave in range(scales_per_octave):  # loop over scales_per_octave
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\t\t\toctave : {octave}")
-                logger.debug(f"\t\t\t\toctave : {scale_per_octave}")
-                logger.debug(f"\t\t\t\toctave_scale = octave ** (scale_per_octave / float(scales_per_octave))")
+                logger.debug(f"\t\t\t\t------------------------")
+                logger.debug(f"\t\t\t\tscale_per_octave : {scale_per_octave}")
+                logger.debug(f"\t\t\t\t------------------------")
+                logger.debug(f"\t\t\t\t\toctave : {octave}\n")
+                logger.debug(f"\t\t\t\toctave_scale = octave ** (scale_per_octave / float(scales_per_octave))\n")
 
             octave_scale = octave ** (scale_per_octave / float(scales_per_octave))
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\t\t\toctave_scale: {octave_scale}")
-                logger.debug(f"\t\t\t\tsize: {size}")
+                logger.debug(f"\t\t\t\t\toctave_scale: {octave_scale}")
+                logger.debug(f"\t\t\t\t\tsize: {size}\n")
                 logger.debug(f"\t\t\t\tper_layer_anchor_sizes.append(octave_scale * size)")
 
             per_layer_anchor_sizes.append(octave_scale * size)
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\t\t\tper_layer_anchor_sizes: {per_layer_anchor_sizes}")
+                logger.debug(f"\t\t\t\t\tper_layer_anchor_sizes: {per_layer_anchor_sizes}\n")
+
+        if logger.level == logging.DEBUG:
+            logger.debug(f"\t\t\t}} // EDN for scale_per_octave in range(scales_per_octave)\n\n")
 
         new_anchor_sizes.append(tuple(per_layer_anchor_sizes))
 
         if logger.level == logging.DEBUG:
             logger.debug(f"\t\t\tnew_anchor_sizes.append(tuple(per_layer_anchor_sizes))")
             logger.debug(f"\t\t\tnew_anchor_sizes: {new_anchor_sizes}")
+
+    if logger.level == logging.DEBUG:
+        logger.debug(f"\t\t}} // END for size in anchor_sizes\n")
 
     if logger.level == logging.DEBUG:
         logger.debug(f"\t\tnew_anchor_sizes:\n\t\t\t{new_anchor_sizes}")
@@ -408,8 +471,9 @@ def make_anchor_generator_retinanet(config):
     )
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"\t\treturn anchor_generator")
-        logger.debug(f"\t\t=================   make_anchor_generator_retinanet(config) END\n")
+        logger.debug(f"\t\tanchor_generator = {anchor_generator}")
+        logger.debug(f"\n\t\treturn anchor_generator")
+        logger.debug(f"\t\t}} // make_anchor_generator_retinanet(config) END\n")
 
     return anchor_generator
 
@@ -469,11 +533,12 @@ def generate_anchors(
     stride=16, sizes=(32, 64, 128, 256, 512), aspect_ratios=(0.5, 1, 2)
 ):
     if logger.level == logging.DEBUG:
-        logger.debug(f"=================   generate_anchors(stride, sizes, apect_ratios) BEGIN")
-        logger.debug(f"\tParams:")
-        logger.debug(f"\t\tstride: {stride}")
-        logger.debug(f"\t\tsizes: {sizes}")
-        logger.debug(f"\t\taspect_ratios: {aspect_ratios}")
+        logger.debug(f"\t\t\t\tgenerate_anchors(stride, sizes, aspect_ratios) {{ //BEGIN")
+        logger.debug(f"\t\t\t//defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"\t\t\t\t\tParams:")
+        logger.debug(f"\t\t\t\t\t\tstride: {stride}")
+        logger.debug(f"\t\t\t\t\t\tsizes: {sizes}")
+        logger.debug(f"\t\t\t\t\t\taspect_ratios: {aspect_ratios}")
 
 
     """Generates a matrix of anchor boxes in (x1, y1, x2, y2) format. Anchors
@@ -481,10 +546,9 @@ def generate_anchors(
     sizes, and aspect ratios as given.
     """
     if logger.level == logging.DEBUG:
-        logger.debug(f"return _generate_anchors(stride, ")
-        logger.debug(f"     np.array(sizes, dtype=np.float) / stride,")
-        logger.debug(f"     np.array(aspect_ratios, dtype=np.float),")
-        logger.debug(f"=================   generate_anchors(stride, sizes, apect_ratios) END")
+        logger.debug(f"\t\t\t\t\treturn _generate_anchors(stride,")
+        logger.debug(f"\t\t\t\t\t\t     np.array(sizes, dtype=np.float) / stride,")
+        logger.debug(f"\t\t\t\t\t\t     np.array(aspect_ratios, dtype=np.float),)")
 
     return _generate_anchors(
         stride,
@@ -498,36 +562,84 @@ def _generate_anchors(base_size, scales, aspect_ratios):
     scales wrt a reference (0, 0, base_size - 1, base_size - 1) window.
     """
     if logger.level == logging.DEBUG:
-        logger.debug(f"=================   _generate_anchors(base_size, scales, apect_ratios) BEGIN")
+        logger.debug(f"\t\t\t\t\t\t_generate_anchors(base_size, scales, aspect_ratios) {{ //BEGIN")
+        logger.debug(f"\t\t\t\t\t\t// defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"\t\t\t\t\t\t\tParams:")
+        logger.debug(f"\t\t\t\t\t\t\t\tbase_size: {base_size}")
+        logger.debug(f"\t\t\t\t\t\t\t\tscales: {scales}")
+        logger.debug(f"\t\t\t\t\t\t\t\taspect_ratios: {aspect_ratios}")
+
+
+    if logger.level == logging.DEBUG:
+        logger.debug(f"anchor = np.array([1, 1, base_size, base_size], dtype=np.float) - 1")
 
     anchor = np.array([1, 1, base_size, base_size], dtype=np.float) - 1
+
+    if logger.level == logging.DEBUG:
+        logger.debug(f"anchor: {anchor}")
+        logger.debug(f"anchors = _ratio_enum(anchor, aspect_ratios)")
+
     anchors = _ratio_enum(anchor, aspect_ratios)
+
+    if logger.level == logging.DEBUG:
+        logger.debug(f"anchors: {anchors}")
+        logger.debug(f"anchors = np.vstack(")
+        logger.debug(f"[_scale_enum(anchors[i, :], scales) for i in range(anchors.shape[0])]")
+        logger.debug(f")")
+
     anchors = np.vstack(
         [_scale_enum(anchors[i, :], scales) for i in range(anchors.shape[0])]
     )
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"return torch.from_numpy(anchors)")
-        logger.debug(f"=================   _generate_anchors(base_size, scales, apect_ratios) END")
+        logger.debug(f"anchors: {anchors}")
+
+    if logger.level == logging.DEBUG:
+        logger.debug(f"\t\t\t\t\t\t\treturn torch.from_numpy(anchors)")
+        logger.debug(f"\t\t\t\t\t\t}} // END _generate_anchors(base_size, scales, apect_ratios) END")
+        logger.debug(f"\t\t\t\t\t}} // END generate_anchors(stride, sizes, aspect_ratios)")
 
     return torch.from_numpy(anchors)
 
-
 def _whctrs(anchor):
-    """Return width, height, x center, and y center for an anchor (window)."""
+    """Return width, height, x center, and y center for an anchor (window).
+         (a[0], a[1]) = (X1, Y1)
+             P1
+             X--------------------------+  ---
+             |<------------------------>|   |
+             |      w = a[2] - a[0]     |   |  h = a[3] - a[1]
+             |                          |   |
+             |                          |   |
+             |                          |   |
+             +--------------------------X  ---
+                                         P2
+                                         (a[2], a[3]) = (X2, Y2)
+
+    """
+
     if logger.level == logging.DEBUG:
-        logger.debug(f"=================   _whctrs(anchors) BEGIN")
-        logger.debug(f"\tParam:")
-        logger.debug(f"\t\tanchor: {anchor}")
+        logger.debug(f"\t\t\t\t_whctrs(anchors) {{ //BEGIN")
+        logger.debug(f"\t\t\t\t// defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"\t\t\t\t\tParam:")
+        logger.debug(f"\t\t\t\t\t\tanchor: {anchor}")
 
     w = anchor[2] - anchor[0] + 1
     h = anchor[3] - anchor[1] + 1
     x_ctr = anchor[0] + 0.5 * (w - 1)
     y_ctr = anchor[1] + 0.5 * (h - 1)
 
+    logger.debug(f"\t\t\t\t\t\tw = anchor[2] - anchor[0] + 1")
+    logger.debug(f"\t\t\t\t\t\tw: {w}")
+    logger.debug(f"\t\t\t\t\t\th = anchor[3] - anchor[1] + 1")
+    logger.debug(f"\t\t\t\t\t\th: {h}")
+    logger.debug(f"\t\t\t\t\t\tx_ctr = anchor[0] + 0.5 * (w - 1)")
+    logger.debug(f"\t\t\t\t\t\tx_ctr: {x_ctr}")
+    logger.debug(f"\t\t\t\t\t\ty_ctr = anchor[1] + 0.5 * (h - 1)")
+    logger.debug(f"\t\t\t\t\t\ty_ctr: {y_ctr}")
+
     if logger.level == logging.DEBUG:
-        logger.debug(f"return w, h, x_ctr, y_ctr")
-        logger.debug(f"=================   _whctrs(anchors) END")
+        logger.debug(f"\t\t\t\t\t\treturn w, h, x_ctr, y_ctr")
+        logger.debug(f"\t\t\t\t\t}} // END _whctrs(anchors)")
 
     return w, h, x_ctr, y_ctr
 
@@ -537,15 +649,34 @@ def _mkanchors(ws, hs, x_ctr, y_ctr):
     (x_ctr, y_ctr), output a set of anchors (windows).
     """
     if logger.level == logging.DEBUG:
-        logger.debug(f"=================   _mkanchors(ws, hs, x_ctr, y_ctr) BEGIN")
-        logger.debug(f"\tParam:")
-        logger.debug(f"\t\tws: {ws}")
-        logger.debug(f"\t\ths: {hs}")
-        logger.debug(f"\t\tx_ctr: {x_ctr}")
-        logger.debug(f"\t\ty_ctr: {y_ctr}")
+        logger.debug(f"\t\t\t_mkanchors(ws, hs, x_ctr, y_ctr) {{ // BEGIN")
+        logger.debug(f"\t\t\t// defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"\t\t\t\tParam:")
+        logger.debug(f"\t\t\t\t\tws: {ws}")
+        logger.debug(f"\t\t\t\t\ths: {hs}")
+        logger.debug(f"\t\t\t\t\tx_ctr: {x_ctr}")
+        logger.debug(f"\t\t\t\t\ty_ctr: {y_ctr}")
 
     ws = ws[:, np.newaxis]
+
+    if logger.level == logging.DEBUG:
+        logger.debug(f"\t\t\t\tws = ws[:, np.newaxis]")
+        logger.debug(f"\t\t\t\t\tws: {ws}")
+
     hs = hs[:, np.newaxis]
+
+    if logger.level == logging.DEBUG:
+        logger.debug(f"\t\t\t\ths = hs[:, np.newaxis]")
+        logger.debug(f"\t\t\t\t\ths: {hs}")
+        logger.debug(f"\t\t\t\tanchors = np.hstack(")
+        logger.debug(f"\t\t\t\t    (")
+        logger.debug(f"\t\t\t\t        x_ctr - 0.5 * (ws - 1),")
+        logger.debug(f"\t\t\t\t        y_ctr - 0.5 * (hs - 1),")
+        logger.debug(f"\t\t\t\t        x_ctr + 0.5 * (ws - 1),")
+        logger.debug(f"\t\t\t\t        y_ctr + 0.5 * (hs - 1),")
+        logger.debug(f"\t\t\t\t    )")
+        logger.debug(f"\t\t\t\t)")
+
     anchors = np.hstack(
         (
             x_ctr - 0.5 * (ws - 1),
@@ -556,9 +687,9 @@ def _mkanchors(ws, hs, x_ctr, y_ctr):
     )
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"anchors: {anchors}")
-        logger.debug(f"return anchors")
-        logger.debug(f"=================   _mkanchors(ws, hs, x_ctr, y_ctr) END")
+        logger.debug(f"\t\t\t\tanchors: {anchors}")
+        logger.debug(f"\t\t\t\treturn anchors")
+        logger.debug(f"\t\t\t}} // END _mkanchors(ws, hs, x_ctr, y_ctr)")
 
     return anchors
 
@@ -567,24 +698,40 @@ def _ratio_enum(anchor, ratios):
     """Enumerate a set of anchors for each aspect ratio wrt an anchor."""
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"=================   _ratio_enum(anchor, ratios) BEGIN")
-        logger.debug(f"\tParam:")
-        logger.debug(f"\t\tanchor: {anchor}")
-        logger.debug(f"\t\tratios: {ratios}")
+        logger.debug(f"\t\t\t\t_ratio_enum(anchor, ratios) {{ //BEGIN")
+        logger.debug(f"\t\t\t\t// defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"\t\t\t\t\tParam:")
+        logger.debug(f"\t\t\t\t\t\tanchor: {anchor}")
+        logger.debug(f"\t\t\t\t\t\tratios: {ratios}")
 
     w, h, x_ctr, y_ctr = _whctrs(anchor)
+    logger.debug(f"\t\t\t\t\tw, h, x_ctr, y_ctr = _whctrs(anchor)")
+    logger.debug(f"\t\t\t\t\tw: {w}, h: {h}, x_ctr: {x_ctr}, y_ctr: {y_ctr}")
 
     size = w * h
+    logger.debug(f"\t\t\t\t\tsize = w * h")
+    logger.debug(f"\t\t\t\t\tsize: {size}")
+
     size_ratios = size / ratios
+    logger.debug(f"\t\t\t\t\tsize_ratios = size / ratios")
+    logger.debug(f"\t\t\t\t\tsize_ratios: {size_ratios}")
+
+
     ws = np.round(np.sqrt(size_ratios))
+    logger.debug(f"\t\t\t\t\tws = np.round(np.sqrt(size_ratios))")
+    logger.debug(f"\t\t\t\t\tws: {ws}")
+
     hs = np.round(ws * ratios)
+    logger.debug(f"\t\t\t\t\ths = np.round(ws * ratios)")
+    logger.debug(f"\t\t\t\t\ths: {hs}")
 
     anchors = _mkanchors(ws, hs, x_ctr, y_ctr)
+    logger.debug(f"\t\t\t\t\tanchors = _mkanchors(ws, hs, x_ctr, y_ctr)")
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"anchors: {anchors}")
-        logger.debug(f"return anchors")
-        logger.debug(f"=================   _ratio_enum(anchor, ratios) END")
+        logger.debug(f"\t\t\t\t\tanchors: {anchors}")
+        logger.debug(f"\t\t\t\t\treturn anchors")
+        logger.debug(f"\t\t\t\t}} // END _ratio_enum(anchor, ratios)")
 
     return anchors
 
@@ -593,18 +740,30 @@ def _scale_enum(anchor, scales):
     """Enumerate a set of anchors for each scale wrt an anchor."""
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"=================   _scale_enum(anchor, scales) BEGIN")
-        logger.debug(f"\tParam:")
-        logger.debug(f"\t\tanchor: {anchor}")
-        logger.debug(f"\t\tscales: {scales}")
+        logger.debug(f"\t\t\t\t\t_scale_enum(anchor, scales) {{ //BEGIN")
+        logger.debug(f"\t\t\t\t\t// defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"\t\t\t\t\tParam:")
+        logger.debug(f"\t\t\t\t\t\tanchor: {anchor}")
+        logger.debug(f"\t\t\t\t\t\tscales: {scales}")
+
+    logger.debug(f"\t\t\t\t\tw, h, x_ctr, y_ctr = _whctrs(anchor)")
 
     w, h, x_ctr, y_ctr = _whctrs(anchor)
+    logger.debug(f"\t\t\t\t\tw: {w}, h: {h}, x_ctr: {x_ctr}, y_ctr: {y_ctr}")
+
+    logger.debug(f"\t\t\t\t\tws = w * scales")
     ws = w * scales
+    logger.debug(f"\t\t\t\t\tws: {ws}")
+
+    logger.debug(f"\t\t\t\t\ths = h * scales")
     hs = h * scales
+    logger.debug(f"\t\t\t\t\ths: {hs}")
+
+    logger.debug(f"\t\t\t\t\tanchors = _mkanchors(ws, hs, x_ctr, y_ctr)")
     anchors = _mkanchors(ws, hs, x_ctr, y_ctr)
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"anchors: {anchors}")
-        logger.debug(f"=================   _scale_enum(anchor, scales) END")
+        logger.debug(f"\t\t\t\t\tanchors: {anchors}")
+        logger.debug(f"\t\t\t\t}} // END _scale_enum(anchor, scales)")
 
     return anchors

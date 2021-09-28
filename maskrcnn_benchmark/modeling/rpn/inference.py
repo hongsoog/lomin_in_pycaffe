@@ -1,5 +1,6 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 import torch
+import inspect
 
 from maskrcnn_benchmark.modeling.box_coder import BoxCoder
 from maskrcnn_benchmark.structures.bounding_box import BoxList
@@ -32,7 +33,8 @@ class RPNPostProcessor(torch.nn.Module):
     ):
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"========== RPNPostProcessing.__init__() BEGIN")
+            logger.debug(f"RPNPostProcessing.__init__() {{ //BEGIN")
+            logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}")
 
         super(RPNPostProcessor, self).__init__()
         self.pre_nms_top_n = pre_nms_top_n
@@ -50,7 +52,7 @@ class RPNPostProcessor(torch.nn.Module):
         self.fpn_post_nms_per_batch = fpn_post_nms_per_batch
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"========== RPNPostProcessing.__init__() END")
+            logger.debug(f"}} // END RPNPostProcessing.__init__()")
 
     def add_gt_proposals(self, proposals, targets):
         """
@@ -59,7 +61,8 @@ class RPNPostProcessor(torch.nn.Module):
             targets: list[BoxList]
         """
         if logger.level == logging.DEBUG:
-            logger.debug(f"========== RPNPostProcessing.add_gt_proposals() BEGIN")
+            logger.debug(f"RPNPostProcessing.add_gt_proposals() {{ // BEGIN")
+            logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}")
 
         # Get the device we're operating on
         device = proposals[0].bbox.device
@@ -77,7 +80,7 @@ class RPNPostProcessor(torch.nn.Module):
         ]
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"========== RPNPostProcessing.add_gt_proposals() END")
+            logger.debug(f"}} // END RPNPostProcessing.add_gt_proposals()")
         return proposals
 
     def forward_for_single_feature_map(self, anchors, objectness, box_regression):
@@ -88,7 +91,8 @@ class RPNPostProcessor(torch.nn.Module):
             box_regression: tensor of size N, A * 4, H, W
         """
         if logger.level == logging.DEBUG:
-            logger.debug(f"========== RPNPostProcessing.forward_for_single_feature_map() BEGIN")
+            logger.debug(f"\n\t\tRPNPostProcessing.forward_for_single_feature_map() {{ \\ BEGIN")
+            logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}")
 
         device = objectness.device
         N, A, H, W = objectness.shape
@@ -132,7 +136,8 @@ class RPNPostProcessor(torch.nn.Module):
             result.append(boxlist)
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"========== RPNPostProcessing.forward_for_single_feature_map() END")
+            logger.debug(f"return result")
+            logger.debug(f"\n\t\t}} // END RPNPostProcessing.forward_for_single_feature_map()")
 
         return result
 
@@ -148,7 +153,12 @@ class RPNPostProcessor(torch.nn.Module):
                 applying box decoding and NMS
         """
         if logger.level == logging.DEBUG:
-            logger.debug(f"========== RPNPostProcessing.forward() BEGIN")
+            logger.debug(f"\t\tRPNPostProcessing.forward(self. anchors, objectness, box_regression, targets=None) {{ // BEGIN")
+            logger.debug(f"\t\tParams:")
+            logger.debug(f"\t\ttanchors: len(anchors) : {len(anchors)}")
+            logger.debug(f"\t\ttobjectness: len(objectness) : {len(objectness)}")
+            logger.debug(f"\t\ttbox_regression: type(box_regression) : {type(box_regression)}")
+            logger.debug(f"\t\tttarget: {targets}")
 
         sampled_boxes = []
         num_levels = len(objectness)
@@ -167,14 +177,15 @@ class RPNPostProcessor(torch.nn.Module):
             boxlists = self.add_gt_proposals(boxlists, targets)
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"========== RPNPostProcessing.forward() END")
+            logger.debug(f"return boxlists")
+            logger.debug(f"\t\t}} // END RPNPostProcessing.forward(self. anchors, objectness, box_regression, targets=None)")
 
         return boxlists
 
     def select_over_all_levels(self, boxlists):
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"========== RPNPostProcessing.fselect_over_all_levels() BEGIN")
+            logger.debug(f"\t\tRPNPostProcessing.select_over_all_levels() {{ // BEGIN")
 
         num_images = len(boxlists)
         # different behavior during training and during testing:
@@ -204,7 +215,7 @@ class RPNPostProcessor(torch.nn.Module):
                 boxlists[i] = boxlists[i][inds_sorted]
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"========== RPNPostProcessing.fselect_over_all_levels() BEGIN")
+            logger.debug(f"\t\t}} // END RPNPostProcessing.fselect_over_all_levels()")
 
         return boxlists
 
@@ -212,7 +223,9 @@ class RPNPostProcessor(torch.nn.Module):
 def make_rpn_postprocessor(config, rpn_box_coder):
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"========== make_rpn_postprocessor() BEGIN")
+        logger.debug(f"\t\tmake_rpn_postprocessor(config, rpn_box_coder) {{ //BEGIN")
+        logger.debug(f"\t\t\tParam:")
+        logger.debug(f"\t\t\t\trpn_box_coder: {rpn_box_coder}")
 
     fpn_post_nms_top_n = config.MODEL.RPN.FPN_POST_NMS_TOP_N_TEST
     pre_nms_top_n = config.MODEL.RPN.PRE_NMS_TOP_N_TEST
@@ -231,6 +244,8 @@ def make_rpn_postprocessor(config, rpn_box_coder):
     )
 
     if logger.level == logging.DEBUG:
-        logger.debug(f"========== make_rpn_postprocessor() END")
+        logger.debug(f"\t\t\treturn box_selector")
+        logger.debug(f"\t\t\tbox_selector: {box_selector}")
+        logger.debug(f"\t\t}} // END make_rpn_postprocessor()")
 
     return box_selector

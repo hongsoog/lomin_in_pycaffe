@@ -1,4 +1,5 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
+import inspect
 import torch
 import torch.nn.functional as F
 from torch import nn
@@ -32,15 +33,15 @@ class FPN(nn.Module):
                 and then the result will be expanded into a result list to return
         """
         if logger.level == logging.DEBUG:
-            logger.debug(f"\n\n=========================================== FPN.__init__ begin")
-            logger.debug(f"\t======constructor params")
-            logger.debug(f"\t\tin_channels_list: {in_channels_list}")
-            logger.debug(f"\t\tout_channels: {out_channels}")
+            logger.debug(f"\n\nFPN.__init__ {{ // BEGIN")
+            logger.debug(f"\t\tdefined in {inspect.getfile(inspect.currentframe())}")
+            logger.debug(f"\t\tParams")
+            logger.debug(f"\t\t\tin_channels_list: {in_channels_list}")
+            logger.debug(f"\t\t\tout_channels: {out_channels}")
             # conv_block: function conv_with_kaiming_unifor.make_cov
             # defined in maskrcnn_benchmark/modelling/make_layers.py
-            logger.debug(f"\t\tconv_block: {conv_block}")
-            logger.debug(f"\t\ttop_blocks: {top_blocks}")
-            logger.debug(f"\t======constructor params")
+            logger.debug(f"\t\t\tconv_block: {conv_block}")
+            logger.debug(f"\t\t\ttop_blocks: {top_blocks}")
 
             logger.debug("\tsuper(FPN, self).__init__()\n")
 
@@ -52,12 +53,14 @@ class FPN(nn.Module):
 
         # Assuming we are using ResNet-50-FPN and configuration,
         # the value of in_channels_list is: [0, 512, 1024, 2048]
-        logger.debug(f"\tfor idx, in_channels in enumerate(in_channels_list, 1):")
+        logger.debug(f"\tfor idx, in_channels in enumerate(in_channels_list, 1) {{")
         for idx, in_channels in enumerate(in_channels_list, 1):
 
             # note that index starts from 1
             if logger.level == logging.DEBUG:
-                logger.debug(f"\n\t\t==> iteration with idx:{idx}, in_channels:{in_channels}")
+                logger.debug(f"\n\t\t-----------------------------------------------------")
+                logger.debug(f"\n\t\titeration with idx:{idx}, in_channels:{in_channels}")
+                logger.debug(f"\n\t\t-----------------------------------------------------")
 
             # naming rule for inner block : "fpn_inner" with index as suffix
             # ex. fpn_inner1, fpn_inner2, fpn_inner3, fpn_inner4
@@ -115,6 +118,11 @@ class FPN(nn.Module):
 
             self.layer_blocks.append(layer_block)
 
+        if logger.level == logging.DEBUG:
+            logger.debug(f"\t}} // END for idx, in_channels in enumerate(in_channels_list, 1)")
+            logger.debug(f"\tself.top_blocks = top_blocks")
+
+
         # Use top_blocks as a member variable of the FPN class
         self.top_blocks = top_blocks
 
@@ -129,7 +137,7 @@ class FPN(nn.Module):
             logger.debug(f"\t\tself.fpn_layer3: {self.fpn_layer3}")
             logger.debug(f"\t\tself.fpn_layer4: {self.fpn_layer4}")
             logger.debug(f"\n\tself.top_blocks: {self.top_blocks}")
-            logger.debug(f"=========================================== FPN.__init__ end\n\n")
+            logger.debug(f"}} // END FPN.__init__\n\n")
 
     def forward(self, x):
         """
@@ -145,27 +153,35 @@ class FPN(nn.Module):
         """
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\n\nFPN.forward(self,x) ====== BEGIN")
-            logger.debug(f"\t======forward param: x  = [C1, C2, C3, C4] ")
+            logger.debug(f"\n\n\tFPN.forward(self,x) {{ // BEGIN")
+            logger.debug(f"\t\tParam: x  = [C2, C3, C4, C5] ")
         # first, calculate the FPN result of the last layer (lowest resolution) feature map.
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\tlen(x) = {len(x)}")
+            logger.debug(f"\t\t\tlen(x) = {len(x)}")
             for idx, element in enumerate(x):
-                logger.debug(f"\tC[{idx+1}].shape : {element.shape}")
-            logger.debug(f"\n\tx[-1].shape = {x[-1].shape}")
+                logger.debug(f"\t\t\tC[{idx+1}].shape : {element.shape}")
+            logger.debug(f"\n\t\t\tx[-1].shape = {x[-1].shape}")
 
+            logger.debug(f"\n\t\t\t===========================================================================")
+            logger.debug(f"\t\t\tFPN block info")
+            logger.debug(f"\t\t\tself.inner_blocks: {self.inner_blocks})")
+            logger.debug(f"\t\t\tself.layer_blocks: {self.layer_blocks})")
+            logger.debug(f"\t\t\t===========================================================================")
+
+        if logger.level == logging.DEBUG:
+            logger.debug("\n\tlast_inner = getattr(self, self.inner_blocks[-1])(x[-1])")
+            logger.debug(f"\t\tself.innerblocks[-1] = {getattr(self, self.inner_blocks[-1])}")
+            logger.debug(f"\t\tx[-1].shape = {x[-1].shape}")
         # last_inner = fpn_inner4(C4)
         last_inner = getattr(self, self.inner_blocks[-1])(x[-1])
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\n\tlast_inner = {self.inner_blocks[-1]}(C4)")
-            logger.debug(f"\t\tself.innerblocks[-1] = {getattr(self, self.inner_blocks[-1])}")
             logger.debug(f"\t\tlast_inner.shape = {last_inner.shape}\n")
             file_path =f"./npy_save/{self.inner_blocks[-1]}_output"
             arr = last_inner.cpu().numpy()
             np.save(file_path, arr)
-            logger.debug(f"\t{self.inner_blocks[-1]}' output of shape {arr.shape} saved into {file_path}.npy\n\n")
+            logger.debug(f"\t{self.inner_blocks[-1]} output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
         # create an empty result list
         results = []
@@ -178,6 +194,7 @@ class FPN(nn.Module):
         # results.append( fpn_layer4(last_inner)
         # == results.append( fpn_layer4(fpn_inner4(C4))
         results.append(getattr(self, self.layer_blocks[-1])(last_inner))
+
         if logger.level == logging.DEBUG:
             logger.debug(f"\n\tresults.append({self.layer_blocks[-1]}(last_inner))")
             logger.debug(f"\t\tself.layer_blocks[-1]: {getattr(self, self.layer_blocks[-1])}")
@@ -186,7 +203,7 @@ class FPN(nn.Module):
             file_path =f"./npy_save/{self.layer_blocks[-1]}_output"
             arr = results[0].cpu().numpy()
             np.save(file_path, arr)
-            logger.debug(f"\t{self.layer_blocks[-1]} output of shape {arr.shape} saved into {file_path}.npy\n\n")
+            logger.debug(f"\t\t{self.layer_blocks[-1]} output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
         # [:-1] get the first three items,
         # [::-1] represents slice from beginning to end, the step size is -1, the effect is the list inversion
@@ -344,7 +361,7 @@ class FPN(nn.Module):
             if logger.level == logging.DEBUG:
                 logger.debug(f"\t\tlast_result = self.top_blocks(x[-1], results[-1])")
                 logger.debug(f"\t\t\tx[-1] => c5, results[-1])=> p5")
-                logger.debug(f"\t\t\tlen(last_result):{len(last_results)}")
+                logger.debug(f"\t\t\tlen(last_results):{len(last_results)}")
                 for idx, element in enumerate(last_results):
                     logger.debug(f"\t\t\tlast_results[{idx}].shape : {element.shape}")
 
@@ -380,7 +397,7 @@ class FPN(nn.Module):
             logger.debug(f"\n\treturn tuple(results)")
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\n\nFPN.forward(self,x) ====== END")
+            logger.debug(f"\n\n\t}} // END FPN.forward(self,x)")
         # return as a tuple (read-only)
         return tuple(results)
 
@@ -388,8 +405,12 @@ class FPN(nn.Module):
 class LastLevelMaxPool(nn.Module):
     def forward(self, x):
         if logger.level == logging.DEBUG:
-            logger.debug(f"LastLevelMaxPool.forward")
-            logger.debug(f"return [F.max_pool2d(x, 1, 2, 0)]")
+            logger.debug(f"\n\tLastLevelMaxPool.forward {{ \\ BEGIN")
+            logger.debug(f"\n\t\tParam")
+            logger.debug(f"\n\t\t\tx: {x}")
+
+            logger.debug(f"\n\treturn [F.max_pool2d(x, 1, 2, 0)]")
+            logger.debug(f"\n\t}} // END LastLevelMaxPool.forward")
 
         return [F.max_pool2d(x, 1, 2, 0)]
 
@@ -400,81 +421,89 @@ class LastLevelP6P7(nn.Module):
     """
     def __init__(self, in_channels, out_channels):
         if logger.level == logging.DEBUG:
-            logger.debug(f"\n\n\t\tLastLevelP6P7.__init__(self, in_channels={in_channels}, out_channels={out_channels}) ====== BEGIN")
-            logger.debug(f"\t\t\tsuper(LastLevelP6P7, self).__init__()")
+            logger.debug(f"\n\n\t\t\tLastLevelP6P7.__init__(self, in_channels, out_channels) {{ //BEGIN")
+            logger.debug(f"\t\t\t\tParam:")
+            logger.debug(f"\t\t\t\t\tin_channels: {in_channels}")
+            logger.debug(f"\t\t\t\t\tout_channels: {out_channels}")
+
+            logger.debug(f"\t\t\t\tsuper(LastLevelP6P7, self).__init__()")
 
         super(LastLevelP6P7, self).__init__()
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t\t\tself.p6 = nn.Conv2d(in_channels={in_channels}, out_channels={out_channels}, 3, 2, 1)")
+            logger.debug(f"\t\t\t\tself.p6 = nn.Conv2d(in_channels={in_channels}, out_channels={out_channels}, 3, 2, 1)")
         self.p6 = nn.Conv2d(in_channels, out_channels, 3, 2, 1)
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t\t\tself.p7 = nn.Conv2d(out_channels={out_channels}, out_channels={out_channels}, 3, 2, 1)")
+            logger.debug(f"\t\t\t\tself.p7 = nn.Conv2d(out_channels={out_channels}, out_channels={out_channels}, 3, 2, 1)")
         self.p7 = nn.Conv2d(out_channels, out_channels, 3, 2, 1)
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t\t\tfor module in [self.p6, self.p7]:")
+            logger.debug(f"\t\t\t\tfor module in [self.p6, self.p7] {{")
 
         for module in [self.p6, self.p7]:
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\t\t\tmodule={module}")
-                logger.debug(f"\t\t\t\tnn.init.kaiming_uniform_(module.weight=module.weight, a=1)")
+                logger.debug(f"\t\t\t\t\tmodule={module}")
+                logger.debug(f"\t\t\t\t\tnn.init.kaiming_uniform_(module.weight=module.weight, a=1)")
             nn.init.kaiming_uniform_(module.weight, a=1)
 
             if logger.level == logging.DEBUG:
-                logger.debug("\t\t\t\tnn.init.constant_(module.bias=module.bias, 0)")
+                logger.debug("\t\t\t\t\tnn.init.constant_(module.bias=module.bias, 0)")
             nn.init.constant_(module.bias, 0)
+
+        if logger.level == logging.DEBUG:
+            logger.debug(f"\t\t\t\t}} // END for module in [self.p6, self.p7]")
 
         self.use_P5 = in_channels == out_channels
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t\t\tself.use_p5 : {self.use_P5}")
-            logger.debug(f"\n\t\tLastLevelP6P7.__init__(self, in_channels={in_channels}, out_channels={out_channels}) ====== END\n\n")
+            logger.debug(f"\t\t\t\tself.use_p5 : {self.use_P5}")
+            logger.debug(f"\t\n\t\t}} // END LastLevelP6P7.__init__(self, in_channels, out_channels)\n\n")
 
 
     def forward(self, c5, p5):
         if logger.level == logging.DEBUG:
-            logger.debug(f"\n\t\tLastLevelP6P7.forward(self, c5, p5) ============= BEGIN ")
-            logger.debug(f"\t\t\tc5.shape: {c5.shape}")
-            logger.debug(f"\t\t\tp5.shape: {p5.shape}\n")
+            logger.debug(f"\n\t\t\tLastLevelP6P7.forward(self, c5, p5) {{ // BEGIN ")
+            logger.debug(f"\n\t\t\t\tParam:")
+            logger.debug(f"\t\t\t\t\tc5.shape: {c5.shape}")
+            logger.debug(f"\t\t\t\t\tp5.shape: {p5.shape}\n")
 
         # for debug
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t\t\tif (self.use_P5 == {self.use_P5})")
+            logger.debug(f"\t\t\t\tif (self.use_P5 == {self.use_P5})")
 
             if (self.use_P5):
-                logger.debug("\t\t\t\tx=p5")
+                logger.debug("\t\t\t\t\tx=p5")
             else:
-                logger.debug("\t\t\t\tx=c5")
+                logger.debug("\t\t\t\t\tx=c5")
 
         x = p5 if self.use_P5 else c5
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t\t\tx.shape = {x.shape}")
+            logger.debug(f"\t\t\t\tx.shape = {x.shape}")
 
         p6 = self.p6(x)
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t\t\tp6 = self.p6(x)")
-            logger.debug(f"\t\t\t\tself.p6: {self.p6}")
-            logger.debug(f"\t\t\t\tp6.shape: {p6.shape}\n")
+            logger.debug(f"\t\t\t\tp6 = self.p6(x)")
+            logger.debug(f"\t\t\t\t\tself.p6: {self.p6}")
+            logger.debug(f"\t\t\t\t\tp6.shape: {p6.shape}\n")
 
             file_path = f"./npy_save/P6"
             arr = p6.cpu().numpy()
             np.save(file_path, arr)
-            logger.debug(f"\t\tLastLevelP6P7::forward() self.p6 ==> {self.p6} output of shape {arr.shape} saved into {file_path}.npy\n\n")
+            logger.debug(f"\t\t\t\tLastLevelP6P7::forward() self.p6 ==> {self.p6} output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
         p7 = self.p7(F.relu(p6))
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t\t\tp7 = self.p7(F.relu(p6))")
-            logger.debug(f"\t\t\t\tself.p7: {self.p7}")
-            logger.debug(f"\t\t\t\tp7.shape: {p7.shape}\n")
+            logger.debug(f"\t\t\t\tp7 = self.p7(F.relu(p6))")
+            logger.debug(f"\t\t\t\t\tself.p7: {self.p7}")
+            logger.debug(f"\t\t\t\t\tp7.shape: {p7.shape}\n")
 
             file_path = f"./npy_save/P7"
             arr = p7.cpu().numpy()
             np.save(file_path, arr)
-            logger.debug(f"\t\tLastLevelP6P7::forward() self.p7 {self.p7}(F.relu(p6)) output of shape {arr.shape} saved into {file_path}.npy\n\n")
+            logger.debug(f"\t\t\tLastLevelP6P7::forward() self.p7 {self.p7}(F.relu(p6)) output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
-            logger.debug(f"\t\t\treturns [p6, p7]")
-            logger.debug(f"\t\tLastLevelP6P7.forward(self, c5, p5) ============= END\n\n")
+            logger.debug(f"\t\t\t\treturns [p6, p7]")
+            logger.debug(f"\t\t\t}} // END LastLevelP6P7.forward(self, c5, p5)\n\n")
         return [p6, p7]

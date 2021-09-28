@@ -17,6 +17,7 @@ Custom implementations may be written in user code and hooked in via the
 `register_*` functions.
 """
 import logging
+import inspect
 import numpy as np
 from collections import namedtuple
 
@@ -160,8 +161,10 @@ class ResNet(nn.Module):
 
     def __init__(self, cfg):
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\n=========================================== Resnet.__init__ BEGIN")
+        logger.debug(f"\n\tResnet.__init__ {{ //BEGIN")
+        logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+        logger.debug(f"\t\tParams:")
+        logger.debug(f"\t\t\tcfg:")
 
         super(ResNet, self).__init__()
 
@@ -171,33 +174,32 @@ class ResNet(nn.Module):
 
         # Translate the string names in the conf file into corresponding specific implementations.
         # The following three use the corresponding registered modules, which are defined at the end of the file
+        logger.debug(f"\t\t_STEM_MODULES: {_STEM_MODULES}")
+        logger.debug(f"\t\t_cfg.MODEL.RESNETS.STEM_FUNC: {cfg.MODEL.RESNETS.STEM_FUNC}")
+
         stem_module = _STEM_MODULES[cfg.MODEL.RESNETS.STEM_FUNC]
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\t_STEM_MODULES: {_STEM_MODULES}")
-            logger.debug(f"\t_cfg.MODEL.RESNETS.STEM_FUNC: {cfg.MODEL.RESNETS.STEM_FUNC}")
-            logger.debug(f"\tstem_module = _STEM_MODULES[cfg.MODEL.RESNETS.STEM_FUNC]")
-            logger.debug(f"\tstem_module: {stem_module}")
+        logger.debug(f"\t\tstem_module = _STEM_MODULES[cfg.MODEL.RESNETS.STEM_FUNC]")
+        logger.debug(f"\t\t\tstem_module: {stem_module}")
 
         # resnet conv2_x~conv5_x implementation
         # ex. cfg.MODEL.CONV_BODY="R-50-FPN"
+        #logger.debug(f"\t\t_STAGE_SPECS: {_STAGE_SPECS}")
+        logger.debug(f"\t\tcfg.MODEL.BACKBONE.CONV_BODY: {cfg.MODEL.BACKBONE.CONV_BODY}")
+        logger.debug(f"\t\tstage_specs = _STAGE_SPECS[cfg.MODEL.BACKBONE.CONV_BODY={cfg.MODEL.BACKBONE.CONV_BODY}]")
+
         stage_specs = _STAGE_SPECS[cfg.MODEL.BACKBONE.CONV_BODY]
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\t_STAGE_SPECS: {_STAGE_SPECS}")
-            logger.debug(f"\tcfg.MODEL.BACKBONE.CONV_BODY: {cfg.MODEL.BACKBONE.CONV_BODY}")
-            logger.debug(f"\tstage_specs = _STAGE_SPECS[cfg.MODEL.BACKBONE.CONV_BODY]")
-            logger.debug(f"\tstage_specs: {stage_specs}")
+        logger.debug(f"\t\t\tstage_specs: {stage_specs}")
 
         # residual transformation function
         # ex. cfg.MODEL.RESNETS.TRANS_FUNC="BottleneckWithFixedBatchNorm"
-        transformation_module = _TRANSFORMATION_MODULES[cfg.MODEL.RESNETS.TRANS_FUNC]
+        logger.debug(f"\t\t_TRANSFORMATION_MODULES: {_TRANSFORMATION_MODULES}")
+        logger.debug(f"\t\tcfg.MODEL.RESNETS.TRANS_FUNC: {cfg.MODEL.RESNETS.TRANS_FUNC}")
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\t_TRANSFORMATION_MODULES: {_TRANSFORMATION_MODULES}")
-            logger.debug(f"\tcfg.MODEL.RESNETS.TRANS_FUNC: {cfg.MODEL.RESNETS.TRANS_FUNC}")
-            logger.debug(f"\ttransformation_module = _TRANSFORMATION_MODULES[cfg.MODEL.RESNETS.TRANS_FUNC]")
-            logger.debug(f"\ttransformation_module: {transformation_module}")
+        transformation_module = _TRANSFORMATION_MODULES[cfg.MODEL.RESNETS.TRANS_FUNC]
+        logger.debug(f"\t\ttransformation_module = _TRANSFORMATION_MODULES[cfg.MODEL.RESNETS.TRANS_FUNC={cfg.MODEL.RESNETS.TRANS_FUNC}]")
+        logger.debug(f"\t\t\ttransformation_module: {transformation_module}")
 
         # After obtaining the implementation of each of the above components,
         # you can use these implementations to build the model
@@ -205,9 +207,8 @@ class ResNet(nn.Module):
         # construct the stem module
         # that is, stage 1 of resnet : conv1 -> bn1 -> relu -> max_pool2d
         self.stem = stem_module(cfg)
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\tself.stem = stem_module(cfg)")
-            logger.debug(f"\tself.stem: {self.stem}")
+        logger.debug(f"\t\tself.stem = stem_module(cfg)")
+        logger.debug(f"\t\t\tself.stem: {self.stem}")
 
         # Construct the specified ResNet stages
         # obtain the corresponding information to construct the convolutional layer of other stages of ResNet
@@ -216,14 +217,14 @@ class ResNet(nn.Module):
         num_groups = cfg.MODEL.RESNETS.NUM_GROUPS
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\tnum_groups = cfg.MODEL.RESNETS.NUM_GROUPS")
-            logger.debug(f"\tnum_groups.stem: {num_groups}")
+            logger.debug(f"\t\tnum_groups = cfg.MODEL.RESNETS.NUM_GROUPS")
+            logger.debug(f"\t\tnum_groups.stem: {num_groups}")
 
         width_per_group = cfg.MODEL.RESNETS.WIDTH_PER_GROUP
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\twidth_per_group = cfg.MODEL.RESNETS.WIDTH_PER_GROUP")
-            logger.debug(f"\twidth_per_group: {width_per_group}")
+            logger.debug(f"\t\twidth_per_group = cfg.MODEL.RESNETS.WIDTH_PER_GROUP")
+            logger.debug(f"\t\twidth_per_group: {width_per_group}")
 
 
         # in_channels refers to the number of channels of the feature map
@@ -231,15 +232,15 @@ class ResNet(nn.Module):
         in_channels = cfg.MODEL.RESNETS.STEM_OUT_CHANNELS
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\tin_channels = cfg.MODEL.RESNETS.STEM_OUT_CHANNELS")
-            logger.debug(f"\tin_channels: {in_channels}")
+            logger.debug(f"\t\tin_channels = cfg.MODEL.RESNETS.STEM_OUT_CHANNELS")
+            logger.debug(f"\t\tin_channels: {in_channels}")
 
         # The number of channels of the special map input in the stage 2
         stage2_bottleneck_channels = num_groups * width_per_group
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\tstage2_bottleneck_channels = num_groups * width_per_group")
-            logger.debug(f"\tstage2_bottleneck_channels: {stage2_bottleneck_channels}")
+            logger.debug(f"\t\tstage2_bottleneck_channels = num_groups * width_per_group")
+            logger.debug(f"\t\tstage2_bottleneck_channels: {stage2_bottleneck_channels}")
 
         # The num. of channels of output of the stage 2
         # ResNet series standard model can judge the number of subsequent channels
@@ -249,61 +250,63 @@ class ResNet(nn.Module):
         stage2_out_channels = cfg.MODEL.RESNETS.RES2_OUT_CHANNELS
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\tstage2_out_channels = cfg.MODEL.RESNETS.RES2_OUT_CHANNELS")
-            logger.debug(f"\tstage2_out_channels: {stage2_out_channels}")
+            logger.debug(f"\t\tstage2_out_channels = cfg.MODEL.RESNETS.RES2_OUT_CHANNELS")
+            logger.debug(f"\t\tstage2_out_channels: {stage2_out_channels}")
 
         # Create an empty stages list and corresponding feature map dictionary
         self.stages = []
         self.return_features = {}
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\tself.stages = []")
-            logger.debug(f"\tself.return_features = {{}}")
+            logger.debug(f"\t\tself.stages = []")
+            logger.debug(f"\t\tself.return_features = {{}}")
 
         # For the definition of stage_specs,
         # refer to ResNet stage specification in this file
         if logger.level == logging.DEBUG:
-            logger.debug(f"\tfor stage_spec in stage_specs:")
+            logger.debug(f"\t\tfor stage_spec in stage_specs {{")
 
         for stage_spec in stage_specs:
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\tstage_spec: {stage_spec}")
-                logger.debug(f"\t\tstage_spec.index: {stage_spec.index}")
+                logger.debug(f"\n\n\t\t\t--------------------------------------------------------")
+                logger.debug(f"\n\n\t\t\tstage_spec: {stage_spec}")
+                logger.debug(f"\t\t\tstage_spec.index: {stage_spec.index}")
+                logger.debug(f"\n\n\t\t\t--------------------------------------------------------")
 
             name = "layer" + str(stage_spec.index)
 
             if logger.level == logging.DEBUG:
-                logger.debug(f'\t\tname = "layer" + str(stage_spec.index)')
-                logger.debug(f"\t\tname: {name}")
+                logger.debug(f'\t\t\tname = "layer" + str(stage_spec.index)')
+                logger.debug(f"\t\t\tname: {name}")
 
             # Calculate the number of output channels for each stage,
             # each time through a stage, the number of channels will be doubled
             stage2_relative_factor = 2 ** (stage_spec.index - 1)
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\tstage2_relative_factor = 2 ** (stage_spec.index - 1)")
-                logger.debug(f"\t\tstage2_relative_factor: {stage2_relative_factor}")
+                logger.debug(f"\t\t\tstage2_relative_factor = 2 ** (stage_spec.index - 1)")
+                logger.debug(f"\t\t\tstage2_relative_factor: {stage2_relative_factor}")
 
             # Calculate the number of input channels
             bottleneck_channels = stage2_bottleneck_channels * stage2_relative_factor
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\tbottleneck_channels = stage2_bottleneck_channels * stage2_relative_factor")
-                logger.debug(f"\t\tbottlenec_channels: {bottleneck_channels}")
+                logger.debug(f"\t\t\tbottleneck_channels = stage2_bottleneck_channels * stage2_relative_factor")
+                logger.debug(f"\t\t\tbottlenec_channels: {bottleneck_channels}")
 
             # Calculate the number of output channels
             out_channels = stage2_out_channels * stage2_relative_factor
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\tout_channels = stage2_out_channels * stage2_relative_factor")
-                logger.debug(f"\t\tout_channels: {out_channels}")
+                logger.debug(f"\t\t\tout_channels = stage2_out_channels * stage2_relative_factor")
+                logger.debug(f"\t\t\tout_channels: {out_channels}")
 
             #
             stage_with_dcn = cfg.MODEL.RESNETS.STAGE_WITH_DCN[stage_spec.index - 1]
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\tstage_with_dcn = cfg.MODEL.RESNETS.STAGE_WITH_DCN[stage_spec.index - 1]")
-                logger.debug(f"\t\tstage_wid_dcn: {stage_with_dcn}")
+                logger.debug(f"\t\t\tstage_with_dcn = cfg.MODEL.RESNETS.STAGE_WITH_DCN[stage_spec.index - 1]")
+                logger.debug(f"\t\t\tstage_with_dcn: {stage_with_dcn}")
 
             # When all the required parameters are obtained, call the `_make_stage` function of this file,
             # This function can create a module corresponding to the stage according to the parameters passed in.
@@ -329,41 +332,42 @@ class ResNet(nn.Module):
             )
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\tmodule = _make_stage(")
-                logger.debug(f"\t\t\ttransformation_module = {transformation_module},")
-                logger.debug(f"\t\t\tin_channels = {in_channels},")
-                logger.debug(f"\t\t\tbottleneck_channels = {bottleneck_channels},")
-                logger.debug(f"\t\t\tout_channels = {out_channels},")
-                logger.debug(f"\t\t\tstage_spec.block_count = {stage_spec.block_count},")
-                logger.debug(f"\t\t\tnum_groups = {num_groups},")
-                logger.debug(f"\t\t\tcfg.MODEL.RESNETS.STRIDE_IN_1X1 : {cfg.MODEL.RESNETS.STRIDE_IN_1X1},")
-                logger.debug(f"\t\t\tfirst_stride=int(stage_spec.index > 1) + 1: {int(stage_spec.index > 1) +1},")
-                logger.debug(f"\t\t\tdcn_config={{")
-                logger.debug(f"\t\t\t\t'stage_with_dcn': {stage_with_dcn},")
-                logger.debug(f"\t\t\t\t'with_modulated_dcn': {cfg.MODEL.RESNETS.WITH_MODULATED_DCN},")
-                logger.debug(f"\t\t\t\t'deformable_groups': {cfg.MODEL.RESNETS.DEFORMABLE_GROUPS},")
-                logger.debug(f"\t\t\t\t}}")
-                logger.debug(f"\t\t\t)")
+                logger.debug(f"\t\t\tmodule = _make_stage(")
+                logger.debug(f"\t\t\t\ttransformation_module = {transformation_module},")
+                logger.debug(f"\t\t\t\tin_channels = {in_channels},")
+                logger.debug(f"\t\t\t\tbottleneck_channels = {bottleneck_channels},")
+                logger.debug(f"\t\t\t\tout_channels = {out_channels},")
+                logger.debug(f"\t\t\t\tstage_spec.block_count = {stage_spec.block_count},")
+                logger.debug(f"\t\t\t\tnum_groups = {num_groups},")
+                logger.debug(f"\t\t\t\tcfg.MODEL.RESNETS.STRIDE_IN_1X1 : {cfg.MODEL.RESNETS.STRIDE_IN_1X1},")
+                logger.debug(f"\t\t\t\tfirst_stride=int(stage_spec.index > 1) + 1: {int(stage_spec.index > 1) +1},")
+                logger.debug(f"\t\t\t\tdcn_config={{")
+                logger.debug(f"\t\t\t\t\t'stage_with_dcn': {stage_with_dcn},")
+                logger.debug(f"\t\t\t\t\t'with_modulated_dcn': {cfg.MODEL.RESNETS.WITH_MODULATED_DCN},")
+                logger.debug(f"\t\t\t\t\t'deformable_groups': {cfg.MODEL.RESNETS.DEFORMABLE_GROUPS},")
+                logger.debug(f"\t\t\t\t\t}}")
+                logger.debug(f"\t\t\t\t)")
 
             # The num. of output ch of the stage i (current stage) is
             # the num. of input ch. of the stage i+1  (next stage)
             in_channels = out_channels
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\tin_channels = out_channels")
-                logger.debug(f"\t\tin_channels: {in_channels}")
+                logger.debug(f"\t\t\tin_channels = out_channels")
+                logger.debug(f"\t\t\tin_channels: {in_channels}")
 
             # Add the current stage module to the model
             self.add_module(name, module)
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\tself.add_module(name={name}, module={module})")
+                #logger.debug(f"\t\t\tself.add_module(name={name}, module={module})")
+                logger.debug(f"\t\t\tself.add_module(name={name}, module)")
 
             # Add the name of the stage to the list
             self.stages.append(name)
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\tself.stages.append(name={name})")
+                logger.debug(f"\t\t\tself.stages.append(name={name})")
 
 
             # Add the boolean value of the stage to the dictionary
@@ -371,30 +375,36 @@ class ResNet(nn.Module):
             self.return_features[name] = stage_spec.return_features
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\tname: {name}")
-                logger.debug(f"\t\tstage_spec.return_features: {stage_spec.return_features}")
-                logger.debug(f"\t\tself.return_features[name] = stage_spec.return_features")
+                #logger.debug(f"\t\t\tname: {name}")
+                logger.debug(f"\t\t\tstage_spec.return_features: {stage_spec.return_features}")
+                logger.debug(f"\t\t\tself.return_features[name] = stage_spec.return_features")
 
+        logger.debug(f"}} // END for stage_spec in stage_specs:")
 
         # Selectively freeze (requires_grad=False) layer in the backbone
         # Selectively freeze certain layers according to the parameters
         # of the conf file (requires_grad=False)
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t\tcfg.MODEL.BACKBONE.FREEZE_CONV_BODY_AT: {cfg.MODEL.BACKBONE.FREEZE_CONV_BODY_AT})")
-            logger.debug(f"\t\tself._freeze_backbone(cfg.MODEL.BACKBONE.FREEZE_CONV_BODY_AT)")
+            logger.debug(f"\t\t\tcfg.MODEL.BACKBONE.FREEZE_CONV_BODY_AT: {cfg.MODEL.BACKBONE.FREEZE_CONV_BODY_AT})")
+            logger.debug(f"\t\t\tself._freeze_backbone(cfg.MODEL.BACKBONE.FREEZE_CONV_BODY_AT)")
 
         self._freeze_backbone(cfg.MODEL.BACKBONE.FREEZE_CONV_BODY_AT)
 
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"=========================================== Resnet.__init__ END\n")
+            logger.debug(f"}} // END Resnet.__init__ END\n")
 
     # Freeze the parameter updates of certain layers according to the given parameters
     def _freeze_backbone(self, freeze_at):
         if logger.level == logging.DEBUG:
-            logger.debug(f"\n\t=========================================== Resnet.__freeze_backbone() START")
+            logger.debug(f"\n\tResnet.__freeze_backbone(self, freeze_at) {{ // BEGIN")
+            logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+            logger.debug(f"\n\t\tParams:")
+            logger.debug(f"\n\t\t\tfreeze_at: {freeze_at}")
+
         if freeze_at < 0:
             return
+
         for stage_index in range(freeze_at):
             if stage_index == 0:
                 m = self.stem  # stage 0 of ResNet is stem
@@ -406,45 +416,45 @@ class ResNet(nn.Module):
                 p.requires_grad = False
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\t=========================================== Resnet.__freeze_backbone() END\n")
+            logger.debug(f"\t}} // END Resnet.__freeze_backbone(self, freeze_at)\n")
 
     # Define the forward propagation process of ResNet
     def forward(self, x):
         if logger.level == logging.DEBUG:
-            logger.debug(f"\n=========================================== Resnet.forward(self, x) BEGIN")
-            logger.debug(f"\tParam")
-            logger.debug(f"\t\tx.shape={x.shape}\n")
+            logger.debug(f"\n\tResnet.forward(self, x) {{ //BEGIN")
+            logger.debug(f"\t\tParam")
+            logger.debug(f"\t\t\tx.shape={x.shape}\n")
         outputs = []
 
         # First go through the stem(layer 0)
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\tx = self.stem(x)")
+            logger.debug(f"\t\tx = self.stem(x)")
 
         x = self.stem(x)
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\tx.shape: {x.shape}")
+            logger.debug(f"\t\tx.shape: {x.shape}")
             file_path = f"./npy_save/stem_output"
             arr = x.cpu().numpy()
             np.save(file_path, arr)
-            logger.debug(f"\tstem output of shape {arr.shape} saved into {file_path}.npy\n\n")
+            logger.debug(f"\t\tstem output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
         # Then calculate the results of layer 1 ~ 4 in turn
         #logger.debug(f"\tfor stage_name in self.stages")
         if logger.level == logging.DEBUG:
-            logger.debug(f"\tfor stage_name in self.stages:")
+            logger.debug(f"\t\tfor stage_name in self.stages:")
 
         for stage_name in self.stages:
 
             # run layer 1-4
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\tstage_name: {stage_name}")
+                logger.debug(f"\t\t\tstage_name: {stage_name}")
 
             x = getattr(self, stage_name)(x)
 
             if logger.level == logging.DEBUG:
-                logger.debug(f"\t\t\toutput shape of {stage_name}: {x.shape}")
+                logger.debug(f"\t\t\t\toutput shape of {stage_name}: {x.shape}")
 
             # Save all the calculation results of stage 2 ~ 5 (that is, the feature map) in the form of a list
             if self.return_features[stage_name]:
@@ -455,19 +465,19 @@ class ResNet(nn.Module):
                     file_path = f"./npy_save/{stage_name}_output"
                     arr = x.cpu().numpy()
                     np.save(file_path, arr)
-                    logger.debug(f"\t{stage_name} output of shape {arr.shape} saved into {file_path}.npy\n\n")
+                    logger.debug(f"\t\t{stage_name} output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
 
         # Return the results, outputs are in the form of a list, and the elements are the feature maps of each stage,
         # which happen to be the input of FPN
 
         if logger.level == logging.DEBUG:
-            logger.debug(f"\n\tResNet::forward return value")
+            logger.debug(f"\n\t\tResNet::forward return value")
             for idx, e in enumerate(outputs):
-                logger.debug(f"\t\toutputs[{idx}]: {e.shape}")
+                logger.debug(f"\t\t\toutputs[{idx}]: {e.shape}")
 
-        logger.debug(f"\n\treturn outputs")
-        logger.debug(f"\n=========================================== Resnet.forward() END")
+        logger.debug(f"\n\t\treturn outputs")
+        logger.debug(f"\n\t}} // END Resnet.forward()")
         return outputs
 
 

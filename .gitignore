@@ -1,3 +1,6 @@
+# vi swap file remove
+*.swp
+
 # pth file remove
 .pth
 

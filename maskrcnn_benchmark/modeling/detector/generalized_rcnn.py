@@ -2,6 +2,7 @@
 """
 Implements the Generalized R-CNN framework
 """
+import inspect
 import torch
 from torch import nn
 
@@ -47,17 +48,17 @@ class GeneralizedRCNN(nn.Module):
     # Initialize the model according to the configuration information
     def __init__(self, cfg):
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"GeneralizedRCNN.__init(self, cfg) ====================== BEGIN")
-            logger.debug(f"\tsuper(GeneralizedRCNN, self).__init__()\n")
+        logger.debug(f"GeneralizedRCNN.__init__(self, cfg) {{ //BEGIN")
+        logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+        logger.debug(f"\t\tParams:")
+        logger.debug(f"\t\t\tcfg:")
 
         super(GeneralizedRCNN, self).__init__()
+        logger.debug(f"\tsuper(GeneralizedRCNN, self).__init__()\n")
 
         # Create a backbone network based on configuration information
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\t==== backbone build ====")
-            logger.debug(f"\tbuild_backbone: {build_backbone}")
-            logger.debug(f"\tself.backbone = build_backbone(cfg)")
+            #logger.debug(f"\tbuild_backbone: {build_backbone}")
+
 
         #---------------------------
         # 1. model.backbone build
@@ -65,34 +66,33 @@ class GeneralizedRCNN(nn.Module):
         # backbone = body + fpn
         #---------------------------
         # build_backbone() defined in maskrcnn_benchmark/modelling/backbone/backbone.py
+        logger.debug(f"\tself.backbone = build_backbone(cfg) // CALL")
+
         self.backbone = build_backbone(cfg)
 
-        if logger.level == logging.DEBUG:
-            pass
-            #logger.debug(f"self.backbone: {self.backbone}\n")
+        logger.debug(f"\tself.backbone = build_backbone(cfg) // RETURNED")
+        logger.debug(f"\t\tself.backbone: {self.backbone}")
 
         #---------------------------
         # 2. model.rpn build
         #---------------------------
         # build_rpn() defined in maskrcnn_benchmark/modelling/rpn/rpn.py
         # Create rpn network based on configuration information
-        if logger.level == logging.DEBUG:
-            logger.debug(f"==== rpn build ==== ")
-            logger.debug(f"self.backbone.out_channels: {self.backbone.out_channels}")
-            logger.debug(f"build_rpn : {build_rpn}")
-            logger.debug(f"self.rpn = build_rpn(cfg, self.backbone.out_channels)")
+        logger.debug(f"\tself.backbone.out_channels: {self.backbone.out_channels}")
+        logger.debug(f"\tself.rpn = build_rpn(cfg, self.backbone.out_channels) // CALL")
 
         self.rpn = build_rpn(cfg, self.backbone.out_channels)
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"self.rpn: {self.rpn}")
+        logger.debug(f"\tself.rpn = build_rpn(cfg, self.backbone.out_channels) // RETURNED")
+        logger.debug(f"\tself.rpn: {self.rpn}")
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"GeneralizedRCNN.__init(self, cfg) ====================== END")
 
         # Create roi_heads based on configuration information
         # comment out by LOMIN
         #self.roi_heads = build_roi_heads(cfg)
+
+        logger.debug(f"}} END GeneralizedRCNN.__init__(self, cfg)")
+
 
     # Define the forward propagation process of the model
     def forward(self, images, targets=None):
@@ -115,10 +115,14 @@ class GeneralizedRCNN(nn.Module):
             raise ValueError("In training mode, targets should be passed")
         """
         if logger.level == logging.DEBUG:
-            logger.debug(f"\n\nGeneralizedRCNN.forward(self, images, targets=None) ====================== BEGIN")
-            logger.debug(f"type(images): {type(images)}")
-            logger.debug(f"targets: {targets}")
-            logger.debug(f"\tif self.training == {self.training}: ")
+            logger.debug(f"\n\n\tGeneralizedRCNN.forward(self, images, targets=None) {{ //BEGIN")
+            logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}")
+            logger.debug(f"\t\tParams:")
+            logger.debug(f"\t\t\timages:")
+            logger.debug(f"\t\t\t\ttype(images): {type(images)}")
+            logger.debug(f"\t\t\ttargets: {targets}")
+
+            logger.debug(f"\tif self.training: {self.training}: ")
 
         if self.training:
             # prohibit training
@@ -214,5 +218,5 @@ class GeneralizedRCNN(nn.Module):
         # If it is not in training mode, output the prediction result of the model.
         if logger.level == logging.DEBUG:
             logger.debug(f"return result");
-            logger.debug(f"GeneralizedRCNN.forward(self, images, targets=None) ====================== END")
+            logger.debug(f"}} // END GeneralizedRCNN.forward(self, images, targets=None)")
         return result

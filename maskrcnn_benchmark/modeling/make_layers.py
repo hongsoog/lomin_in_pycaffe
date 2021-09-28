@@ -3,6 +3,7 @@
 Miscellaneous utility functions
 """
 
+import inspect
 import torch
 from torch import nn
 from torch.nn import functional as F
@@ -100,12 +101,22 @@ def make_fc(dim_in, hidden_dim, use_gn=False):
 
 def conv_with_kaiming_uniform(use_gn=False, use_relu=False):
 
-    logger.debug(f"\n\t\tconv_with_kaiming_uniform(use_gn={use_gn}, use_relut={use_relu}) ======== BEGIN")
+    logger.debug(f"\n\t\t\tconv_with_kaiming_uniform(use_gn={use_gn}, use_relut={use_relu}) {{ //BEGIN")
+    logger.debug(f"\t\t\t// defined in {inspect.getfile(inspect.currentframe())}")
 
     def make_conv(
         in_channels, out_channels, kernel_size, stride=1, dilation=1
     ):
+        logger.debug(f"\n\t\t\t\tmake_conv(in_channels, out_channels, kernel_size, stride=1, dilation=1) {{ //BEGIN")
+        logger.debug(f"\t\t\t\t// defined in {inspect.getfile(inspect.currentframe())}")
         # TODO: config check
+        logger.debug(f"\t\t\t\tParams:")
+        logger.debug(f"\t\t\t\t\tin_channels: {in_channels}")
+        logger.debug(f"\t\t\t\t\tout_channels: {out_channels}")
+        logger.debug(f"\t\t\t\t\tkernel_size: {kernel_size}")
+        logger.debug(f"\t\t\t\t\tstride: {stride}")
+        logger.debug(f"\t\t\t\t\tdilation: {dilation}")
+
         conv = Conv2d(
             in_channels,
             out_channels,
@@ -116,7 +127,6 @@ def conv_with_kaiming_uniform(use_gn=False, use_relu=False):
             bias=False if use_gn else True,
         )
 
-        logger.debug(f"\n\t\t\tconv_with_kaiming_uniform().make_conv() ====== BEGIN")
         """
         logger.debug(f"\t\t\t\tuse_gn: {use_gn}")
         logger.debug(f"\t\t\t\tuse_relu: {use_relu}")
@@ -127,14 +137,16 @@ def conv_with_kaiming_uniform(use_gn=False, use_relu=False):
         logger.debug(f"\t\t\t\tdilation: {dilation}")
         """
 
-        logger.debug(f"\t\t\t\tConv2d(in_channles={in_channels}, out_channels={out_channels}, kernel_size={kernel_size}, stride={stride}")
-        logger.debug(f"\t\t\t\t       padding={dilation*(kernel_size -1) //2}, dilation={dilation}, bias={False if use_gn else True},")
+        logger.debug(f"\t\t\t\tconv = Conv2d(in_channles={in_channels}, out_channels={out_channels}, kernel_size={kernel_size}, stride={stride}")
+        logger.debug(f"\t\t\t\t       padding={dilation*(kernel_size -1) //2}, dilation={dilation}, bias={False if use_gn else True}, )")
+        logger.debug(f"\t\t\t\tconv: {conv}")
 
 
         # Caffe2 implementation uses XavierFill, which in fact
         # corresponds to kaiming_uniform_ in PyTorch
         nn.init.kaiming_uniform_(conv.weight, a=1)
         logger.debug(f"\t\t\t\tnn.init.kaiming_uniform_(conv.weight, a=1)")
+
         if not use_gn:
             logger.debug(f"\t\t\t\tif not use_gn:")
             nn.init.constant_(conv.bias, 0)
@@ -142,6 +154,8 @@ def conv_with_kaiming_uniform(use_gn=False, use_relu=False):
 
         module = [conv,]
         logger.debug(f"\t\t\t\tmodule = [conv,]")
+        logger.debug(f"\t\t\t\tmodule: {module}")
+
         if use_gn:
             logger.debug(f"\t\t\t\tif use_gn:")
             logger.debug(f"\t\t\t\t\tmodule.append(group_norm(out_channels={out_channels}))")
@@ -154,13 +168,14 @@ def conv_with_kaiming_uniform(use_gn=False, use_relu=False):
 
         if len(module) > 1:
             logger.debug(f"\t\t\t\tif len(module) > 1:")
+            logger.debug(f"\t\t\t\t\tmodule: {module}")
             logger.debug(f"\t\t\t\t\treturn nn.Sequential(*module)")
             return nn.Sequential(*module)
 
-        logger.debug("\t\t\t\treturn conv\n")
-        logger.debug(f"\t\t\tconv_with_kaiming_uniform().make_conv() ====== END\n")
+        logger.debug(f"\t\t\t\tconv: {conv}")
+        logger.debug(f"\t\t\t\treturn conv\n")
+        logger.debug(f"\t\t\t\t}} // END conv_with_kaiming_uniform().make_conv()\n")
         return conv
 
-    logger.debug("\t\t\treturn make_conv")
-    logger.debug(f"\t\ttconv_with_kaiming_uniform(use_gn={use_gn}, use_relut={use_relu}) ======== END\n")
+    logger.debug(f"\t\t\t}} // END conv_with_kaiming_uniform(use_gn={use_gn}, use_relu={use_relu})\n")
     return make_conv

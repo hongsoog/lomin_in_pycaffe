@@ -1,5 +1,6 @@
 # pytorch 및 mask_rcnn 관련 import
 import os
+import inspect
 import argparse
 from pprint import pprint
 from glob import glob
@@ -42,23 +43,32 @@ class DetectionDemo(object):
     # __init__(cfg, weight, is_recognition=False)
     # --------------------------------
     def __init__(self, cfg, weight, is_recognition=False):
+        logger.debug(f"DetectionDemo.__init__ {{ // BEGIN")
         self.is_recognition = is_recognition
         self.cfg = cfg.clone()
         self.device = torch.device(cfg.MODEL.DEVICE)
         # self.device = torch.device("cpu")
+        logger.debug(f"\tself.model = build_detection_model(self.cfg)")
         self.model = build_detection_model(self.cfg)
         self.model.to(self.device)
 
         # set to evaluation mode for interference
+        logger.debug(f"\tself.model.eval()")
         self.model.eval()
 
+        logger.debug(f"\tcheckpointer = DetectronCheckpointer(cfg, self.model, save_dir='/dev/null')")
         checkpointer = DetectronCheckpointer(cfg, self.model, save_dir='/dev/null')
+
+        logger.debug(f"\t_ = checkpointer.load(weight)")
         _ = checkpointer.load(weight)
 
         # build_transforms defined in maskrcnn_benchmark.data.transforms/*.py
+        logger.debug(f"\tself.transforms = build_transforms(self.cfg, self.is_recognition)")
         self.transforms = build_transforms(self.cfg, self.is_recognition)
         self.cpu_device = torch.device("cpu")
         self.score_thresh = self.cfg.TEST.SCORE_THRESHOLD
+
+        logger.debug(f"}} // END DetectionDemo.__init__")
 
     # --------------------------------
     # run_on_pil(image_origin)
@@ -86,11 +96,14 @@ class DetectionDemo(object):
         # - normalization: RGB to GBR color channel ordering
         #       multiply 255 on pixel value
         #       normalization with constant mean and constant std defined in cfg
-        logger.debug(f"compute_prediction(self, image)")
-        logger.debug(f"\n\timage: H, W=({image.height},{image.width})")
-        logger.debug(f"\n\timage_tensor = self.transforms(image)")
+        logger.debug(f"compute_prediction(self, image) {{ // BEGIN")
+        logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+        logger.debug(f"\tParams:")
+        logger.debug(f"\t\timage: H, W=({image.height},{image.width})")
+
 
         image_tensor = self.transforms(image)
+        logger.debug(f"\timage_tensor = self.transforms(image)")
 
         import numpy as np
         np.save("./npy_save/transformed_tensor.npy", image_tensor)
@@ -136,6 +149,9 @@ class DetectionDemo(object):
             trace, _ = torch.jit._get_trace_graph(self.model, args(image_list))
         make_dot_from_trace(trace).render(f"detection_mode_{version}_structure", format="png")
         """
+        logger.debug(f"return pred")
+        logger.debug(f"\tpred: {pred}")
+        logger.debug(f"}} // END compute_prediction(self, image)\n\n\n\n")
         return pred
 
     # --------------------------------
@@ -219,18 +235,19 @@ pil_image = Image.open(image_file_path).convert('RGB')
 org_pil_image = np.array(pil_image)
 prediction = demo.run_on_pil_image(pil_image)
 
+draw_result = False
 
-# draw with predicted boxes
-bboxes = prediction['bboxes']
-scores = prediction['scores']
+if draw_result:
+    # draw with predicted boxes
+    bboxes = prediction['bboxes']
+    scores = prediction['scores']
 
+    bboxed_image, num_boxes = bb_image_draw(pil_image, line_color=(255, 0, 0), line_width = 3, score_threshold = 0.3)
 
-bboxed_image, num_boxes = bb_image_draw(pil_image, line_color=(255, 0, 0), line_width = 3, score_threshold = 0.3)
-
-# Display an image with Python
-# https://stackoverflow.com/questions/35286540/display-an-image-with-python
-plt.figure()
-plt.imshow(bboxed_image)
-plt.show()
+    # Display an image with Python
+    # https://stackoverflow.com/questions/35286540/display-an-image-with-python
+    plt.figure()
+    plt.imshow(bboxed_image)
+    plt.show()
 
 # Detection model Info

@@ -37,38 +37,72 @@ import tools.pre_processing
 # for model debugging log
 from model_log import  logger
 
+
+
 # Detection V2 Model in PyTorch
 class DetectionDemo(object):
     # --------------------------------
     # __init__(cfg, weight, is_recognition=False)
     # --------------------------------
     def __init__(self, cfg, weight, is_recognition=False):
-        logger.debug(f"DetectionDemo.__init__ {{ // BEGIN")
+        logger.debug(f"# =======================================")
+        logger.debug(f"# I. Detection Model Build and Init")
+        logger.debug(f"# =======================================")
+        logger.debug(f"DetectionDemo.__init__(self, cfg, weight, is_recognition=False) {{ // BEGIN")
+        logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"\n\t// Params:")
+        logger.debug(f"\t\t// cfg.MODEL.DEVICE: {cfg.MODEL.DEVICE}")
+        logger.debug(f"\t\t// weight: {weight}")
+        logger.debug(f"\t\t// is_recognition: {is_recognition}\n")
+
         self.is_recognition = is_recognition
         self.cfg = cfg.clone()
         self.device = torch.device(cfg.MODEL.DEVICE)
         # self.device = torch.device("cpu")
-        logger.debug(f"\tself.model = build_detection_model(self.cfg)")
+        logger.debug(f"\tself.model = build_detection_model(self.cfg) // CALL")
+        logger.debug(f"\t{{\n")
+
         self.model = build_detection_model(self.cfg)
+
+        logger.debug(f"\t}}")
+        logger.debug(f"\n\tself.model = build_detection_model(self.cfg) // RETURNED")
+        logger.debug(f"\t// self.model: {self.model}\n\n")
         self.model.to(self.device)
 
         # set to evaluation mode for interference
-        logger.debug(f"\tself.model.eval()")
+        logger.debug(f"\t# -----------------------------------------")
+        logger.debug(f"\t# 1.3 set to evaluation mode for interference")
+        logger.debug(f"\t# -----------------------------------------")
+        logger.debug(f"\tself.model.eval()\n")
+        logger.debug(f"\t// in {inspect.getfile(inspect.currentframe())}")
         self.model.eval()
 
-        logger.debug(f"\tcheckpointer = DetectronCheckpointer(cfg, self.model, save_dir='/dev/null')")
+        logger.debug(f"\t# -----------------------------------------")
+        logger.debug(f"\t# 1.4 Load Weight")
+        logger.debug(f"\t# -----------------------------------------")
+        logger.debug(f"\tcheckpointer = DetectronCheckpointer(cfg, self.model, save_dir='/dev/null') // CALL")
         checkpointer = DetectronCheckpointer(cfg, self.model, save_dir='/dev/null')
+        logger.debug(f"\tcheckpointer = DetectronCheckpointer(cfg, self.model, save_dir='/dev/null') // RETURNED")
 
-        logger.debug(f"\t_ = checkpointer.load(weight)")
+        logger.debug(f"\t_ = checkpointer.load(weight){{// CALL")
         _ = checkpointer.load(weight)
+        logger.debug(f"\t}} _ = checkpointer.load(weight) // RETURNED")
 
         # build_transforms defined in maskrcnn_benchmark.data.transforms/*.py
-        logger.debug(f"\tself.transforms = build_transforms(self.cfg, self.is_recognition)")
+        logger.debug(f"\t# -----------------------------------------")
+        logger.debug(f"\t# 1.5 Build Transfroms")
+        logger.debug(f"\t# -----------------------------------------")
+        logger.debug(f"\tself.transforms = build_transforms(self.cfg, self.is_recognition) // CALL")
         self.transforms = build_transforms(self.cfg, self.is_recognition)
+        logger.debug(f"\tself.transforms = build_transforms(self.cfg, self.is_recognition) // RETURNED")
+
         self.cpu_device = torch.device("cpu")
+
+        logger.debug(f"\t// self.cfg.TEST.SCORE_THRESHOLD:{self.cfg.TEST.SCORE_THRESHOLD}")
+        logger.debug(f"\tself.score_thresh = self.cfg.TEST.SCORE_THRESHOLD")
         self.score_thresh = self.cfg.TEST.SCORE_THRESHOLD
 
-        logger.debug(f"}} // END DetectionDemo.__init__")
+        logger.debug(f"}} // END DetectionDemo.__init__\n\n\n")
 
     # --------------------------------
     # run_on_pil(image_origin)
@@ -96,40 +130,62 @@ class DetectionDemo(object):
         # - normalization: RGB to GBR color channel ordering
         #       multiply 255 on pixel value
         #       normalization with constant mean and constant std defined in cfg
+        logger.debug(f"# =======================================")
+        logger.debug(f"# II. Model Forward with test image")
+        logger.debug(f"# =======================================\n\n")
+
         logger.debug(f"compute_prediction(self, image) {{ // BEGIN")
         logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}\n")
-        logger.debug(f"\tParams:")
-        logger.debug(f"\t\timage: H, W=({image.height},{image.width})")
+        logger.debug(f"\n\t// Params:")
+        logger.debug(f"\t\t> image.width: {image.width}")
+        logger.debug(f"\t\t> image.height: {image.height}\n")
 
 
+        logger.debug(f"\t# ==================================")
+        logger.debug(f"\t# 2-1 Transformer to input image")
+        logger.debug(f"\t# ==================================")
+        logger.debug(f"\timage_tensor = self.transforms(image) // CALL\n\t{{")
         image_tensor = self.transforms(image)
-        logger.debug(f"\timage_tensor = self.transforms(image)")
+        logger.debug(f"\n\t}} image_tensor = self.transforms(image) // RETURNED")
 
         import numpy as np
         np.save("./npy_save/transformed_tensor.npy", image_tensor)
 
-        logger.debug(f"\n\timage_tensor.shape: {image_tensor.shape}")
+        logger.debug(f"\t// image_tensor.shape: {image_tensor.shape}\n")
 
+        logger.debug(f"\t# ==================================")
+        logger.debug(f"\t# 2-2 Zero padding and Batched Input")
+        logger.debug(f"\t# ==================================")
 
         # padding image for 32 divisible size on width and height
-        logger.debug(f"\n\tpadding images for 32 divisible size on width and height")
-        logger.debug(f"\timage_list = to_image_list(image_tensor, {self.cfg.DATALOADER.SIZE_DIVISIBILITY}).to(self.device)")
-
+        logger.debug(f"\n\t// padding images for 32 divisible size on width and height")
+        logger.debug(f"\t// self.cfg.DATALOADER.SIZE_DIVISIBILITY: {self.cfg.DATALOADER.SIZE_DIVISIBILITY}")
+        logger.debug(f"\t// self.device: {self.device}")
+        logger.debug(f"\timage_list = to_image_list(image_tensor, self.cfg.DATALOADER.SIZE_DIVISIBILITY).to(self.device) // CALL\n\t{{")
         image_list = to_image_list(image_tensor, self.cfg.DATALOADER.SIZE_DIVISIBILITY).to(self.device)
+        logger.debug(f"\n\t}} // END to_image_list(tensors, size_divisible=0)\n")
+        logger.debug(f"\timage_list = to_image_list(image_tensor, self.cfg.DATALOADER.SIZE_DIVISIBILITY).to(self.device) // RETURNED")
 
         np.save("./npy_save/padded_tensor.npy", image_list.tensors.cpu())
 
-        logger.debug(f"\timage_list.image_sizes: {image_list.image_sizes}")
-        logger.debug(f"\timage_list.tensors.shape: {image_list.tensors.shape}")
+        logger.debug(f"\t// image_list.image_sizes: {image_list.image_sizes}")
+        logger.debug(f"\t// image_list.tensors.shape: {image_list.tensors.shape}")
 
-        torch.save(self.model, "./detection_model_v2.pth")
-        torch.save(self.model.backbone, "./detection_model_v2_backbone.pth")
-        torch.save(self.model.backbone.body, "./detection_model_v2_backbone_body.pth")
-        torch.save(self.model.backbone.fpn, "./detection_model_v2_backbone_fpn.pth")
+        #torch.save(self.model, "./detection_model_v2.pth")
+        #torch.save(self.model.backbone, "./detection_model_v2_backbone.pth")
+        #torch.save(self.model.backbone.body, "./detection_model_v2_backbone_body.pth")
+        #torch.save(self.model.backbone.fpn, "./detection_model_v2_backbone_fpn.pth")
 
+        logger.debug(f"\n\n")
+        logger.debug(f"\t# ==============================")
+        logger.debug(f"\t# 2-3 Inference with input image")
+        logger.debug(f"\t# ==============================")
         with torch.no_grad():
-            logger.debug(f"\tpred = self.model(image_list)")
+            logger.debug(f"\twith torch.no_grad():")
+            logger.debug(f"\t\tpred = self.model(image_list) // CALL")
             pred = self.model(image_list)
+            logger.debug(f"\t\t}}")
+            logger.debug(f"\t\tpred = self.model(image_list) // RETURNED")
             pred = pred[0].to(self.cpu_device)
 
         """
@@ -235,6 +291,7 @@ pil_image = Image.open(image_file_path).convert('RGB')
 org_pil_image = np.array(pil_image)
 prediction = demo.run_on_pil_image(pil_image)
 
+#draw_result = True
 draw_result = False
 
 if draw_result:

@@ -8,4 +8,12 @@ logger.setLevel(logging.DEBUG)       # generate log message with DEBUG
 
 and run as follows:
 
-$ python detection_model_debug.py |& tee log_detection_model_debug_20210907.txt
+$ python detection_model_debug.py |& tee log_detection_model_debug_20210xxxx.txt
+
+$ vi ./log_detection_model_debug_20210xxxx.txt
+
+1) remove debug log preambles
+:% s/DEBUG:root://g
+
+2) convert tab into 2 spaces
+: retab

@@ -50,16 +50,18 @@ class GeneralizedRCNN(nn.Module):
 
         logger.debug(f"GeneralizedRCNN.__init__(self, cfg) {{ //BEGIN")
         logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}\n")
-        logger.debug(f"\t\tParams:")
-        logger.debug(f"\t\t\tcfg:")
+        logger.debug(f"\t\t// Params:")
+        logger.debug(f"\t\t\t// cfg:\n")
 
         super(GeneralizedRCNN, self).__init__()
         logger.debug(f"\tsuper(GeneralizedRCNN, self).__init__()\n")
 
         # Create a backbone network based on configuration information
-            #logger.debug(f"\tbuild_backbone: {build_backbone}")
-
-
+        #logger.debug(f"\tbuild_backbone: {build_backbone}")
+        logger.debug(f"\t# ===========================================")
+        logger.debug(f"\t# 1.1 Backbone(Resnet50 + FPN) build")
+        logger.debug(f"\t# ===========================================")
+        logger.debug(f"\t{{ // BEGIN of 1.1\n")
         #---------------------------
         # 1. model.backbone build
         #---------------------------
@@ -67,31 +69,42 @@ class GeneralizedRCNN(nn.Module):
         #---------------------------
         # build_backbone() defined in maskrcnn_benchmark/modelling/backbone/backbone.py
         logger.debug(f"\tself.backbone = build_backbone(cfg) // CALL")
+        logger.debug(f"\t{{\n")
 
         self.backbone = build_backbone(cfg)
 
-        logger.debug(f"\tself.backbone = build_backbone(cfg) // RETURNED")
-        logger.debug(f"\t\tself.backbone: {self.backbone}")
+        logger.debug(f"\t}}")
+        logger.debug(f"\tself.backbone = build_backbone(cfg) // RETURNED\n")
+        #logger.debug(f"\t// self.backbone: {self.backbone}\n")
+        logger.debug(f"\n\t}} // END of 1.1 \n")
+
 
         #---------------------------
         # 2. model.rpn build
         #---------------------------
         # build_rpn() defined in maskrcnn_benchmark/modelling/rpn/rpn.py
         # Create rpn network based on configuration information
-        logger.debug(f"\tself.backbone.out_channels: {self.backbone.out_channels}")
+
+        logger.debug(f"\t# ===========================================")
+        logger.debug(f"\t# 1.2 RPN (Region Proposal Network) build")
+        logger.debug(f"\t# ===========================================")
+        logger.debug(f"\t{{ // BEGIN of 1.2\n")
+
+        logger.debug(f"\t// self.backbone.out_channels: {self.backbone.out_channels}")
         logger.debug(f"\tself.rpn = build_rpn(cfg, self.backbone.out_channels) // CALL")
 
         self.rpn = build_rpn(cfg, self.backbone.out_channels)
 
-        logger.debug(f"\tself.rpn = build_rpn(cfg, self.backbone.out_channels) // RETURNED")
-        logger.debug(f"\tself.rpn: {self.rpn}")
+        logger.debug(f"\tself.rpn = build_rpn(cfg, self.backbone.out_channels) // RETURNED\n\n")
+        logger.debug(f"\t// self.rpn: {self.rpn}")
+        logger.debug(f"\n\t}} // END of 1.2\n")
 
 
         # Create roi_heads based on configuration information
         # comment out by LOMIN
         #self.roi_heads = build_roi_heads(cfg)
 
-        logger.debug(f"}} END GeneralizedRCNN.__init__(self, cfg)")
+        logger.debug(f"}} // END GeneralizedRCNN.__init__(self, cfg)")
 
 
     # Define the forward propagation process of the model
@@ -114,55 +127,52 @@ class GeneralizedRCNN(nn.Module):
         if self.training and targets is None:
             raise ValueError("In training mode, targets should be passed")
         """
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\n\n\tGeneralizedRCNN.forward(self, images, targets=None) {{ //BEGIN")
-            logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}")
-            logger.debug(f"\t\tParams:")
-            logger.debug(f"\t\t\timages:")
-            logger.debug(f"\t\t\t\ttype(images): {type(images)}")
-            logger.debug(f"\t\t\ttargets: {targets}")
+        logger.debug(f"\n\n\tGeneralizedRCNN.forward(self, images, targets=None) {{ //BEGIN")
+        logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+        logger.debug(f"\t\t// Params:")
+        logger.debug(f"\t\t\t> images:")
+        logger.debug(f"\t\t\t> type(images): {type(images)}")
+        logger.debug(f"\t\t\t> targets: {targets}\n")
 
-            logger.debug(f"\tif self.training: {self.training}: ")
+        logger.debug(f"\tif self.training: {self.training}")
 
         if self.training:
             # prohibit training
             raise
 
         # Convert the data type of the input image to ImageList
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\timages = to_image_list(images)")
-
+        logger.debug(f"\timages = to_image_list(images) // CALL\n\t{{")
         images = to_image_list(images)
+        logger.debug(f"\n\t}}\n\timages = to_image_list(images) // RETURNED\n")
 
         #-----------------------------------
         # Backbone: resnet50, fpn
         #-----------------------------------
         # ---------- for debug backbone with tensorboard -------------
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\timages.image_sizes: {images.image_sizes}")
-            logger.debug(f"\timages.tensors.shape: {images.tensors.shape}")
+        logger.debug(f"\timages.image_sizes: {images.image_sizes}")
+        logger.debug(f"\timages.tensors.shape: {images.tensors.shape}")
 
         grid = torchvision.utils.make_grid(images.tensors)
-        if logger.level > logging.DEBUG:
-            """
-            writer.add_image("\tinput_image_to_self.backbone", grid, 0)
 
-            tensors_shape = f"{images.tensors.shape}"
-            writer.add_text("\timages.tensors.shape", tensors_shape)
+        """
+        writer.add_image("\tinput_image_to_self.backbone", grid, 0)
 
-            images_sizes = f"\t{images.image_sizes}"
-            writer.add_text("images.images_sizes", images_sizes)
+        tensors_shape = f"{images.tensors.shape}"
+        writer.add_text("\timages.tensors.shape", tensors_shape)
 
-            writer.add_graph(self.backbone, images.tensors, True)
-            """
+        images_sizes = f"\t{images.image_sizes}"
+        writer.add_text("images.images_sizes", images_sizes)
+
+        writer.add_graph(self.backbone, images.tensors, True)
+        """
+        logger.debug(f"\t# ===========================================")
+        logger.debug(f"\t# 2-3-1 Backbone Forward")
+        logger.debug(f"\t# ===========================================")
+
         # ---------- for debug with tensorboard -------------
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\tmodel.backbone.forward(images.tensors) BEFORE")
-
+        logger.debug(f"\tmodel.backbone.forward(images.tensors) // CALL\n\t{{")
         features = self.backbone(images.tensors)
-
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\tmodel.backbone.forward(images.tensors) DONE")
+        logger.debug(f"\n\t}} model.backbone.forward(images.tensors) // RETURNED")
 
         #------------------------------------------------
         # RPN :
@@ -176,14 +186,16 @@ class GeneralizedRCNN(nn.Module):
             #logger.debug("writer.add_graph(self.rpn, [images.sizes, images.tensors, features, targets], True)")
             #writer.add_graph(self.rpn, [images.image_sizes, images.tensors, features, targets], True)
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"proposals, proposal_losses = self.rpn(images, features, targets) BEFORE")
 
+        logger.debug(f"\n\n\t# ===========================================")
+        logger.debug(f"\t# 2-3-2 RPN Forward")
+        logger.debug(f"\t# ===========================================\n")
+        logger.debug(f"\tproposals, proposal_losses = self.rpn(images, features, targets) // CALL\n\t{{")
         proposals, proposal_losses = self.rpn(images, features, targets)
         #proposals = self.rpn([images.image_sizes, images.tensors, features, targets])
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"proposals, proposal_losses = self.rpn(images, features, targets) DONE")
+        logger.debug(f"\n")
+        logger.debug(f"\t}}\n\tproposals, proposal_losses = self.rpn(images, features, targets) // RETURNED\n")
 
         # ========= codes removed by LOMIN for preventing training BEGIN
         """
@@ -208,15 +220,14 @@ class GeneralizedRCNN(nn.Module):
         # ========= codes removed by LOMIN for preventing training END
 
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"x = features");
-            logger.debug(f"result = proposals");
+        logger.debug(f"x = features");
+        logger.debug(f"result = proposals");
 
         x = features    # what for this code?
         result = proposals
 
         # If it is not in training mode, output the prediction result of the model.
-        if logger.level == logging.DEBUG:
-            logger.debug(f"return result");
-            logger.debug(f"}} // END GeneralizedRCNN.forward(self, images, targets=None)")
+        logger.debug(f"return result");
+        logger.debug(f"}} // END GeneralizedRCNN.forward(self, images, targets=None)")
+
         return result

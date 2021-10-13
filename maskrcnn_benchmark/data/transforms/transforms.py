@@ -1,4 +1,5 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
+import inspect
 import random
 import PIL
 from PIL import Image
@@ -21,17 +22,37 @@ from model_log import  logger
 
 class Compose(object):
     def __init__(self, transforms):
+        logger.debug(f"\n\t\tCompose.__init__(self, transforms {{ // BEGIN")
+        logger.debug(f"\t\t\t// defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"\n\t\t\t// Params:")
+        logger.debug(f"\t\t\t\ttransforms: {transforms}")
         self.transforms = transforms
+        logger.debug(f"\n\t\t\tself.transforms = transforms")
+        logger.debug(f"\t\t\t// self.transforms: {self.transforms}")
+        logger.debug(f"\n\t\tCompose.__init__(self, transforms }} // END")
 
     def __call__(self, image):
-        logger.debug(f"\n\t\ttransforms.py Compose class __call__  ====== BEGIN")
-        logger.debug(f"\n\t\tfor t in self.transforms:")
-        for t in self.transforms:
-            logger.debug(f"\t\t\timage = {t}(image)")
-            image = t(image)
-        logger.debug(f"\n\t\treturn image")
-        logger.debug (f"\t\ttransforms.py Compose class __call__  ====== END")
+        logger.debug(f"\n\t\tCompose.__call__(self, image) {{ // BEGIN")
+        logger.debug(f"\t\t\t// defined in {inspect.getfile(inspect.currentframe())}")
+        logger.debug(f"\n\t\t\t// Params:")
+        logger.debug(f"\t\t\t\ttype(image): {type(image)}")
+        logger.debug(f"\t\t\t\timage.height: {image.height}")
+        logger.debug(f"\t\t\t\timage.width: {image.width}")
 
+        logger.debug(f"\n\t\t\tfor t in self.transforms:")
+        for t in self.transforms:
+            logger.debug(f"\t\t\t\timage = {t}(image)")
+            image = t(image)
+            logger.debug(f"\t\t\t\ttype(image): {type(image)}")
+
+            if isinstance(image, Image.Image):
+                logger.debug(f"\t\t\t\timage.height: {image.height}")
+                logger.debug(f"\t\t\t\timage.width: {image.width}")
+            elif isinstance(image, torch.Tensor):
+                logger.debug(f"\t\t\t\timage.size(): {image.size()}")
+
+        logger.debug(f"\n\t\t\treturn image")
+        logger.debug(f"\n\t\t}} // END Compose.__call__()")
         return image
 
 class Resize(object):

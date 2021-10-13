@@ -19,24 +19,24 @@ class RetinaNetHead(torch.nn.Module):
     def __init__(self, cfg, in_channels):
         if logger.level == logging.DEBUG:
             logger.debug(f"\n\n\t\t\tRetinaNetHead.__init__(cfg, in_channels) {{ //BEGIN")
-            logger.debug(f"\t\t\t\t// defined in {inspect.getfile(inspect.currentframe())}")
-            logger.debug(f"\t\t\t\tParams:")
-            logger.debug(f"\t\t\t\t\tcfg:")
-            logger.debug(f"\t\t\t\t\tin_channles: {in_channels}:")
+            logger.debug(f"\t\t\t\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+            logger.debug(f"\t\t\t\t// Params:")
+            logger.debug(f"\t\t\t\t\t// cfg:")
+            logger.debug(f"\t\t\t\t\t//in_channles: {in_channels}\n")
 
         super(RetinaNetHead, self).__init__()
 
         num_classes = cfg.MODEL.RETINANET.NUM_CLASSES - 1
         logger.debug(f"\t\t\t\tnum_classes = cfg.MODEL.RETINANET.NUM_CLASSES - 1")
-        logger.debug(f"\t\t\t\t>>num_classes: {num_classes}")
+        logger.debug(f"\t\t\t\t// num_classes: {num_classes}")
 
-        logger.debug(f"\t\t\t\t>> cfg.MODEL.RETINANET.ASPECT_RATIOS: {cfg.MODEL.RETINANET.ASPECT_RATIOS}")
-        logger.debug(f"\t\t\t\t>> cfg.MODEL.RETINANET.SCALES_PER_OCTAVE: {cfg.MODEL.RETINANET.SCALES_PER_OCTAVE}")
+        logger.debug(f"\t\t\t\t// cfg.MODEL.RETINANET.ASPECT_RATIOS: {cfg.MODEL.RETINANET.ASPECT_RATIOS}")
+        logger.debug(f"\t\t\t\t// cfg.MODEL.RETINANET.SCALES_PER_OCTAVE: {cfg.MODEL.RETINANET.SCALES_PER_OCTAVE}")
         num_anchors = len(cfg.MODEL.RETINANET.ASPECT_RATIOS) \
                         * cfg.MODEL.RETINANET.SCALES_PER_OCTAVE
         logger.debug(f"\t\t\t\tnum_anchors = len(cfg.MODEL.RETINANET.ASPECT_RATIOS) \\")
         logger.debug(f"\t\t\t\t                * cfg.MODEL.RETINANET.SCALES_PER_OCTAVE")
-        logger.debug(f"\t\t\t\t>>num_anchors: {num_anchors}")
+        logger.debug(f"\t\t\t\t// num_anchors: {num_anchors}")
 
         cls_tower = []
         bbox_tower = []
@@ -68,59 +68,83 @@ class RetinaNetHead(torch.nn.Module):
             logger.debug(f"\n\n}} // END RetinaNetHead._init__(cfg, in_channels)")
 
     def forward(self, x):
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\n\n\tRetinaNetHead.forward(self, x) {{ // BEGIN")
-            logger.debug(f"\t// // defined in {inspect.getfile(inspect.currentframe())}")
-            logger.debug(f"\t\tParam:")
-            logger.debug(f"\t\t\tlen(x)): {len(x)}")  # x is features returned from FPN
-            for idx, f in enumerate(x):
-                logger.debug(f"\t\t\t\tx[{idx}].shape: {f.shape}")
+        logger.debug(f"\n\n\tRetinaNetHead.forward(self, x) {{ // BEGIN")
+        logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+        logger.debug(f"\t\t// Param:")
+        logger.debug(f"\t\t\t// self: {self}")
+
+        # x is features returned from FPN
+        logger.debug(f"\t\t\t// len(x)): {len(x)} # x is features retruned fron FPN forward")
+        logger.debug(f"\n\t\t\t\t# features info")
+        for i, f in enumerate(x):
+            if i < 3:
+                logger.debug(f"\t\t\t\t// feature[{i}].shape: {f.shape} <== P{i + 2} after FPN")
+            else:
+                logger.debug(f"\t\t\t\t// feature[{i}].shape: {f.shape} <== P{i + 3} after FPN")
+
+        logger.debug(f"\n")
 
         logits = []
+        logger.debug(f"\t\tlogits = []")
+
         bbox_reg = []
+        logger.debug(f"\t\tbbox_reg = []\n")
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\t\tlogits = []")
-            logger.debug(f"\t\tbbox_reg = []\n")
+        logger.debug(f"\t\t#=========================================")
+        logger.debug(f"\t\t# for every P (total 5) from FPN,")
+        logger.debug(f"\t\t# - apply cls_tower and cls_logits")
+        logger.debug(f"\t\t# - apply bbox_tower and bbox_pred")
+        logger.debug(f"\t\t# hence 5 set of identical cls_tower, cls_logits, bbox_tower and bbox_pred")
+        logger.debug(f"\t\t# should be prepared because caffe don't have sub-net iteration structure")
+        logger.debug(f"\t\t#=========================================")
 
-            logger.debug(f"\t\tself.cls_tower:\n{self.cls_tower}\n")
-            logger.debug(f"\t\tself.cls_logits:\n{self.cls_logits}\n")
-            logger.debug(f"\t\tself.bbox_tower:\n{self.bbox_tower}\n")
-            logger.debug(f"\t\tself.bbox_pred:\n{self.bbox_pred}\n")
+        logger.debug(f"\t\tfor idx, feature in enumerate(x) {{")
 
-            logger.debug(f"\n\n\t\tfor idx, feature in enumerate(x) {{")
-
+        total_num_iter = len(x)
         for idx, feature in enumerate(x):
 
-            if logger.level == logging.DEBUG:
-                logger.debug(f"\t\t\t===== iteration: {idx} ====")
-                logger.debug(f"\t\t\tfeature[{idx}].shape: {feature.shape}\n")
+            logger.debug(f"\t\t\t{{")
+            logger.debug(f"\t\t\t# BEGIN iteration: {idx+1}/{total_num_iter}\n")
+            logger.debug(f"\t\t\t// ===================================")
+            if idx < 3:
+                logger.debug(f"\t\t\t// feature P{idx+2} of shape: {feature.shape}")
+            else:
+                logger.debug(f"\t\t\t// feature p{idx+3} of shape: {feature.shape}")
+            logger.debug(f"\t\t\t// ===================================")
 
+            logger.debug(f"\t\t\t# 2-3-2-1-1. append cls_logits(cls_tower(feature))")
             logits.append(self.cls_logits(self.cls_tower(feature)))
-            if logger.level == logging.DEBUG:
-                logger.debug(f"\t\t\tlogits.append(self.cls_logits(self.cls_tower(feature)))")
-                logger.debug(f"\t\t\t\tlen(logits): {len(logits)}\n")
+            logger.debug(f"\t\t\tlogits.append(self.cls_logits(self.cls_tower(feature)))")
+            logger.debug(f"\t\t\tlogits.append(self.cls_logits(self.cls_tower(feature)))")
+            logger.debug(f"\t\t\t\t// feature.shape: {feature.shape}")
+            logger.debug(f"\t\t\t\t// self.cls_tower: {self.cls_tower}")
+            logger.debug(f"\t\t\t\t// self.cls_logits: {self.cls_logits}")
+            logger.debug(f"\t\t\t\t// logits[-1].shape: {logits[-1].shape}")
+            logger.debug(f"\t\t\t\t// len(logits): {len(logits)}\n")
 
+            logger.debug(f"\t\t\t# 2-3-2-1-2. append bbox_pred(bbox_tower(feature))")
             bbox_reg.append(self.bbox_pred(self.bbox_tower(feature)))
-            if logger.level == logging.DEBUG:
-                logger.debug(f"\t\t\tbbox_reg.append(self.bbox_pred(self.bbox_tower(feature)))")
-                logger.debug(f"\t\t\t\tlen(bbox_reg): {len(bbox_reg)}\n")
+            logger.debug(f"\t\t\tbbox_reg.append(self.bbox_pred(self.bbox_tower(feature)))")
+            logger.debug(f"\t\t\t\t// feature.shape: {feature.shape}")
+            logger.debug(f"\t\t\t\t// self.bbox_tower: {self.bbox_tower}")
+            logger.debug(f"\t\t\t\t// self.bbox_pred: {self.bbox_pred}")
+            logger.debug(f"\t\t\t\t// bbox_reg[-1].shape: {bbox_reg[-1].shape}")
+            logger.debug(f"\t\t\t\t// len(bbox_reg): {len(bbox_reg)}\n")
 
+            logger.debug(f"\t\t\t}} // END iteration: {idx+1}/{total_num_iter}\n")
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\n\n\t\t}}// END for idx, feature n enumerate(x)")
+        logger.debug(f"\n\n\t\t}}// END for idx, feature n enumerate(x)\n")
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f" ==== logits ====")
-            for idx, l in enumerate(logits):
-                logger.debug(f"logits[{idx}].shape: {l.shape}")
+        logger.debug(f"\t\t// ==== logits ====")
+        for idx, l in enumerate(logits):
+            logger.debug(f"\t\t// logits[{idx}].shape: {l.shape}")
 
-            logger.debug(f"\n ==== bbox_reg ====")
-            for idx, b in enumerate(bbox_reg):
-                logger.debug(f"bbox_reg[{idx}].shape: {b.shape}")
+        logger.debug(f"\n\t\t// ==== bbox_reg ====")
+        for idx, b in enumerate(bbox_reg):
+            logger.debug(f"\t\t// bbox_reg[{idx}].shape: {b.shape}")
 
-            logger.debug(f"\nreturn logits, bbox_reg")
-            logger.debug(f"\t}} // END RetinaNetHead.forward(self, x)")
+        logger.debug(f"\nreturn logits, bbox_reg")
+        logger.debug(f"\t}} // END RetinaNetHead.forward(self, x)")
 
         return logits, bbox_reg
 
@@ -133,59 +157,63 @@ class RetinaNetModule(torch.nn.Module):
 
     def __init__(self, cfg, in_channels):
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\n\nRetinaNetModule.__init__(self, cfg, in_channels) {{ // BEGIN")
-            logger.debug(f"// defined in {inspect.getfile(inspect.currentframe())}")
-            logger.debug(f"\tParams:")
-            logger.debug(f"\t\tcfg:")
-            logger.debug(f"\t\tin_channels: {in_channels}\n")
+        logger.debug(f"\t\tRetinaNetModule.__init__(self, cfg, in_channels) {{ // BEGIN")
+        logger.debug(f"\t\t\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+        logger.debug(f"\t\t\t// Params:")
+        logger.debug(f"\t\t\t\t// cfg:")
+        logger.debug(f"\t\t\t\t// in_channels: {in_channels}\n")
 
-            logger.debug(f"\tsuper(RetinaNetModule, self).__init__()")
-            logger.debug(f"\tself.cfg = cfg.clone()")
-
+        logger.debug(f"\tsuper(RetinaNetModule, self).__init__()")
         super(RetinaNetModule, self).__init__()
 
+        logger.debug(f"\tself.cfg = cfg.clone()")
         self.cfg = cfg.clone()
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\tanchor_generator = make_anchor_generator_retinanet(cfg)\n")
+        logger.debug(f"\t#============================")
+        logger.debug(f"\t# 1.2.1 anchor generator build")
+        logger.debug(f"\t#============================")
 
+        logger.debug(f"\tanchor_generator = make_anchor_generator_retinanet(cfg) // CALL\n\t{{")
         anchor_generator = make_anchor_generator_retinanet(cfg)
+        logger.debug(f"\t}}\n\tanchor_generator = make_anchor_generator_retinanet(cfg) // RETURNED\n")
+        logger.debug(f"\t// anchor_generator: {anchor_generator}")
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\tanchor_generator: {anchor_generator}")
-            logger.debug(f"\thead = RetinaNetHead(cfg, in_channels={in_channels})")
-
+        logger.debug(f"\t#============================")
+        logger.debug(f"\t# 1.2.2 RPN head build ")
+        logger.debug(f"\t#============================")
+        logger.debug(f"\thead = RetinaNetHead(cfg, in_channels={in_channels}) // CALL\n\t{{")
         head = RetinaNetHead(cfg, in_channels)
+        logger.debug(f"\t}}\n\thead = RetinaNetHead(cfg, in_channels={in_channels}) // RETURNED")
+        logger.debug(f"\t// head: {head}")
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\thead: {head}")
-            logger.debug(f"\tbox_coder = BoxCoder(weights=(10., 10., 5., 5.))")
-
+        logger.debug(f"\t#============================")
+        logger.debug(f"\t# 1.2.3 RPN box_coder build")
+        logger.debug(f"\t#============================")
+        logger.debug(f"\tbox_coder = BoxCoder(weights=(10., 10., 5., 5.)) // CALL\n\t{{")
         box_coder = BoxCoder(weights=(10., 10., 5., 5.))
+        logger.debug(f"\t}}\n\tbox_coder = BoxCoder(weights=(10., 10., 5., 5.)) // RETURNED")
+        logger.debug(f"\t// box_coder: {box_coder}")
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\tbox_coder: {box_coder}")
-            logger.debug(f"\tbox_selector_test = make_retinanet_postprocessor(cfg, box_coder)")
-
+        logger.debug(f"\t#============================")
+        logger.debug(f"\t# 1.2.4 RPN box_selector_test build")
+        logger.debug(f"\t#============================")
+        logger.debug(f"\tbox_selector_test = make_retinanet_postprocessor(cfg, box_coder) // CALL\n\t{{")
         box_selector_test = make_retinanet_postprocessor(cfg, box_coder)
-
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\tbox_selector_test: {box_selector_test}")
-            logger.debug(f"\tself.anchor_generator = anchor_generator")
-            logger.debug(f"\tself.head = head")
-            logger.debug(f"\tself.box_selector_test = box_selector_test")
+        logger.debug(f"\t}}\n\tbox_selector_test = make_retinanet_postprocessor(cfg, box_coder) // RETURNED")
+        logger.debug(f"\t// box_selector_test: {box_selector_test}")
 
         self.anchor_generator = anchor_generator
         self.head = head
         self.box_selector_test = box_selector_test
+        logger.debug(f"\tself.anchor_generator = anchor_generator")
+        logger.debug(f"\tself.head = head")
+        logger.debug(f"\tself.box_selector_test = box_selector_test")
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\n\n}} // RetinaNetModule.__init__(self, cfg, in_channels) END")
-            logger.debug(f"\t}} // END build_retinanet(cfg, in_channels)")
+        logger.debug(f"\n\n}} // RetinaNetModule.__init__(self, cfg, in_channels) END")
+        logger.debug(f"\t}} // END build_retinanet(cfg, in_channels)")
 
     def forward(self, images, features, targets=None):
-    #def forward(self, rpn_inputs):
+        #def forward(self, rpn_inputs):
 
         """
         Arguments:
@@ -207,30 +235,51 @@ class RetinaNetModule(torch.nn.Module):
         #images = ImageList(images_tensors, images_sizes)
         # added for tensforboard debugging END
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\n\nRetinaNetModule.forward(self, images, features, targets=None) {{ // BEGIN")
-            logger.debug(f"// defined in {inspect.getfile(inspect.currentframe())}")
-            logger.debug(f"\tParams:")
-            logger.debug(f"\t\ttype(images.image_size): {type(images.image_sizes)}")
-            logger.debug(f"\t\ttype(images.tensors): {type(images.tensors)}")
-            logger.debug(f"\t\tlen(features)): {len(features)}")
-            for idx, f in enumerate(features):
-               logger.debug(f"\t\t\tfeature[{idx}].shape: {f.shape}")
+        logger.debug(f"\t\tRetinaNetModule.forward(self, images, features, targets=None) {{ // BEGIN")
+        logger.debug(f"\t\t\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+        logger.debug(f"\t\t\t// Params:")
+        logger.debug(f"\t\t\t\t// type(images): {type(images)}")
+        logger.debug(f"\t\t\t\t// len(images.image_sizes): {len(images.image_sizes)}")
+        logger.debug(f"\t\t\t\t// len(images.tensors): {len(images.tensors)}")
+        logger.debug(f"\t\t\t\t// len(features)): {len(features)}")
+        logger.debug(f"\t\t\t\t// target: {targets}\n")
 
+        logger.debug(f"\t\t\t\t# images info")
+        for i, s in enumerate(images.image_sizes):
+            logger.debug(f"\t\t\t\t// images.image_sizes[{i}]: {s} # transformed image size (H, W)")
+
+        for i, t in enumerate(images.tensors):
+            logger.debug(f"\t\t\t\t// images.tensors[{i}].shape: {t.shape} # zero-padded batch image size (C, H, W)")
+
+        logger.debug(f"\n\t\t\t\t# features info")
+        for i, f in enumerate(features):
+            if i < 3:
+               logger.debug(f"\t\t\t\t// feature[{i}].shape: {f.shape} <== P{i+2} after FPN")
+            else:
+               logger.debug(f"\t\t\t\t// feature[{i}].shape: {f.shape} <== P{i+3} after FPN")
+
+        logger.debug(f"\n")
         #------------------------
         #  1. head
         #------------------------
-        box_cls, box_regression = self.head(features)
-        if logger.level == logging.DEBUG:
-            logger.debug(f"self.head: {self.head}")
-            logger.debug(f"box_cls, box_regression = self.head(features)")
-            logger.debug(f"\tlen(box_cls): {len(box_cls)}")
-            for i, bc in enumerate(box_cls):
-                logger.debug(f"\tbox_cls[{i}].shape: {bc.shape}")
+        logger.debug(f"\t\t# ===========================================")
+        logger.debug(f"\t\t# 2-3-2-1 RPN.Head forward")
+        logger.debug(f"\t\t# ===========================================\n")
 
-            logger.debug(f"\tlen(box_regression): {len(box_regression)}")
-            for i, br in enumerate(box_regression):
-                logger.debug(f"\tbox_regression[{i}].shape: {br.shape}")
+        logger.debug(f"\t\t// type(self.head): {type(self.head)}")
+        logger.debug(f"\t\tbox_cls, box_regression = self.head(features) // CALL\n{{")
+
+
+        box_cls, box_regression = self.head(features)
+
+        logger.debug(f"\n\t\t}}\nbox_cls, box_regression = self.head(features) // RETURNED")
+        logger.debug(f"\t\t// len(box_cls): {len(box_cls)}")
+        for i, bc in enumerate(box_cls):
+            logger.debug(f"\t\t\t// box_cls[{i}].shape: {bc.shape}")
+
+        logger.debug(f"\t\t// len(box_regression): {len(box_regression)}")
+        for i, br in enumerate(box_regression):
+            logger.debug(f"\t\t\t// box_regression[{i}].shape: {br.shape}")
 
             """
             TODO : how to save list of tensor as numpy file
@@ -247,67 +296,86 @@ class RetinaNetModule(torch.nn.Module):
             logger.debug(f"box_regression of shape {arr.shape} saved into {file_path}.npy\n\n")
             """
 
-    #------------------------
-    #  2. anchor_generator
-    #------------------------
+        #------------------------
+        #  2. anchor_generator
+        #------------------------
+        logger.debug(f"\n\n")
+        logger.debug(f"\t\t# ===========================================")
+        logger.debug(f"\t\t# 2-3-2-2 RPN.anchor_generator forward")
+        logger.debug(f"\t\t# ===========================================\n")
+
+        logger.debug(f"\t\t// self.anchor_generator: {self.anchor_generator}")
+        logger.debug(f"\t\tanchors = self.anchor_generator(images, features) // CALL {{")
         anchors = self.anchor_generator(images, features)
-        if logger.level == logging.DEBUG:
-            logger.debug(f"anchors = self.anchor_generator(images, features)")
-            logger.debug(f"self.anchor_generator: {self.anchor_generator}")
-            logger.debug(f"anchors: {anchors}")
+        logger.debug(f"\t\t}}\nanchors = self.anchor_generator(images, features) // RETURNED")
+        logger.debug(f"\t\t// anchors: list of list of BoxList")
+        logger.debug(f"\t\t// len(anchors):{len(anchors)}")
+        logger.debug(f"\t\t// len(anchors[0]):{len(anchors[0])}")
+        for i, a in enumerate(anchors[0]):
+            logger.debug(f"\t\t// anchors[0][{i}]: {a}")
+
 
 
         #------------------------
         #  3. _forward_test
         #------------------------
+        logger.debug(f"\n\n\t\t# ===========================================")
+        logger.debug(f"\t\t# 2-3-2-3 RPN._forward_test")
+        logger.debug(f"\t\t# ===========================================\n")
+
         if self.training:
-            if logger.level == logging.DEBUG:
-                logger.debug(f"if self.training: {self.training}")
-                logger.debug(f"\treturn self._forward_train(anchors, box_cls, box_regression, targets)")
-                logger.debug(f"\t}} // END RetinaNetModule.forward(self, images, features, targets=None)")
+            logger.debug(f"\t\tif self.training: {self.training}")
+            logger.debug(f"\t\t\treturn self._forward_train(anchors, box_cls, box_regression, targets)")
+            logger.debug(f"\t\t\t}} // END RetinaNetModule.forward(self, images, features, targets=None)")
             return self._forward_train(anchors, box_cls, box_regression, targets)
         else:
-            if logger.level == logging.DEBUG:
-                logger.debug(f"if self.training: {self.training}")
-                logger.debug(f"\treturn self._forward_test(anchors, box_cls, box_regression)")
+            logger.debug(f"\t\tif self.training: {self.training}")
+
+            logger.debug(f"\t\t\t# call paramers info")
+            logger.debug(f"\t\t\t# anchors:")
+            logger.debug(f"\t\t\t#    from self.anchor_generator(self, x)  # 2-3-2-2")
+            logger.debug(f"\t\t\t# box_cls, box_regression:")
+            logger.debug(f"\t\t\t#     return value RetinaNetHead.forward(self, x)")
+            logger.debug(f"\t\t\t#     called by box_cls, box_regression = self.head(features)  # 2-3-2-1")
+
+            logger.debug(f"\t\t\treturn self._forward_test(anchors, box_cls, box_regression) // CALL")
             return self._forward_test(anchors, box_cls, box_regression)
 
     def _forward_test(self, anchors, box_cls, box_regression):
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"\n\nRetinaNetModule._forward_test(self, anchors, box_cls, box_regression) {{ // BEGIN")
-            logger.debug(f"// defined in {inspect.getfile(inspect.currentframe())}")
-            logger.debug(f"\tparams:")    # anchors is list
-            logger.debug(f"\tlen(anchors): {len(anchors)}")    # anchors is list
-            logger.debug(f"\tlen(box_cls): {len(box_cls)}")
-            logger.debug(f"\tlen(box_regression): {len(box_regression)}")
-
-            logger.debug(f"\tself.box_selector_test: {self.box_selector_test}")
-            logger.debug(f"\tboxes = self.box_selector_test(anchors, box_cls, box_regression)")
+        logger.debug(f"\n\nRetinaNetModule._forward_test(self, anchors, box_cls, box_regression) {{ // BEGIN")
+        logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+        logger.debug(f"\t// Params:")    # anchors is list
+        logger.debug(f"\t\t// len(anchors): {len(anchors)}")    # anchors is list of list of BoxList
+        logger.debug(f"\t\t// anchors: {anchors}")
+        logger.debug(f"\t\t// len(box_cls): {len(box_cls)} from RetinaNetHead (RPN.Head cls_towers and cls_logit)")
+        logger.debug(f"\t\t// len(box_regression): {len(box_regression)} from RetinaNetHead (RPN.Head bbox_towers and bbox_pred")
 
         #------------------------
         #  4. box_selector_test
         #------------------------
+        logger.debug(f"\t// self.box_selector_test: {self.box_selector_test}")
+        logger.debug(f"\tboxes = self.box_selector_test(anchors=>anchors, box_cls=>objectness, box_regression=>box_regression) // CALL\n{{")
         boxes = self.box_selector_test(anchors, box_cls, box_regression)
+        logger.debug(f"\n")
+        logger.debug(f"\t}}\n\tboxes = self.box_selector_test(anchors, box_cls, box_regression) // RETURNED")
 
-        if logger.level == logging.DEBUG:
-            logger.debug(f"len(boxes): {len(boxes)}")
-            logger.debug(f"(boxes): {boxes}")
-            logger.debug(f"return boxes, {{}} # {{}} is just empty dictionayr")
-            logger.debug(f"\n\n}} // RetinaNetModule._forward_test(self, anchors, box_cls, box_regression): END")
-            logger.debug(f"}} // END RetinaNetModule.forward(self, images, features, targets=None)")
+        logger.debug(f"\t// len(boxes): {len(boxes)}")
+        logger.debug(f"(boxes): {boxes}")
+        logger.debug(f"return boxes, {{}} # {{}} is just empty dictionayr")
+        logger.debug(f"\n\n}} // RetinaNetModule._forward_test(self, anchors, box_cls, box_regression): END")
+        logger.debug(f"}} // END RetinaNetModule.forward(self, images, features, targets=None)")
 
         # {} is just empty dictionary if self.training == FALSE
         return boxes, {}
 
 
 def build_retinanet(cfg, in_channels):
-    if logger.level == logging.DEBUG:
-        logger.debug(f"\tbuild_retinanet(cfg, in_channels) {{ // BEGIN")
-        logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}")
-        logger.debug(f"\t\tParam:")
-        logger.debug(f"\t\t\tcfg:")
-        logger.debug(f"\t\t\tin_channels: {in_channels}")
-        logger.debug(f"\treturn RetinaNetModule(cfg, in_channels)")
+    logger.debug(f"\tbuild_retinanet(cfg, in_channels) {{ // BEGIN")
+    logger.debug(f"\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+    logger.debug(f"\t\t// Param:")
+    logger.debug(f"\t\t\t// cfg:")
+    logger.debug(f"\t\t\t// in_channels: {in_channels}")
+    logger.debug(f"\treturn RetinaNetModule(cfg, in_channels) // CALL")
 
     return RetinaNetModule(cfg, in_channels)

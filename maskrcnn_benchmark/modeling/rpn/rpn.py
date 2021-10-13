@@ -28,7 +28,7 @@ class RPNHeadConvRegressor(nn.Module):
         """
         if logger.level == logging.DEBUG:
             logger.debug(f"\n\n====================================== RPNHeadConvRegressor.__init__ BEGIN")
-            logger.debug(f"\tParams:")
+            logger.debug(f"\t// Params:")
             logger.debug(f"\t\tin_channels: {in_channels}  - number of ch. of the input feature")
             logger.debug(f"\t\tnum_anchors: {num_anchors}  - number of anchors to be predicted")
             logger.debug(f"\n\tsuper(RPNHeadConvRegressor, self).__init__()")
@@ -59,7 +59,7 @@ class RPNHeadConvRegressor(nn.Module):
     def forward(self, x):
         if logger.level == logging.DEBUG:
             logger.debug(f"\n====================================== RPNHeadConvRegressor.forward(sefl, x) BEGIN")
-            logger.debug(f"\tParams:")
+            logger.debug(f"\t// Params:")
             logger.debug(f"\tx.type = {x.type}")
             logger.debug(f"\tlen(x) = {len(x)}")
 
@@ -157,7 +157,7 @@ class RPNHead(nn.Module):
         """
         if logger.level == logging.DEBUG:
             logger.debug(f"\n====================================== RPNHead.__init__(self, cfg, in_channels, num_anchaors) BEGIN")
-            logger.debug(f"\tParams:")
+            logger.debug(f"\t// Params:")
             logger.debug(f"\t\tin_channels: {in_channels}")
             logger.debug(f"\t\tnum_anchors: {num_anchors}")
             logger.debug(f"super(RPNHead, self).__init__()")
@@ -321,7 +321,7 @@ class RPNModule(torch.nn.Module):
     def _forward_test(self, anchors, objectness, rpn_box_regression):
         if logger.level == logging.DEBUG:
             logger.debug(f"\n====================================== RPNModule._forward_test(self, anchors, objectness, rpn_box_regression) BEGIN")
-            logger.debug(f"\tparams:")
+            logger.debug(f"\t// Params:")
             logger.debug(f"\t\tanchors: {anchors}")
             logger.debug(f"\t\tobjectness: {objectness}")
             logger.debug(f"\t\trpn_box_regression: {rpn_box_regression}")

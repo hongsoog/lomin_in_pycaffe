@@ -1,6 +1,11 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 import torch
 
+# for model debugging log
+import inspect
+import logging
+from model_log import  logger
+
 # transpose
 FLIP_LEFT_RIGHT = 0
 FLIP_TOP_BOTTOM = 1
@@ -17,9 +22,28 @@ class BoxList(object):
     """
 
     def __init__(self, bbox, image_size, mode="xyxy"):
+
+        logger.debug(f"\t\t\t\tBoxList.__init__(self, bbox, image_size, mode='xyxy') {{ //BEGIN")
+        logger.debug(f"\t\t\t\t\t// defined in {inspect.getfile(inspect.currentframe())}\n")
+        logger.debug(f"\t\t\t\t\t// Params:")
+        logger.debug(f"\t\t\t\t\t\t// type(bbox):{type(bbox)}")
+        logger.debug(f"\t\t\t\t\t\t// bbox.shape:{bbox.shape}")
+        logger.debug(f"\t\t\t\t\t\t// image_size: {image_size}\n")
+
+
+        logger.debug(f"\t\t\t\t\t// isinstance(bbox, torch.Tensor): {isinstance(bbox, torch.Tensor)}")
         device = bbox.device if isinstance(bbox, torch.Tensor) else torch.device("cpu")
+        logger.debug(f'\t\t\t\t\tdevice = bbox.device if isinstance(bbox, torch.Tensor) else torch.device("cpu")')
+        logger.debug(f"\t\t\t\t\t// device: {device}\n")
+
         bbox = torch.as_tensor(bbox, dtype=torch.float32, device=device)
+        logger.debug(f"\t\t\t\t\tbbox = torch.as_tensor(bbox, dtype=torch.float32, device=device)")
+        logger.debug(f"\t\t\t\t\t// bbox.shape: {bbox.shape}\n")
+
+        logger.debug(f"\t\t\t\t\t// bbox.ndimension(): {bbox.ndimension()}")
+        logger.debug(f"\t\t\t\t\t// bbox.size(-1): {bbox.size(-1)}\n")
         if bbox.ndimension() != 2:
+            # Tensor.ndimension() : alias for Tensor.dim() which returns number of dimesions
             raise ValueError(
                 "bbox should have 2 dimensions, got {}".format(bbox.ndimension())
             )
@@ -32,9 +56,15 @@ class BoxList(object):
             raise ValueError("mode should be 'xyxy' or 'xywh'")
 
         self.bbox = bbox
+        logger.debug(f"\t\t\t\t\tself.bbox = bbox")
         self.size = image_size  # (image_width, image_height)
+        logger.debug(f"\t\t\t\t\tself.size = image_size  # (image_width, image_height)")
         self.mode = mode
+        logger.debug(f"\t\t\t\t\tself.mode = mode")
         self.extra_fields = {}
+        logger.debug(f"\t\t\t\t\tself.extra_fields = {{}}")
+
+        logger.debug(f"\t\t\t\t}} // END BoxList.__init__(self, bbox, image_size, mode='xyxy')")
 
     def add_field(self, field, field_data):
         self.extra_fields[field] = field_data

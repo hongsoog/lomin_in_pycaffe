@@ -1,6 +1,6 @@
 
 -----------------------------
-layer index: 190/300
+Processing 1/8
 layer name: 'backbone_fpn_fpn_inner4''
 layer type: 'Convolution'
 2 learnable parameters in 'Convolution' type
@@ -12,7 +12,7 @@ layer type: 'Convolution'
 	set backbone_fpn_fpn_inner4_bias with arr:shape (1024,), type float32
 
 -----------------------------
-layer index: 192/300
+Processing 2/8
 layer name: 'backbone_fpn_fpn_layer4''
 layer type: 'Convolution'
 2 learnable parameters in 'Convolution' type
@@ -24,9 +24,73 @@ layer type: 'Convolution'
 	set backbone_fpn_fpn_layer4_bias with arr:shape (1024,), type float32
 
 -----------------------------
-layer index: 194/300
-layer name: 'backbone_fpn_fpn_inner3_upsample''
-layer type: 'Deconvolution'
-1 learnable parameters in 'Deconvolution' type
-	p[0]: (1024, 1024, 4, 4) of float32
-./npy_save/backbone_fpn_fpn_inner3_upsample_weight.npy is not exits!!
+Processing 3/8
+layer name: 'backbone_fpn_fpn_inner3''
+layer type: 'Convolution'
+2 learnable parameters in 'Convolution' type
+	p[0]: (1024, 1024, 1, 1) of float32
+	load ./npy_save/backbone_fpn_fpn_inner3_weight.npy
+	set backbone_fpn_fpn_inner3_weight with arr:shape (1024, 1024, 1, 1), type float32
+	p[1]: (1024,) of float32
+	load ./npy_save/backbone_fpn_fpn_inner3_bias.npy
+	set backbone_fpn_fpn_inner3_bias with arr:shape (1024,), type float32
+
+-----------------------------
+Processing 4/8
+layer name: 'backbone_fpn_fpn_layer3''
+layer type: 'Convolution'
+2 learnable parameters in 'Convolution' type
+	p[0]: (1024, 1024, 3, 3) of float32
+	load ./npy_save/backbone_fpn_fpn_layer3_weight.npy
+	set backbone_fpn_fpn_layer3_weight with arr:shape (1024, 1024, 3, 3), type float32
+	p[1]: (1024,) of float32
+	load ./npy_save/backbone_fpn_fpn_layer3_bias.npy
+	set backbone_fpn_fpn_layer3_bias with arr:shape (1024,), type float32
+
+-----------------------------
+Processing 5/8
+layer name: 'backbone_fpn_fpn_inner2''
+layer type: 'Convolution'
+2 learnable parameters in 'Convolution' type
+	p[0]: (1024, 512, 1, 1) of float32
+	load ./npy_save/backbone_fpn_fpn_inner2_weight.npy
+	set backbone_fpn_fpn_inner2_weight with arr:shape (1024, 512, 1, 1), type float32
+	p[1]: (1024,) of float32
+	load ./npy_save/backbone_fpn_fpn_inner2_bias.npy
+	set backbone_fpn_fpn_inner2_bias with arr:shape (1024,), type float32
+
+-----------------------------
+Processing 6/8
+layer name: 'backbone_fpn_fpn_layer2''
+layer type: 'Convolution'
+2 learnable parameters in 'Convolution' type
+	p[0]: (1024, 1024, 3, 3) of float32
+	load ./npy_save/backbone_fpn_fpn_layer2_weight.npy
+	set backbone_fpn_fpn_layer2_weight with arr:shape (1024, 1024, 3, 3), type float32
+	p[1]: (1024,) of float32
+	load ./npy_save/backbone_fpn_fpn_layer2_bias.npy
+	set backbone_fpn_fpn_layer2_bias with arr:shape (1024,), type float32
+
+-----------------------------
+Processing 7/8
+layer name: 'backbone_fpn_top_blocks_p6''
+layer type: 'Convolution'
+2 learnable parameters in 'Convolution' type
+	p[0]: (1024, 2048, 3, 3) of float32
+	load ./npy_save/backbone_fpn_top_blocks_p6_weight.npy
+	set backbone_fpn_top_blocks_p6_weight with arr:shape (1024, 2048, 3, 3), type float32
+	p[1]: (1024,) of float32
+	load ./npy_save/backbone_fpn_top_blocks_p6_bias.npy
+	set backbone_fpn_top_blocks_p6_bias with arr:shape (1024,), type float32
+
+-----------------------------
+Processing 8/8
+layer name: 'backbone_fpn_top_blocks_p7''
+layer type: 'Convolution'
+2 learnable parameters in 'Convolution' type
+	p[0]: (1024, 1024, 3, 3) of float32
+	load ./npy_save/backbone_fpn_top_blocks_p7_weight.npy
+	set backbone_fpn_top_blocks_p7_weight with arr:shape (1024, 1024, 3, 3), type float32
+	p[1]: (1024,) of float32
+	load ./npy_save/backbone_fpn_top_blocks_p7_bias.npy
+	set backbone_fpn_top_blocks_p7_bias with arr:shape (1024,), type float32

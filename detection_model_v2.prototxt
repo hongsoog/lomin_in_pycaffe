@@ -1634,10 +1634,10 @@ layer {
   }
 }
 layer {
-  name: "backbone_fpn_fpn_inner3_lateral"
+  name: "backbone_fpn_fpn_inner3"
   type: "Convolution"
   bottom: "backbone_body_layer3_5_eltwise"
-  top: "backbone_fpn_fpn_inner3_lateral"
+  top: "backbone_fpn_fpn_inner3"
   convolution_param {
     num_output: 1024
     kernel_size: 1
@@ -1647,7 +1647,7 @@ layer {
 layer {
   name: "backbone_fpn_fpn_inner3_lateral_sum"
   type: "Eltwise"
-  bottom: "backbone_fpn_fpn_inner3_lateral"
+  bottom: "backbone_fpn_fpn_inner3"
   bottom: "backbone_fpn_fpn_inner3_upsample"
   top: "backbone_fpn_fpn_inner3_lateral_sum"
 }
@@ -1680,10 +1680,10 @@ layer {
   }
 }
 layer {
-  name: "backbone_fpn_fpn_inner2_lateral"
+  name: "backbone_fpn_fpn_inner2"
   type: "Convolution"
   bottom: "backbone_body_layer2_3_eltwise"
-  top: "backbone_fpn_fpn_inner2_lateral"
+  top: "backbone_fpn_fpn_inner2"
   convolution_param {
     num_output: 1024
     kernel_size: 1
@@ -1693,7 +1693,7 @@ layer {
 layer {
   name: "backbone_fpn_fpn_inner2_lateral_sum"
   type: "Eltwise"
-  bottom: "backbone_fpn_fpn_inner2_lateral"
+  bottom: "backbone_fpn_fpn_inner2"
   bottom: "backbone_fpn_fpn_inner2_upsample"
   top: "backbone_fpn_fpn_inner2_lateral_sum"
 }
@@ -1710,10 +1710,10 @@ layer {
   }
 }
 layer {
-  name: "backbone_fpn_topblocks_p6"
+  name: "backbone_fpn_top_blocks_p6"
   type: "Convolution"
   bottom: "backbone_body_layer4_2_eltwise"
-  top: "backbone_fpn_topblocks_p6"
+  top: "backbone_fpn_top_blocks_p6"
   convolution_param {
     num_output: 1024
     pad: 1
@@ -1722,16 +1722,16 @@ layer {
   }
 }
 layer {
-  name: "backbone_fpn_topblocks_p6relu"
+  name: "backbone_fpn_top_blocks_p6relu"
   type: "ReLU"
-  bottom: "backbone_fpn_topblocks_p6"
-  top: "backbone_fpn_topblocks_p6"
+  bottom: "backbone_fpn_top_blocks_p6"
+  top: "backbone_fpn_top_blocks_p6relu"
 }
 layer {
-  name: "backbone_fpn_topblocks_p7"
+  name: "backbone_fpn_top_blocks_p7"
   type: "Convolution"
-  bottom: "backbone_fpn_topblocks_p6"
-  top: "backbone_fpn_topblocks_p7"
+  bottom: "backbone_fpn_top_blocks_p6relu"
+  top: "backbone_fpn_top_blocks_p7"
   convolution_param {
     num_output: 1024
     pad: 1
@@ -1740,10 +1740,10 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p2_0"
+  name: "rpn_head_cls_tower_0_for_p2"
   type: "Convolution"
   bottom: "backbone_fpn_fpn_layer2"
-  top: "rpn_head_cls_tower_p2_0"
+  top: "rpn_head_cls_tower_0_for_p2"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1753,16 +1753,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p2_1"
+  name: "rpn_head_cls_tower_1_for_p2"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p2_0"
-  top: "rpn_head_cls_tower_p2_0"
+  bottom: "rpn_head_cls_tower_0_for_p2"
+  top: "rpn_head_cls_tower_0_for_p2"
 }
 layer {
-  name: "rpn_head_cls_tower_p2_2"
+  name: "rpn_head_cls_tower_2_for_p2"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p2_0"
-  top: "rpn_head_cls_tower_p2_2"
+  bottom: "rpn_head_cls_tower_0_for_p2"
+  top: "rpn_head_cls_tower_2_for_p2"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1772,16 +1772,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p2_3"
+  name: "rpn_head_cls_tower_3_for_p2"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p2_2"
-  top: "rpn_head_cls_tower_p2_2"
+  bottom: "rpn_head_cls_tower_2_for_p2"
+  top: "rpn_head_cls_tower_2_for_p2"
 }
 layer {
-  name: "rpn_head_cls_tower_p2_4"
+  name: "rpn_head_cls_tower_4_for_p2"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p2_2"
-  top: "rpn_head_cls_tower_p2_4"
+  bottom: "rpn_head_cls_tower_2_for_p2"
+  top: "rpn_head_cls_tower_4_for_p2"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1791,16 +1791,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p2_5"
+  name: "rpn_head_cls_tower_5_for_p2"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p2_4"
-  top: "rpn_head_cls_tower_p2_4"
+  bottom: "rpn_head_cls_tower_4_for_p2"
+  top: "rpn_head_cls_tower_4_for_p2"
 }
 layer {
-  name: "rpn_head_cls_tower_p2_6"
+  name: "rpn_head_cls_tower_6_for_p2"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p2_4"
-  top: "rpn_head_cls_tower_p2_6"
+  bottom: "rpn_head_cls_tower_4_for_p2"
+  top: "rpn_head_cls_tower_6_for_p2"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1810,16 +1810,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p2_7"
+  name: "rpn_head_cls_tower_7_for_p2"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p2_6"
-  top: "rpn_head_cls_tower_p2_6"
+  bottom: "rpn_head_cls_tower_6_for_p2"
+  top: "rpn_head_cls_tower_6_for_p2"
 }
 layer {
-  name: "rpn_head_cls_logits_p2"
+  name: "rpn_head_cls_logits_for_p2"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p2_6"
-  top: "rpn_head_cls_logits_p2"
+  bottom: "rpn_head_cls_tower_6_for_p2"
+  top: "rpn_head_cls_logits_for_p2"
   convolution_param {
     num_output: 9
     bias_term: true
@@ -1829,10 +1829,10 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p2_0"
+  name: "rpn_head_bbox_tower_0_for_p2"
   type: "Convolution"
   bottom: "backbone_fpn_fpn_layer2"
-  top: "rpn_head_bbox_tower_p2_0"
+  top: "rpn_head_bbox_tower_0_for_p2"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1842,16 +1842,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p2_1"
+  name: "rpn_head_bbox_tower_1_for_p2"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p2_0"
-  top: "rpn_head_bbox_tower_p2_0"
+  bottom: "rpn_head_bbox_tower_0_for_p2"
+  top: "rpn_head_bbox_tower_0_for_p2"
 }
 layer {
-  name: "rpn_head_bbox_tower_p2_2"
+  name: "rpn_head_bbox_tower_2_for_p2"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p2_0"
-  top: "rpn_head_bbox_tower_p2_2"
+  bottom: "rpn_head_bbox_tower_0_for_p2"
+  top: "rpn_head_bbox_tower_2_for_p2"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1861,16 +1861,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p2_3"
+  name: "rpn_head_bbox_tower_3_for_p2"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p2_2"
-  top: "rpn_head_bbox_tower_p2_2"
+  bottom: "rpn_head_bbox_tower_2_for_p2"
+  top: "rpn_head_bbox_tower_2_for_p2"
 }
 layer {
-  name: "rpn_head_bbox_tower_p2_4"
+  name: "rpn_head_bbox_tower_4_for_p2"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p2_2"
-  top: "rpn_head_bbox_tower_p2_4"
+  bottom: "rpn_head_bbox_tower_2_for_p2"
+  top: "rpn_head_bbox_tower_4_for_p2"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1880,16 +1880,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p2_5"
+  name: "rpn_head_bbox_tower_5_for_p2"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p2_4"
-  top: "rpn_head_bbox_tower_p2_4"
+  bottom: "rpn_head_bbox_tower_4_for_p2"
+  top: "rpn_head_bbox_tower_4_for_p2"
 }
 layer {
-  name: "rpn_head_bbox_tower_p2_6"
+  name: "rpn_head_bbox_tower_6_for_p2"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p2_4"
-  top: "rpn_head_bbox_tower_p2_6"
+  bottom: "rpn_head_bbox_tower_4_for_p2"
+  top: "rpn_head_bbox_tower_6_for_p2"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1899,16 +1899,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p2_7"
+  name: "rpn_head_bbox_tower_7_for_p2"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p2_6"
-  top: "rpn_head_bbox_tower_p2_6"
+  bottom: "rpn_head_bbox_tower_6_for_p2"
+  top: "rpn_head_bbox_tower_6_for_p2"
 }
 layer {
-  name: "rpn_head_bbox_pred_p2"
+  name: "rpn_head_bbox_pred_for_p2"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p2_6"
-  top: "rpn_head_bbox_pred_p2"
+  bottom: "rpn_head_bbox_tower_6_for_p2"
+  top: "rpn_head_bbox_pred_for_p2"
   convolution_param {
     num_output: 36
     bias_term: true
@@ -1918,10 +1918,10 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p3_0"
+  name: "rpn_head_cls_tower_0_for_p3"
   type: "Convolution"
   bottom: "backbone_fpn_fpn_layer3"
-  top: "rpn_head_cls_tower_p3_0"
+  top: "rpn_head_cls_tower_0_for_p3"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1931,16 +1931,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p3_1"
+  name: "rpn_head_cls_tower_1_for_p3"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p3_0"
-  top: "rpn_head_cls_tower_p3_0"
+  bottom: "rpn_head_cls_tower_0_for_p3"
+  top: "rpn_head_cls_tower_0_for_p3"
 }
 layer {
-  name: "rpn_head_cls_tower_p3_2"
+  name: "rpn_head_cls_tower_2_for_p3"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p3_0"
-  top: "rpn_head_cls_tower_p3_2"
+  bottom: "rpn_head_cls_tower_0_for_p3"
+  top: "rpn_head_cls_tower_2_for_p3"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1950,16 +1950,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p3_3"
+  name: "rpn_head_cls_tower_3_for_p3"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p3_2"
-  top: "rpn_head_cls_tower_p3_2"
+  bottom: "rpn_head_cls_tower_2_for_p3"
+  top: "rpn_head_cls_tower_2_for_p3"
 }
 layer {
-  name: "rpn_head_cls_tower_p3_4"
+  name: "rpn_head_cls_tower_4_for_p3"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p3_2"
-  top: "rpn_head_cls_tower_p3_4"
+  bottom: "rpn_head_cls_tower_2_for_p3"
+  top: "rpn_head_cls_tower_4_for_p3"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1969,16 +1969,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p3_5"
+  name: "rpn_head_cls_tower_5_for_p3"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p3_4"
-  top: "rpn_head_cls_tower_p3_4"
+  bottom: "rpn_head_cls_tower_4_for_p3"
+  top: "rpn_head_cls_tower_4_for_p3"
 }
 layer {
-  name: "rpn_head_cls_tower_p3_6"
+  name: "rpn_head_cls_tower_6_for_p3"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p3_4"
-  top: "rpn_head_cls_tower_p3_6"
+  bottom: "rpn_head_cls_tower_4_for_p3"
+  top: "rpn_head_cls_tower_6_for_p3"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -1988,16 +1988,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p3_7"
+  name: "rpn_head_cls_tower_7_for_p3"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p3_6"
-  top: "rpn_head_cls_tower_p3_6"
+  bottom: "rpn_head_cls_tower_6_for_p3"
+  top: "rpn_head_cls_tower_6_for_p3"
 }
 layer {
-  name: "rpn_head_cls_logits_p3"
+  name: "rpn_head_cls_logits_for_p3"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p3_6"
-  top: "rpn_head_cls_logits_p3"
+  bottom: "rpn_head_cls_tower_6_for_p3"
+  top: "rpn_head_cls_logits_for_p3"
   convolution_param {
     num_output: 9
     bias_term: true
@@ -2007,10 +2007,10 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p3_0"
+  name: "rpn_head_bbox_tower_0_for_p3"
   type: "Convolution"
   bottom: "backbone_fpn_fpn_layer3"
-  top: "rpn_head_bbox_tower_p3_0"
+  top: "rpn_head_bbox_tower_0_for_p3"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2020,16 +2020,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p3_1"
+  name: "rpn_head_bbox_tower_1_for_p3"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p3_0"
-  top: "rpn_head_bbox_tower_p3_0"
+  bottom: "rpn_head_bbox_tower_0_for_p3"
+  top: "rpn_head_bbox_tower_0_for_p3"
 }
 layer {
-  name: "rpn_head_bbox_tower_p3_2"
+  name: "rpn_head_bbox_tower_2_for_p3"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p3_0"
-  top: "rpn_head_bbox_tower_p3_2"
+  bottom: "rpn_head_bbox_tower_0_for_p3"
+  top: "rpn_head_bbox_tower_2_for_p3"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2039,16 +2039,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p3_3"
+  name: "rpn_head_bbox_tower_3_for_p3"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p3_2"
-  top: "rpn_head_bbox_tower_p3_2"
+  bottom: "rpn_head_bbox_tower_2_for_p3"
+  top: "rpn_head_bbox_tower_2_for_p3"
 }
 layer {
-  name: "rpn_head_bbox_tower_p3_4"
+  name: "rpn_head_bbox_tower_4_for_p3"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p3_2"
-  top: "rpn_head_bbox_tower_p3_4"
+  bottom: "rpn_head_bbox_tower_2_for_p3"
+  top: "rpn_head_bbox_tower_4_for_p3"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2058,16 +2058,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p3_5"
+  name: "rpn_head_bbox_tower_5_for_p3"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p3_4"
-  top: "rpn_head_bbox_tower_p3_4"
+  bottom: "rpn_head_bbox_tower_4_for_p3"
+  top: "rpn_head_bbox_tower_4_for_p3"
 }
 layer {
-  name: "rpn_head_bbox_tower_p3_6"
+  name: "rpn_head_bbox_tower_6_for_p3"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p3_4"
-  top: "rpn_head_bbox_tower_p3_6"
+  bottom: "rpn_head_bbox_tower_4_for_p3"
+  top: "rpn_head_bbox_tower_6_for_p3"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2077,16 +2077,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p3_7"
+  name: "rpn_head_bbox_tower_7_for_p3"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p3_6"
-  top: "rpn_head_bbox_tower_p3_6"
+  bottom: "rpn_head_bbox_tower_6_for_p3"
+  top: "rpn_head_bbox_tower_6_for_p3"
 }
 layer {
-  name: "rpn_head_bbox_pred_p3"
+  name: "rpn_head_bbox_pred_for_p3"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p3_6"
-  top: "rpn_head_bbox_pred_p3"
+  bottom: "rpn_head_bbox_tower_6_for_p3"
+  top: "rpn_head_bbox_pred_for_p3"
   convolution_param {
     num_output: 36
     bias_term: true
@@ -2096,10 +2096,10 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p4_0"
+  name: "rpn_head_cls_tower_0_for_p4"
   type: "Convolution"
   bottom: "backbone_fpn_fpn_layer4"
-  top: "rpn_head_cls_tower_p4_0"
+  top: "rpn_head_cls_tower_0_for_p4"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2109,16 +2109,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p4_1"
+  name: "rpn_head_cls_tower_1_for_p4"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p4_0"
-  top: "rpn_head_cls_tower_p4_0"
+  bottom: "rpn_head_cls_tower_0_for_p4"
+  top: "rpn_head_cls_tower_0_for_p4"
 }
 layer {
-  name: "rpn_head_cls_tower_p4_2"
+  name: "rpn_head_cls_tower_2_for_p4"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p4_0"
-  top: "rpn_head_cls_tower_p4_2"
+  bottom: "rpn_head_cls_tower_0_for_p4"
+  top: "rpn_head_cls_tower_2_for_p4"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2128,16 +2128,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p4_3"
+  name: "rpn_head_cls_tower_3_for_p4"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p4_2"
-  top: "rpn_head_cls_tower_p4_2"
+  bottom: "rpn_head_cls_tower_2_for_p4"
+  top: "rpn_head_cls_tower_2_for_p4"
 }
 layer {
-  name: "rpn_head_cls_tower_p4_4"
+  name: "rpn_head_cls_tower_4_for_p4"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p4_2"
-  top: "rpn_head_cls_tower_p4_4"
+  bottom: "rpn_head_cls_tower_2_for_p4"
+  top: "rpn_head_cls_tower_4_for_p4"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2147,16 +2147,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p4_5"
+  name: "rpn_head_cls_tower_5_for_p4"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p4_4"
-  top: "rpn_head_cls_tower_p4_4"
+  bottom: "rpn_head_cls_tower_4_for_p4"
+  top: "rpn_head_cls_tower_4_for_p4"
 }
 layer {
-  name: "rpn_head_cls_tower_p4_6"
+  name: "rpn_head_cls_tower_6_for_p4"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p4_4"
-  top: "rpn_head_cls_tower_p4_6"
+  bottom: "rpn_head_cls_tower_4_for_p4"
+  top: "rpn_head_cls_tower_6_for_p4"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2166,16 +2166,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p4_7"
+  name: "rpn_head_cls_tower_7_for_p4"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p4_6"
-  top: "rpn_head_cls_tower_p4_6"
+  bottom: "rpn_head_cls_tower_6_for_p4"
+  top: "rpn_head_cls_tower_6_for_p4"
 }
 layer {
-  name: "rpn_head_cls_logits_p4"
+  name: "rpn_head_cls_logits_for_p4"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p4_6"
-  top: "rpn_head_cls_logits_p4"
+  bottom: "rpn_head_cls_tower_6_for_p4"
+  top: "rpn_head_cls_logits_for_p4"
   convolution_param {
     num_output: 9
     bias_term: true
@@ -2185,10 +2185,10 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p4_0"
+  name: "rpn_head_bbox_tower_0_for_p4"
   type: "Convolution"
   bottom: "backbone_fpn_fpn_layer4"
-  top: "rpn_head_bbox_tower_p4_0"
+  top: "rpn_head_bbox_tower_0_for_p4"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2198,16 +2198,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p4_1"
+  name: "rpn_head_bbox_tower_1_for_p4"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p4_0"
-  top: "rpn_head_bbox_tower_p4_0"
+  bottom: "rpn_head_bbox_tower_0_for_p4"
+  top: "rpn_head_bbox_tower_0_for_p4"
 }
 layer {
-  name: "rpn_head_bbox_tower_p4_2"
+  name: "rpn_head_bbox_tower_2_for_p4"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p4_0"
-  top: "rpn_head_bbox_tower_p4_2"
+  bottom: "rpn_head_bbox_tower_0_for_p4"
+  top: "rpn_head_bbox_tower_2_for_p4"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2217,16 +2217,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p4_3"
+  name: "rpn_head_bbox_tower_3_for_p4"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p4_2"
-  top: "rpn_head_bbox_tower_p4_2"
+  bottom: "rpn_head_bbox_tower_2_for_p4"
+  top: "rpn_head_bbox_tower_2_for_p4"
 }
 layer {
-  name: "rpn_head_bbox_tower_p4_4"
+  name: "rpn_head_bbox_tower_4_for_p4"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p4_2"
-  top: "rpn_head_bbox_tower_p4_4"
+  bottom: "rpn_head_bbox_tower_2_for_p4"
+  top: "rpn_head_bbox_tower_4_for_p4"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2236,16 +2236,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p4_5"
+  name: "rpn_head_bbox_tower_5_for_p4"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p4_4"
-  top: "rpn_head_bbox_tower_p4_4"
+  bottom: "rpn_head_bbox_tower_4_for_p4"
+  top: "rpn_head_bbox_tower_4_for_p4"
 }
 layer {
-  name: "rpn_head_bbox_tower_p4_6"
+  name: "rpn_head_bbox_tower_6_for_p4"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p4_4"
-  top: "rpn_head_bbox_tower_p4_6"
+  bottom: "rpn_head_bbox_tower_4_for_p4"
+  top: "rpn_head_bbox_tower_6_for_p4"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2255,16 +2255,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p4_7"
+  name: "rpn_head_bbox_tower_7_for_p4"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p4_6"
-  top: "rpn_head_bbox_tower_p4_6"
+  bottom: "rpn_head_bbox_tower_6_for_p4"
+  top: "rpn_head_bbox_tower_6_for_p4"
 }
 layer {
-  name: "rpn_head_bbox_pred_p4"
+  name: "rpn_head_bbox_pred_for_p4"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p4_6"
-  top: "rpn_head_bbox_pred_p4"
+  bottom: "rpn_head_bbox_tower_6_for_p4"
+  top: "rpn_head_bbox_pred_for_p4"
   convolution_param {
     num_output: 36
     bias_term: true
@@ -2274,10 +2274,10 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p6_0"
+  name: "rpn_head_cls_tower_0_for_p6"
   type: "Convolution"
-  bottom: "backbone_fpn_topblocks_p6"
-  top: "rpn_head_cls_tower_p6_0"
+  bottom: "backbone_fpn_top_blocks_p6"
+  top: "rpn_head_cls_tower_0_for_p6"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2287,16 +2287,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p6_1"
+  name: "rpn_head_cls_tower_1_for_p6"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p6_0"
-  top: "rpn_head_cls_tower_p6_0"
+  bottom: "rpn_head_cls_tower_0_for_p6"
+  top: "rpn_head_cls_tower_0_for_p6"
 }
 layer {
-  name: "rpn_head_cls_tower_p6_2"
+  name: "rpn_head_cls_tower_2_for_p6"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p6_0"
-  top: "rpn_head_cls_tower_p6_2"
+  bottom: "rpn_head_cls_tower_0_for_p6"
+  top: "rpn_head_cls_tower_2_for_p6"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2306,16 +2306,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p6_3"
+  name: "rpn_head_cls_tower_3_for_p6"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p6_2"
-  top: "rpn_head_cls_tower_p6_2"
+  bottom: "rpn_head_cls_tower_2_for_p6"
+  top: "rpn_head_cls_tower_2_for_p6"
 }
 layer {
-  name: "rpn_head_cls_tower_p6_4"
+  name: "rpn_head_cls_tower_4_for_p6"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p6_2"
-  top: "rpn_head_cls_tower_p6_4"
+  bottom: "rpn_head_cls_tower_2_for_p6"
+  top: "rpn_head_cls_tower_4_for_p6"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2325,16 +2325,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p6_5"
+  name: "rpn_head_cls_tower_5_for_p6"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p6_4"
-  top: "rpn_head_cls_tower_p6_4"
+  bottom: "rpn_head_cls_tower_4_for_p6"
+  top: "rpn_head_cls_tower_4_for_p6"
 }
 layer {
-  name: "rpn_head_cls_tower_p6_6"
+  name: "rpn_head_cls_tower_6_for_p6"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p6_4"
-  top: "rpn_head_cls_tower_p6_6"
+  bottom: "rpn_head_cls_tower_4_for_p6"
+  top: "rpn_head_cls_tower_6_for_p6"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2344,16 +2344,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p6_7"
+  name: "rpn_head_cls_tower_7_for_p6"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p6_6"
-  top: "rpn_head_cls_tower_p6_6"
+  bottom: "rpn_head_cls_tower_6_for_p6"
+  top: "rpn_head_cls_tower_6_for_p6"
 }
 layer {
-  name: "rpn_head_cls_logits_p6"
+  name: "rpn_head_cls_logits_for_p6"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p6_6"
-  top: "rpn_head_cls_logits_p6"
+  bottom: "rpn_head_cls_tower_6_for_p6"
+  top: "rpn_head_cls_logits_for_p6"
   convolution_param {
     num_output: 9
     bias_term: true
@@ -2363,10 +2363,10 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p6_0"
+  name: "rpn_head_bbox_tower_0_for_p6"
   type: "Convolution"
-  bottom: "backbone_fpn_topblocks_p6"
-  top: "rpn_head_bbox_tower_p6_0"
+  bottom: "backbone_fpn_top_blocks_p6"
+  top: "rpn_head_bbox_tower_0_for_p6"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2376,16 +2376,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p6_1"
+  name: "rpn_head_bbox_tower_1_for_p6"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p6_0"
-  top: "rpn_head_bbox_tower_p6_0"
+  bottom: "rpn_head_bbox_tower_0_for_p6"
+  top: "rpn_head_bbox_tower_0_for_p6"
 }
 layer {
-  name: "rpn_head_bbox_tower_p6_2"
+  name: "rpn_head_bbox_tower_2_for_p6"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p6_0"
-  top: "rpn_head_bbox_tower_p6_2"
+  bottom: "rpn_head_bbox_tower_0_for_p6"
+  top: "rpn_head_bbox_tower_2_for_p6"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2395,16 +2395,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p6_3"
+  name: "rpn_head_bbox_tower_3_for_p6"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p6_2"
-  top: "rpn_head_bbox_tower_p6_2"
+  bottom: "rpn_head_bbox_tower_2_for_p6"
+  top: "rpn_head_bbox_tower_2_for_p6"
 }
 layer {
-  name: "rpn_head_bbox_tower_p6_4"
+  name: "rpn_head_bbox_tower_4_for_p6"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p6_2"
-  top: "rpn_head_bbox_tower_p6_4"
+  bottom: "rpn_head_bbox_tower_2_for_p6"
+  top: "rpn_head_bbox_tower_4_for_p6"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2414,16 +2414,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p6_5"
+  name: "rpn_head_bbox_tower_5_for_p6"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p6_4"
-  top: "rpn_head_bbox_tower_p6_4"
+  bottom: "rpn_head_bbox_tower_4_for_p6"
+  top: "rpn_head_bbox_tower_4_for_p6"
 }
 layer {
-  name: "rpn_head_bbox_tower_p6_6"
+  name: "rpn_head_bbox_tower_6_for_p6"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p6_4"
-  top: "rpn_head_bbox_tower_p6_6"
+  bottom: "rpn_head_bbox_tower_4_for_p6"
+  top: "rpn_head_bbox_tower_6_for_p6"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2433,16 +2433,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p6_7"
+  name: "rpn_head_bbox_tower_7_for_p6"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p6_6"
-  top: "rpn_head_bbox_tower_p6_6"
+  bottom: "rpn_head_bbox_tower_6_for_p6"
+  top: "rpn_head_bbox_tower_6_for_p6"
 }
 layer {
-  name: "rpn_head_bbox_pred_p6"
+  name: "rpn_head_bbox_pred_for_p6"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p6_6"
-  top: "rpn_head_bbox_pred_p6"
+  bottom: "rpn_head_bbox_tower_6_for_p6"
+  top: "rpn_head_bbox_pred_for_p6"
   convolution_param {
     num_output: 36
     bias_term: true
@@ -2452,10 +2452,10 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p7_0"
+  name: "rpn_head_cls_tower_0_for_p7"
   type: "Convolution"
-  bottom: "backbone_fpn_topblocks_p7"
-  top: "rpn_head_cls_tower_p7_0"
+  bottom: "backbone_fpn_top_blocks_p7"
+  top: "rpn_head_cls_tower_0_for_p7"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2465,16 +2465,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p7_1"
+  name: "rpn_head_cls_tower_1_for_p7"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p7_0"
-  top: "rpn_head_cls_tower_p7_0"
+  bottom: "rpn_head_cls_tower_0_for_p7"
+  top: "rpn_head_cls_tower_0_for_p7"
 }
 layer {
-  name: "rpn_head_cls_tower_p7_2"
+  name: "rpn_head_cls_tower_2_for_p7"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p7_0"
-  top: "rpn_head_cls_tower_p7_2"
+  bottom: "rpn_head_cls_tower_0_for_p7"
+  top: "rpn_head_cls_tower_2_for_p7"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2484,16 +2484,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p7_3"
+  name: "rpn_head_cls_tower_3_for_p7"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p7_2"
-  top: "rpn_head_cls_tower_p7_2"
+  bottom: "rpn_head_cls_tower_2_for_p7"
+  top: "rpn_head_cls_tower_2_for_p7"
 }
 layer {
-  name: "rpn_head_cls_tower_p7_4"
+  name: "rpn_head_cls_tower_4_for_p7"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p7_2"
-  top: "rpn_head_cls_tower_p7_4"
+  bottom: "rpn_head_cls_tower_2_for_p7"
+  top: "rpn_head_cls_tower_4_for_p7"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2503,16 +2503,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p7_5"
+  name: "rpn_head_cls_tower_5_for_p7"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p7_4"
-  top: "rpn_head_cls_tower_p7_4"
+  bottom: "rpn_head_cls_tower_4_for_p7"
+  top: "rpn_head_cls_tower_4_for_p7"
 }
 layer {
-  name: "rpn_head_cls_tower_p7_6"
+  name: "rpn_head_cls_tower_6_for_p7"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p7_4"
-  top: "rpn_head_cls_tower_p7_6"
+  bottom: "rpn_head_cls_tower_4_for_p7"
+  top: "rpn_head_cls_tower_6_for_p7"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2522,16 +2522,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_cls_tower_p7_7"
+  name: "rpn_head_cls_tower_7_for_p7"
   type: "ReLU"
-  bottom: "rpn_head_cls_tower_p7_6"
-  top: "rpn_head_cls_tower_p7_6"
+  bottom: "rpn_head_cls_tower_6_for_p7"
+  top: "rpn_head_cls_tower_6_for_p7"
 }
 layer {
-  name: "rpn_head_cls_logits_p7"
+  name: "rpn_head_cls_logits_for_p7"
   type: "Convolution"
-  bottom: "rpn_head_cls_tower_p7_6"
-  top: "rpn_head_cls_logits_p7"
+  bottom: "rpn_head_cls_tower_6_for_p7"
+  top: "rpn_head_cls_logits_for_p7"
   convolution_param {
     num_output: 9
     bias_term: true
@@ -2541,10 +2541,10 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p7_0"
+  name: "rpn_head_bbox_tower_0_for_p7"
   type: "Convolution"
-  bottom: "backbone_fpn_topblocks_p7"
-  top: "rpn_head_bbox_tower_p7_0"
+  bottom: "backbone_fpn_top_blocks_p7"
+  top: "rpn_head_bbox_tower_0_for_p7"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2554,16 +2554,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p7_1"
+  name: "rpn_head_bbox_tower_1_for_p7"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p7_0"
-  top: "rpn_head_bbox_tower_p7_0"
+  bottom: "rpn_head_bbox_tower_0_for_p7"
+  top: "rpn_head_bbox_tower_0_for_p7"
 }
 layer {
-  name: "rpn_head_bbox_tower_p7_2"
+  name: "rpn_head_bbox_tower_2_for_p7"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p7_0"
-  top: "rpn_head_bbox_tower_p7_2"
+  bottom: "rpn_head_bbox_tower_0_for_p7"
+  top: "rpn_head_bbox_tower_2_for_p7"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2573,16 +2573,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p7_3"
+  name: "rpn_head_bbox_tower_3_for_p7"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p7_2"
-  top: "rpn_head_bbox_tower_p7_2"
+  bottom: "rpn_head_bbox_tower_2_for_p7"
+  top: "rpn_head_bbox_tower_2_for_p7"
 }
 layer {
-  name: "rpn_head_bbox_tower_p7_4"
+  name: "rpn_head_bbox_tower_4_for_p7"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p7_2"
-  top: "rpn_head_bbox_tower_p7_4"
+  bottom: "rpn_head_bbox_tower_2_for_p7"
+  top: "rpn_head_bbox_tower_4_for_p7"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2592,16 +2592,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p7_5"
+  name: "rpn_head_bbox_tower_5_for_p7"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p7_4"
-  top: "rpn_head_bbox_tower_p7_4"
+  bottom: "rpn_head_bbox_tower_4_for_p7"
+  top: "rpn_head_bbox_tower_4_for_p7"
 }
 layer {
-  name: "rpn_head_bbox_tower_p7_6"
+  name: "rpn_head_bbox_tower_6_for_p7"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p7_4"
-  top: "rpn_head_bbox_tower_p7_6"
+  bottom: "rpn_head_bbox_tower_4_for_p7"
+  top: "rpn_head_bbox_tower_6_for_p7"
   convolution_param {
     num_output: 1024
     bias_term: true
@@ -2611,16 +2611,16 @@ layer {
   }
 }
 layer {
-  name: "rpn_head_bbox_tower_p7_7"
+  name: "rpn_head_bbox_tower_7_for_p7"
   type: "ReLU"
-  bottom: "rpn_head_bbox_tower_p7_6"
-  top: "rpn_head_bbox_tower_p7_6"
+  bottom: "rpn_head_bbox_tower_6_for_p7"
+  top: "rpn_head_bbox_tower_6_for_p7"
 }
 layer {
-  name: "rpn_head_bbox_pred_p7"
+  name: "rpn_head_bbox_pred_for_p7"
   type: "Convolution"
-  bottom: "rpn_head_bbox_tower_p7_6"
-  top: "rpn_head_bbox_pred_p7"
+  bottom: "rpn_head_bbox_tower_6_for_p7"
+  top: "rpn_head_bbox_pred_for_p7"
   convolution_param {
     num_output: 36
     bias_term: true

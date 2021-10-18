@@ -1,0 +1,12 @@
+Add all modified files in git - the easy way
+
+source: https://coderwall.com/p/gf50uw/add-all-modified-files-in-git-the-easy-way
+
+I recently saw a protip that use git ls-files to add modified files. Like so:
+$ git ls-files --modified | xargs git add
+
+You don't have to do that!
+
+All you need to do is:
+
+git add -u

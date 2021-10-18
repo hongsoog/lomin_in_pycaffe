@@ -2,14 +2,13 @@
 *.swp
 
 # pth file remove
-.pth
+*.pth
 
 # temporary npy files for saving Pytorch model parameters
-./npy_save/*.npy
+*.npy
 
 # core file
 core
-*.pth
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

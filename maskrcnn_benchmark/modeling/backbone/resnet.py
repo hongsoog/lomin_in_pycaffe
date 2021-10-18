@@ -951,18 +951,56 @@ class BaseStem(nn.Module):
         logger.debug(f"\t\t// self.conv1: {self.conv1}")
         logger.debug(f"\t\t// x.shape: {x.shape}\n")
 
+        ## for debug
+        file_path = f"./npy_save/backbone_body_stem_conv1_output.npy"
+        arr = x.cpu().numpy()
+        np.save(file_path, arr)
+        logger.debug(f"\t\tstem conv1 output of shape {arr.shape} saved into {file_path}.npy\n\n")
+
         x = self.bn1(x)
         logger.debug(f"\t\tx = self.bn1(x)")
         logger.debug(f"\t\t// self.bn1: {self.bn1}")
         logger.debug(f"\t\t// x.shape: {x.shape}\n")
 
+        ## for debug
+        file_path = f"./npy_save/backbone_body_stem_bn1_output.npy"
+        arr = x.cpu().numpy()
+        np.save(file_path, arr)
+        logger.debug(f"\t\tstem bn1 output of shape {arr.shape} saved into {file_path}.npy\n\n")
+
         x = F.relu_(x)
         logger.debug(f"\t\tx = F.relu_(x)")
         logger.debug(f"\t\t// x.shape: {x.shape}\n")
 
+        ## for debug
+        file_path = f"./npy_save/backbone_body_stem_relu_output.npy"
+        arr = x.cpu().numpy()
+        np.save(file_path, arr)
+        logger.debug(f"\t\tstem relu output of shape {arr.shape} saved into {file_path}.npy\n\n")
+        """
         x = F.max_pool2d(x, kernel_size=3, stride=2, padding=1)
         logger.debug(f"\t\tx = F.max_pool2d(x, kernel_size=3, stride=2, padding=1)")
         logger.debug(f"\t\t// x.shape: {x.shape}\n")
+        """
+        # https://github.com/xxradon/PytorchToCaffe/issues/16
+        # to mimic caffe pooling's round_mode (ceiling)
+        #x = F.max_pool2d(x, kernel_size=3, stride=2, padding=1)
+
+        """
+        https://pytorch.org/docs/stable/generated/torch.nn.MaxPool2d.html
+        When ceil_mode=True, sliding windows are allowed to go off-bounds 
+        if they start within the left padding or the input. 
+        Sliding windows that would start in the right padded region are ignored.
+        """
+        x = F.max_pool2d(x, kernel_size=3, stride=2, ceil_mode=True)
+        logger.debug(f"\t\tx = F.max_pool2d(x, kernel_size=3, stride=2, ceil_mode=True)")
+        logger.debug(f"\t\t// x.shape: {x.shape}\n")
+
+        ## for debug
+        file_path = f"./npy_save/backbone_body_stem_maxpool_output.npy"
+        arr = x.cpu().numpy()
+        np.save(file_path, arr)
+        logger.debug(f"\t\tstem maxpool output of shape {arr.shape} saved into {file_path}.npy\n\n")
 
         logger.debug(f"\treturn x\n")
         logger.debug(f"\n\t}} // END BaseStem.forward()")

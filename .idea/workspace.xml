@@ -5,89 +5,269 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c28a4c1-c0ed-46a3-9e6a-82ebdec4e883" name="Default Changelist" comment="Subject:&#10;&#10;&#10;Details:&#10;&#10;&#10;&#10;[Related Issue: ]">
-      <change afterPath="$PROJECT_DIR$/detection_model_v2.prototxt.backup" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210908_2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210908_3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210913.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210915.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210916.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210916_clean.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210917.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210917.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210917.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210917_clean.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_archive/log_detection_model_debug_20210924.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_detection_model_debug_20210929.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_detection_model_debug_20210929.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_detection_model_debug_20210930.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_detection_model_debug_20211005.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_detection_model_debug_20211006.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_detection_model_debug_20211006.txt:" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_detection_model_debug_20211008.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log_detection_model_debug_20211012.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npy_save/C1.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npy_save/C2.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npy_save/C3.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npy_save/C4.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npy_save/C5.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npy_save/inner_top_down_for_fpn_inner2.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/npy_save/inner_top_down_for_fpn_inner3.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out.gv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backbone_body.caffemodel" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backbone_body_network.prototxt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/find.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/how_to_git_add_tracked_modified_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/.load_backbone_fpn_params_log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/bilinear_interpolation.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/caffe_detection_v2_model_back_20211014.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/caffe_detectionv2_model_test.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/convert_to_caffe.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/detection_model_debug.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/detection_model_v2_in_caffe.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/detection_v2.prototxt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/detection_v2_caffe.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/detection_v2_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/detection_v2_model_log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/load_rpn_params_log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/log/load_backbone_body_params_log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/log/save_pytorch_model_learnable_parameters_log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/log/save_pytorch_model_non_learnable_parameters_log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/lomin_caffe_version.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/C1.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/C2.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/C3.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/C4.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/P6.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/P7.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_downsample_0_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_downsample_1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_0_downsample_1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_1_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_1_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_1_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_1_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_1_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_1_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_1_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_1_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_1_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_2_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_2_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_2_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_2_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_2_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_2_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_2_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_2_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer1_2_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_downsample_0_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_downsample_1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_0_downsample_1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_1_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_1_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_1_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_1_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_1_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_1_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_1_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_1_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_1_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_2_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_2_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_2_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_2_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_2_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_2_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_2_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_2_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_2_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_3_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_3_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_3_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_3_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_3_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_3_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_3_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_3_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer2_3_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_downsample_0_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_downsample_1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_0_downsample_1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_1_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_1_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_1_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_1_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_1_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_1_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_1_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_1_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_1_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_2_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_2_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_2_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_2_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_2_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_2_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_2_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_2_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_2_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_3_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_3_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_3_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_3_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_3_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_3_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_3_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_3_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_3_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_4_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_4_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_4_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_4_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_4_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_4_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_4_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_4_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_4_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_5_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_5_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_5_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_5_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_5_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_5_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_5_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_5_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer3_5_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_downsample_0_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_downsample_1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_0_downsample_1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_1_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_1_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_1_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_1_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_1_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_1_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_1_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_1_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_1_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_2_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_2_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_2_bn2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_2_bn2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_2_bn3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_2_bn3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_2_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_2_conv2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_layer4_2_conv3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_stem_bn1_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_stem_bn1_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_stem_bn1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_stem_conv1_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_stem_conv1_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_stem_maxpool_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_body_stem_relu_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_inner2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_inner2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_inner3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_inner3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_inner4_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_inner4_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_layer2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_layer2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_layer3_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_layer3_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_layer4_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_fpn_layer4_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_top_blocks_p6_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_top_blocks_p6_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_top_blocks_p7_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/backbone_fpn_top_blocks_p7_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/fpn_inner2_ouptut_plus_inner_topdown.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/fpn_inner2_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/fpn_inner3_ouptut_plus_inner_topdown.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/fpn_inner3_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/fpn_inner4_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/fpn_layer2_ouptut.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/fpn_layer3_ouptut.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/fpn_layer4_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/inner_top_down_for_fpn_inner2.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/inner_top_down_for_fpn_inner3.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/padded_tensor.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_bbox_pred_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_bbox_pred_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_bbox_tower_0_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_bbox_tower_0_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_bbox_tower_2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_bbox_tower_2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_bbox_tower_4_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_bbox_tower_4_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_bbox_tower_6_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_bbox_tower_6_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_cls_logits_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_cls_logits_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_cls_tower_0_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_cls_tower_0_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_cls_tower_2_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_cls_tower_2_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_cls_tower_4_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_cls_tower_4_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_cls_tower_6_bias.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/rpn_head_cls_tower_6_weight.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/stem_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/npy_save/transformed_tensor.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/pycaffe_api_test.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/pytoch_detection_v2_model.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/save_pytorch_detection_v2_model_parameter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/impl_in_caffe/tmp/load_backbone_body_params_log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log_detection_model_debug_20211014.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/backbone_body_stem_bn1_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/backbone_body_stem_conv1_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/backbone_body_stem_maxpool_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/npy_save/backbone_body_stem_relu_output.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resnet50.prototxt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tmp/load_rpn_params_log.txt" afterDir="false" />
       <change beforePath="$USER_HOME$/local-repo/caffe-tools/tools/solvers.py" beforeDir="false" afterPath="$USER_HOME$/local-repo/caffe-tools/tools/solvers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/dv2_caffe.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/dv2_caffe.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.log_detection_model_debug_20210913.txt.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.log_detection_model_debug_20210913_clean.txt.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.log_detection_model_debug_20210915.txt.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.log_detection_model_debug_20210916.txt.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.log_detection_model_debug_20210917.cc.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.log_detection_model_debug_20210917.txt.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.log_detection_model_debug_20210917_clean.txt.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.log_detection_model_debug_20210924_clean.txt.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/caffe_detection_v2_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/caffe_detection_v2_model.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bilinear_interpolation.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/caffe_detection_v2_model.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/impl_in_caffe/caffe_detection_v2_model.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/caffe_detection_v2_model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/convert_to_caffe.ipynb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/detection_model_debug.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection_model_debug.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/detection_model_v2.prototxt" beforeDir="false" afterPath="$PROJECT_DIR$/detection_model_v2.prototxt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/how_to_save_detection_model_v2_debug_messages.txt" beforeDir="false" afterPath="$PROJECT_DIR$/how_to_save_detection_model_v2_debug_messages.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210719.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210720.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210720_clean.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210721.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210722.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210908_2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210908_3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210913.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210913_clean.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210915.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210916.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210916_clean.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210917.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210917.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210917.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210917_clean.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210924.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_20210924_clean.txt" beforeDir="false" afterPath="$PROJECT_DIR$/log_detection_model_debug_20210924_clean.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_debug_clean_20210722.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_info_20210719.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_info_20210720.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log_detection_model_v2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/data/transforms/transforms.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/data/transforms/transforms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/backbone/backbone.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/backbone/backbone.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/backbone/fpn.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/backbone/fpn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection_model_v2_in_caffe.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection_v2_caffe.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lomin_caffe_version.ipynb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/backbone/resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/backbone/resnet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/box_coder.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/box_coder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/detector/generalized_rcnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/detector/generalized_rcnn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/make_layers.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/make_layers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/rpn/anchor_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/rpn/anchor_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/rpn/inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/rpn/inference.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/rpn/retinanet/inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/rpn/retinanet/inference.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/rpn/retinanet/retinanet.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/rpn/retinanet/retinanet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/rpn/rpn.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/modeling/rpn/rpn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/structures/bounding_box.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/structures/bounding_box.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/structures/image_list.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/structures/image_list.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maskrcnn_benchmark/utils/model_zoo.py" beforeDir="false" afterPath="$PROJECT_DIR$/maskrcnn_benchmark/utils/model_zoo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pycaffe_api_test.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytoch_detection_v2_model.ipynb" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +305,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/miniconda3/pkgs/pytorch-1.8.0-py3.6_cuda10.2_cudnn7.6.5_0/lib/python3.6/site-packages/torch/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/impl_in_caffe/save_pytorch_detection_v2_model_parameter.py" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="PyConsoleOptionsProvider">
@@ -140,8 +320,11 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/impl_in_caffe" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.detecion_model_v2_debug">
+  <component name="RunManager" selected="Python.detection_v2_caffe">
     <configuration name="caffe_api_tests" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="lomin" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -176,6 +359,48 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/detection_model_debug.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="detection_v2_caffe" type="PythonConfigurationType" factoryName="Python">
+      <module name="lomin" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda3/envs/lomin/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/impl_in_caffe" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/impl_in_caffe/detection_v2_model.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="save_pytorch_model_params" type="PythonConfigurationType" factoryName="Python">
+      <module name="lomin" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda3/envs/lomin/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/impl_in_caffe" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/impl_in_caffe/save_pytorch_detection_v2_model_parameter.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -230,6 +455,8 @@
       <item itemvalue="Python.caffe_api_tests" />
       <item itemvalue="Python.detecion_model_v2_debug" />
       <item itemvalue="Python.dv2_caffe" />
+      <item itemvalue="Python.detection_v2_caffe" />
+      <item itemvalue="Python.save_pytorch_model_params" />
       <item itemvalue="Python.test_onnx_export_for_maskrcnn_resnet50_fpn" />
       <item itemvalue="Python.torchinfo_detect_model" />
     </list>
@@ -320,19 +547,9 @@
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/caffe_detection_v2_model.py</url>
-          <line>107</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/detection_model_debug.py</url>
-          <line>286</line>
+          <line>297</line>
           <option name="timeStamp" value="71" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/caffe_detection_v2_model.py</url>
-          <line>150</line>
-          <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/maskrcnn_benchmark/modeling/backbone/fpn.py</url>
@@ -351,12 +568,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/detection_model_debug.py</url>
-          <line>112</line>
+          <line>114</line>
           <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/detection_model_debug.py</url>
-          <line>164</line>
+          <line>166</line>
           <option name="timeStamp" value="86" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -368,6 +585,11 @@
           <url>file://$PROJECT_DIR$/maskrcnn_benchmark/modeling/rpn/anchor_generator.py</url>
           <line>133</line>
           <option name="timeStamp" value="88" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/impl_in_caffe/save_pytorch_detection_v2_model_parameter.py</url>
+          <line>180</line>
+          <option name="timeStamp" value="90" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

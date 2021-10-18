@@ -1,0 +1,181 @@
+--------------------------------------------------------------------------------
+saving learnalbe parameters of layers in detection v2 model
+--------------------------------------------------------------------------------
+backbone.body.stem.conv1.weight of (64, 3, 7, 7)
+		saved in ./npy_save/backbone_body_stem_conv1_weight.npy
+backbone.body.layer1.0.downsample.0.weight of (256, 64, 1, 1)
+		saved in ./npy_save/backbone_body_layer1_0_downsample_0_weight.npy
+backbone.body.layer1.0.conv1.weight of (64, 64, 1, 1)
+		saved in ./npy_save/backbone_body_layer1_0_conv1_weight.npy
+backbone.body.layer1.0.conv2.weight of (64, 64, 3, 3)
+		saved in ./npy_save/backbone_body_layer1_0_conv2_weight.npy
+backbone.body.layer1.0.conv3.weight of (256, 64, 1, 1)
+		saved in ./npy_save/backbone_body_layer1_0_conv3_weight.npy
+backbone.body.layer1.1.conv1.weight of (64, 256, 1, 1)
+		saved in ./npy_save/backbone_body_layer1_1_conv1_weight.npy
+backbone.body.layer1.1.conv2.weight of (64, 64, 3, 3)
+		saved in ./npy_save/backbone_body_layer1_1_conv2_weight.npy
+backbone.body.layer1.1.conv3.weight of (256, 64, 1, 1)
+		saved in ./npy_save/backbone_body_layer1_1_conv3_weight.npy
+backbone.body.layer1.2.conv1.weight of (64, 256, 1, 1)
+		saved in ./npy_save/backbone_body_layer1_2_conv1_weight.npy
+backbone.body.layer1.2.conv2.weight of (64, 64, 3, 3)
+		saved in ./npy_save/backbone_body_layer1_2_conv2_weight.npy
+backbone.body.layer1.2.conv3.weight of (256, 64, 1, 1)
+		saved in ./npy_save/backbone_body_layer1_2_conv3_weight.npy
+backbone.body.layer2.0.downsample.0.weight of (512, 256, 1, 1)
+		saved in ./npy_save/backbone_body_layer2_0_downsample_0_weight.npy
+backbone.body.layer2.0.conv1.weight of (128, 256, 1, 1)
+		saved in ./npy_save/backbone_body_layer2_0_conv1_weight.npy
+backbone.body.layer2.0.conv2.weight of (128, 128, 3, 3)
+		saved in ./npy_save/backbone_body_layer2_0_conv2_weight.npy
+backbone.body.layer2.0.conv3.weight of (512, 128, 1, 1)
+		saved in ./npy_save/backbone_body_layer2_0_conv3_weight.npy
+backbone.body.layer2.1.conv1.weight of (128, 512, 1, 1)
+		saved in ./npy_save/backbone_body_layer2_1_conv1_weight.npy
+backbone.body.layer2.1.conv2.weight of (128, 128, 3, 3)
+		saved in ./npy_save/backbone_body_layer2_1_conv2_weight.npy
+backbone.body.layer2.1.conv3.weight of (512, 128, 1, 1)
+		saved in ./npy_save/backbone_body_layer2_1_conv3_weight.npy
+backbone.body.layer2.2.conv1.weight of (128, 512, 1, 1)
+		saved in ./npy_save/backbone_body_layer2_2_conv1_weight.npy
+backbone.body.layer2.2.conv2.weight of (128, 128, 3, 3)
+		saved in ./npy_save/backbone_body_layer2_2_conv2_weight.npy
+backbone.body.layer2.2.conv3.weight of (512, 128, 1, 1)
+		saved in ./npy_save/backbone_body_layer2_2_conv3_weight.npy
+backbone.body.layer2.3.conv1.weight of (128, 512, 1, 1)
+		saved in ./npy_save/backbone_body_layer2_3_conv1_weight.npy
+backbone.body.layer2.3.conv2.weight of (128, 128, 3, 3)
+		saved in ./npy_save/backbone_body_layer2_3_conv2_weight.npy
+backbone.body.layer2.3.conv3.weight of (512, 128, 1, 1)
+		saved in ./npy_save/backbone_body_layer2_3_conv3_weight.npy
+backbone.body.layer3.0.downsample.0.weight of (1024, 512, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_0_downsample_0_weight.npy
+backbone.body.layer3.0.conv1.weight of (256, 512, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_0_conv1_weight.npy
+backbone.body.layer3.0.conv2.weight of (256, 256, 3, 3)
+		saved in ./npy_save/backbone_body_layer3_0_conv2_weight.npy
+backbone.body.layer3.0.conv3.weight of (1024, 256, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_0_conv3_weight.npy
+backbone.body.layer3.1.conv1.weight of (256, 1024, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_1_conv1_weight.npy
+backbone.body.layer3.1.conv2.weight of (256, 256, 3, 3)
+		saved in ./npy_save/backbone_body_layer3_1_conv2_weight.npy
+backbone.body.layer3.1.conv3.weight of (1024, 256, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_1_conv3_weight.npy
+backbone.body.layer3.2.conv1.weight of (256, 1024, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_2_conv1_weight.npy
+backbone.body.layer3.2.conv2.weight of (256, 256, 3, 3)
+		saved in ./npy_save/backbone_body_layer3_2_conv2_weight.npy
+backbone.body.layer3.2.conv3.weight of (1024, 256, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_2_conv3_weight.npy
+backbone.body.layer3.3.conv1.weight of (256, 1024, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_3_conv1_weight.npy
+backbone.body.layer3.3.conv2.weight of (256, 256, 3, 3)
+		saved in ./npy_save/backbone_body_layer3_3_conv2_weight.npy
+backbone.body.layer3.3.conv3.weight of (1024, 256, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_3_conv3_weight.npy
+backbone.body.layer3.4.conv1.weight of (256, 1024, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_4_conv1_weight.npy
+backbone.body.layer3.4.conv2.weight of (256, 256, 3, 3)
+		saved in ./npy_save/backbone_body_layer3_4_conv2_weight.npy
+backbone.body.layer3.4.conv3.weight of (1024, 256, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_4_conv3_weight.npy
+backbone.body.layer3.5.conv1.weight of (256, 1024, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_5_conv1_weight.npy
+backbone.body.layer3.5.conv2.weight of (256, 256, 3, 3)
+		saved in ./npy_save/backbone_body_layer3_5_conv2_weight.npy
+backbone.body.layer3.5.conv3.weight of (1024, 256, 1, 1)
+		saved in ./npy_save/backbone_body_layer3_5_conv3_weight.npy
+backbone.body.layer4.0.downsample.0.weight of (2048, 1024, 1, 1)
+		saved in ./npy_save/backbone_body_layer4_0_downsample_0_weight.npy
+backbone.body.layer4.0.conv1.weight of (512, 1024, 1, 1)
+		saved in ./npy_save/backbone_body_layer4_0_conv1_weight.npy
+backbone.body.layer4.0.conv2.weight of (512, 512, 3, 3)
+		saved in ./npy_save/backbone_body_layer4_0_conv2_weight.npy
+backbone.body.layer4.0.conv3.weight of (2048, 512, 1, 1)
+		saved in ./npy_save/backbone_body_layer4_0_conv3_weight.npy
+backbone.body.layer4.1.conv1.weight of (512, 2048, 1, 1)
+		saved in ./npy_save/backbone_body_layer4_1_conv1_weight.npy
+backbone.body.layer4.1.conv2.weight of (512, 512, 3, 3)
+		saved in ./npy_save/backbone_body_layer4_1_conv2_weight.npy
+backbone.body.layer4.1.conv3.weight of (2048, 512, 1, 1)
+		saved in ./npy_save/backbone_body_layer4_1_conv3_weight.npy
+backbone.body.layer4.2.conv1.weight of (512, 2048, 1, 1)
+		saved in ./npy_save/backbone_body_layer4_2_conv1_weight.npy
+backbone.body.layer4.2.conv2.weight of (512, 512, 3, 3)
+		saved in ./npy_save/backbone_body_layer4_2_conv2_weight.npy
+backbone.body.layer4.2.conv3.weight of (2048, 512, 1, 1)
+		saved in ./npy_save/backbone_body_layer4_2_conv3_weight.npy
+backbone.fpn.fpn_inner2.weight of (1024, 512, 1, 1)
+		saved in ./npy_save/backbone_fpn_fpn_inner2_weight.npy
+backbone.fpn.fpn_inner2.bias of (1024,)
+		saved in ./npy_save/backbone_fpn_fpn_inner2_bias.npy
+backbone.fpn.fpn_layer2.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/backbone_fpn_fpn_layer2_weight.npy
+backbone.fpn.fpn_layer2.bias of (1024,)
+		saved in ./npy_save/backbone_fpn_fpn_layer2_bias.npy
+backbone.fpn.fpn_inner3.weight of (1024, 1024, 1, 1)
+		saved in ./npy_save/backbone_fpn_fpn_inner3_weight.npy
+backbone.fpn.fpn_inner3.bias of (1024,)
+		saved in ./npy_save/backbone_fpn_fpn_inner3_bias.npy
+backbone.fpn.fpn_layer3.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/backbone_fpn_fpn_layer3_weight.npy
+backbone.fpn.fpn_layer3.bias of (1024,)
+		saved in ./npy_save/backbone_fpn_fpn_layer3_bias.npy
+backbone.fpn.fpn_inner4.weight of (1024, 2048, 1, 1)
+		saved in ./npy_save/backbone_fpn_fpn_inner4_weight.npy
+backbone.fpn.fpn_inner4.bias of (1024,)
+		saved in ./npy_save/backbone_fpn_fpn_inner4_bias.npy
+backbone.fpn.fpn_layer4.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/backbone_fpn_fpn_layer4_weight.npy
+backbone.fpn.fpn_layer4.bias of (1024,)
+		saved in ./npy_save/backbone_fpn_fpn_layer4_bias.npy
+backbone.fpn.top_blocks.p6.weight of (1024, 2048, 3, 3)
+		saved in ./npy_save/backbone_fpn_top_blocks_p6_weight.npy
+backbone.fpn.top_blocks.p6.bias of (1024,)
+		saved in ./npy_save/backbone_fpn_top_blocks_p6_bias.npy
+backbone.fpn.top_blocks.p7.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/backbone_fpn_top_blocks_p7_weight.npy
+backbone.fpn.top_blocks.p7.bias of (1024,)
+		saved in ./npy_save/backbone_fpn_top_blocks_p7_bias.npy
+rpn.head.cls_tower.0.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/rpn_head_cls_tower_0_weight.npy
+rpn.head.cls_tower.0.bias of (1024,)
+		saved in ./npy_save/rpn_head_cls_tower_0_bias.npy
+rpn.head.cls_tower.2.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/rpn_head_cls_tower_2_weight.npy
+rpn.head.cls_tower.2.bias of (1024,)
+		saved in ./npy_save/rpn_head_cls_tower_2_bias.npy
+rpn.head.cls_tower.4.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/rpn_head_cls_tower_4_weight.npy
+rpn.head.cls_tower.4.bias of (1024,)
+		saved in ./npy_save/rpn_head_cls_tower_4_bias.npy
+rpn.head.cls_tower.6.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/rpn_head_cls_tower_6_weight.npy
+rpn.head.cls_tower.6.bias of (1024,)
+		saved in ./npy_save/rpn_head_cls_tower_6_bias.npy
+rpn.head.bbox_tower.0.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/rpn_head_bbox_tower_0_weight.npy
+rpn.head.bbox_tower.0.bias of (1024,)
+		saved in ./npy_save/rpn_head_bbox_tower_0_bias.npy
+rpn.head.bbox_tower.2.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/rpn_head_bbox_tower_2_weight.npy
+rpn.head.bbox_tower.2.bias of (1024,)
+		saved in ./npy_save/rpn_head_bbox_tower_2_bias.npy
+rpn.head.bbox_tower.4.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/rpn_head_bbox_tower_4_weight.npy
+rpn.head.bbox_tower.4.bias of (1024,)
+		saved in ./npy_save/rpn_head_bbox_tower_4_bias.npy
+rpn.head.bbox_tower.6.weight of (1024, 1024, 3, 3)
+		saved in ./npy_save/rpn_head_bbox_tower_6_weight.npy
+rpn.head.bbox_tower.6.bias of (1024,)
+		saved in ./npy_save/rpn_head_bbox_tower_6_bias.npy
+rpn.head.cls_logits.weight of (9, 1024, 3, 3)
+		saved in ./npy_save/rpn_head_cls_logits_weight.npy
+rpn.head.cls_logits.bias of (9,)
+		saved in ./npy_save/rpn_head_cls_logits_bias.npy
+rpn.head.bbox_pred.weight of (36, 1024, 3, 3)
+		saved in ./npy_save/rpn_head_bbox_pred_weight.npy
+rpn.head.bbox_pred.bias of (36,)
+		saved in ./npy_save/rpn_head_bbox_pred_bias.npy

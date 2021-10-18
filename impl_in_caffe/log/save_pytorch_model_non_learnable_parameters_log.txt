@@ -1,0 +1,218 @@
+
+
+
+--------------------------------------------------------------------------------
+saving non-learnalbe parameters of FrozenBatchNorm2d in detection v2 model
+--------------------------------------------------------------------------------
+backbone.body.stem.bn1.weight of (64,)
+		saved in ./npy_save/backbone_body_stem_bn1_weight.npy
+backbone.body.stem.bn1.bias of (64,)
+		saved in ./npy_save/backbone_body_stem_bn1_bias.npy
+backbone.body.layer1.0.downsample.1.weight of (256,)
+		saved in ./npy_save/backbone_body_layer1_0_downsample_1_weight.npy
+backbone.body.layer1.0.downsample.1.bias of (256,)
+		saved in ./npy_save/backbone_body_layer1_0_downsample_1_bias.npy
+backbone.body.layer1.0.bn1.weight of (64,)
+		saved in ./npy_save/backbone_body_layer1_0_bn1_weight.npy
+backbone.body.layer1.0.bn1.bias of (64,)
+		saved in ./npy_save/backbone_body_layer1_0_bn1_bias.npy
+backbone.body.layer1.0.bn2.weight of (64,)
+		saved in ./npy_save/backbone_body_layer1_0_bn2_weight.npy
+backbone.body.layer1.0.bn2.bias of (64,)
+		saved in ./npy_save/backbone_body_layer1_0_bn2_bias.npy
+backbone.body.layer1.0.bn3.weight of (256,)
+		saved in ./npy_save/backbone_body_layer1_0_bn3_weight.npy
+backbone.body.layer1.0.bn3.bias of (256,)
+		saved in ./npy_save/backbone_body_layer1_0_bn3_bias.npy
+backbone.body.layer1.1.bn1.weight of (64,)
+		saved in ./npy_save/backbone_body_layer1_1_bn1_weight.npy
+backbone.body.layer1.1.bn1.bias of (64,)
+		saved in ./npy_save/backbone_body_layer1_1_bn1_bias.npy
+backbone.body.layer1.1.bn2.weight of (64,)
+		saved in ./npy_save/backbone_body_layer1_1_bn2_weight.npy
+backbone.body.layer1.1.bn2.bias of (64,)
+		saved in ./npy_save/backbone_body_layer1_1_bn2_bias.npy
+backbone.body.layer1.1.bn3.weight of (256,)
+		saved in ./npy_save/backbone_body_layer1_1_bn3_weight.npy
+backbone.body.layer1.1.bn3.bias of (256,)
+		saved in ./npy_save/backbone_body_layer1_1_bn3_bias.npy
+backbone.body.layer1.2.bn1.weight of (64,)
+		saved in ./npy_save/backbone_body_layer1_2_bn1_weight.npy
+backbone.body.layer1.2.bn1.bias of (64,)
+		saved in ./npy_save/backbone_body_layer1_2_bn1_bias.npy
+backbone.body.layer1.2.bn2.weight of (64,)
+		saved in ./npy_save/backbone_body_layer1_2_bn2_weight.npy
+backbone.body.layer1.2.bn2.bias of (64,)
+		saved in ./npy_save/backbone_body_layer1_2_bn2_bias.npy
+backbone.body.layer1.2.bn3.weight of (256,)
+		saved in ./npy_save/backbone_body_layer1_2_bn3_weight.npy
+backbone.body.layer1.2.bn3.bias of (256,)
+		saved in ./npy_save/backbone_body_layer1_2_bn3_bias.npy
+backbone.body.layer2.0.downsample.1.weight of (512,)
+		saved in ./npy_save/backbone_body_layer2_0_downsample_1_weight.npy
+backbone.body.layer2.0.downsample.1.bias of (512,)
+		saved in ./npy_save/backbone_body_layer2_0_downsample_1_bias.npy
+backbone.body.layer2.0.bn1.weight of (128,)
+		saved in ./npy_save/backbone_body_layer2_0_bn1_weight.npy
+backbone.body.layer2.0.bn1.bias of (128,)
+		saved in ./npy_save/backbone_body_layer2_0_bn1_bias.npy
+backbone.body.layer2.0.bn2.weight of (128,)
+		saved in ./npy_save/backbone_body_layer2_0_bn2_weight.npy
+backbone.body.layer2.0.bn2.bias of (128,)
+		saved in ./npy_save/backbone_body_layer2_0_bn2_bias.npy
+backbone.body.layer2.0.bn3.weight of (512,)
+		saved in ./npy_save/backbone_body_layer2_0_bn3_weight.npy
+backbone.body.layer2.0.bn3.bias of (512,)
+		saved in ./npy_save/backbone_body_layer2_0_bn3_bias.npy
+backbone.body.layer2.1.bn1.weight of (128,)
+		saved in ./npy_save/backbone_body_layer2_1_bn1_weight.npy
+backbone.body.layer2.1.bn1.bias of (128,)
+		saved in ./npy_save/backbone_body_layer2_1_bn1_bias.npy
+backbone.body.layer2.1.bn2.weight of (128,)
+		saved in ./npy_save/backbone_body_layer2_1_bn2_weight.npy
+backbone.body.layer2.1.bn2.bias of (128,)
+		saved in ./npy_save/backbone_body_layer2_1_bn2_bias.npy
+backbone.body.layer2.1.bn3.weight of (512,)
+		saved in ./npy_save/backbone_body_layer2_1_bn3_weight.npy
+backbone.body.layer2.1.bn3.bias of (512,)
+		saved in ./npy_save/backbone_body_layer2_1_bn3_bias.npy
+backbone.body.layer2.2.bn1.weight of (128,)
+		saved in ./npy_save/backbone_body_layer2_2_bn1_weight.npy
+backbone.body.layer2.2.bn1.bias of (128,)
+		saved in ./npy_save/backbone_body_layer2_2_bn1_bias.npy
+backbone.body.layer2.2.bn2.weight of (128,)
+		saved in ./npy_save/backbone_body_layer2_2_bn2_weight.npy
+backbone.body.layer2.2.bn2.bias of (128,)
+		saved in ./npy_save/backbone_body_layer2_2_bn2_bias.npy
+backbone.body.layer2.2.bn3.weight of (512,)
+		saved in ./npy_save/backbone_body_layer2_2_bn3_weight.npy
+backbone.body.layer2.2.bn3.bias of (512,)
+		saved in ./npy_save/backbone_body_layer2_2_bn3_bias.npy
+backbone.body.layer2.3.bn1.weight of (128,)
+		saved in ./npy_save/backbone_body_layer2_3_bn1_weight.npy
+backbone.body.layer2.3.bn1.bias of (128,)
+		saved in ./npy_save/backbone_body_layer2_3_bn1_bias.npy
+backbone.body.layer2.3.bn2.weight of (128,)
+		saved in ./npy_save/backbone_body_layer2_3_bn2_weight.npy
+backbone.body.layer2.3.bn2.bias of (128,)
+		saved in ./npy_save/backbone_body_layer2_3_bn2_bias.npy
+backbone.body.layer2.3.bn3.weight of (512,)
+		saved in ./npy_save/backbone_body_layer2_3_bn3_weight.npy
+backbone.body.layer2.3.bn3.bias of (512,)
+		saved in ./npy_save/backbone_body_layer2_3_bn3_bias.npy
+backbone.body.layer3.0.downsample.1.weight of (1024,)
+		saved in ./npy_save/backbone_body_layer3_0_downsample_1_weight.npy
+backbone.body.layer3.0.downsample.1.bias of (1024,)
+		saved in ./npy_save/backbone_body_layer3_0_downsample_1_bias.npy
+backbone.body.layer3.0.bn1.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_0_bn1_weight.npy
+backbone.body.layer3.0.bn1.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_0_bn1_bias.npy
+backbone.body.layer3.0.bn2.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_0_bn2_weight.npy
+backbone.body.layer3.0.bn2.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_0_bn2_bias.npy
+backbone.body.layer3.0.bn3.weight of (1024,)
+		saved in ./npy_save/backbone_body_layer3_0_bn3_weight.npy
+backbone.body.layer3.0.bn3.bias of (1024,)
+		saved in ./npy_save/backbone_body_layer3_0_bn3_bias.npy
+backbone.body.layer3.1.bn1.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_1_bn1_weight.npy
+backbone.body.layer3.1.bn1.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_1_bn1_bias.npy
+backbone.body.layer3.1.bn2.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_1_bn2_weight.npy
+backbone.body.layer3.1.bn2.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_1_bn2_bias.npy
+backbone.body.layer3.1.bn3.weight of (1024,)
+		saved in ./npy_save/backbone_body_layer3_1_bn3_weight.npy
+backbone.body.layer3.1.bn3.bias of (1024,)
+		saved in ./npy_save/backbone_body_layer3_1_bn3_bias.npy
+backbone.body.layer3.2.bn1.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_2_bn1_weight.npy
+backbone.body.layer3.2.bn1.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_2_bn1_bias.npy
+backbone.body.layer3.2.bn2.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_2_bn2_weight.npy
+backbone.body.layer3.2.bn2.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_2_bn2_bias.npy
+backbone.body.layer3.2.bn3.weight of (1024,)
+		saved in ./npy_save/backbone_body_layer3_2_bn3_weight.npy
+backbone.body.layer3.2.bn3.bias of (1024,)
+		saved in ./npy_save/backbone_body_layer3_2_bn3_bias.npy
+backbone.body.layer3.3.bn1.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_3_bn1_weight.npy
+backbone.body.layer3.3.bn1.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_3_bn1_bias.npy
+backbone.body.layer3.3.bn2.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_3_bn2_weight.npy
+backbone.body.layer3.3.bn2.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_3_bn2_bias.npy
+backbone.body.layer3.3.bn3.weight of (1024,)
+		saved in ./npy_save/backbone_body_layer3_3_bn3_weight.npy
+backbone.body.layer3.3.bn3.bias of (1024,)
+		saved in ./npy_save/backbone_body_layer3_3_bn3_bias.npy
+backbone.body.layer3.4.bn1.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_4_bn1_weight.npy
+backbone.body.layer3.4.bn1.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_4_bn1_bias.npy
+backbone.body.layer3.4.bn2.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_4_bn2_weight.npy
+backbone.body.layer3.4.bn2.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_4_bn2_bias.npy
+backbone.body.layer3.4.bn3.weight of (1024,)
+		saved in ./npy_save/backbone_body_layer3_4_bn3_weight.npy
+backbone.body.layer3.4.bn3.bias of (1024,)
+		saved in ./npy_save/backbone_body_layer3_4_bn3_bias.npy
+backbone.body.layer3.5.bn1.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_5_bn1_weight.npy
+backbone.body.layer3.5.bn1.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_5_bn1_bias.npy
+backbone.body.layer3.5.bn2.weight of (256,)
+		saved in ./npy_save/backbone_body_layer3_5_bn2_weight.npy
+backbone.body.layer3.5.bn2.bias of (256,)
+		saved in ./npy_save/backbone_body_layer3_5_bn2_bias.npy
+backbone.body.layer3.5.bn3.weight of (1024,)
+		saved in ./npy_save/backbone_body_layer3_5_bn3_weight.npy
+backbone.body.layer3.5.bn3.bias of (1024,)
+		saved in ./npy_save/backbone_body_layer3_5_bn3_bias.npy
+backbone.body.layer4.0.downsample.1.weight of (2048,)
+		saved in ./npy_save/backbone_body_layer4_0_downsample_1_weight.npy
+backbone.body.layer4.0.downsample.1.bias of (2048,)
+		saved in ./npy_save/backbone_body_layer4_0_downsample_1_bias.npy
+backbone.body.layer4.0.bn1.weight of (512,)
+		saved in ./npy_save/backbone_body_layer4_0_bn1_weight.npy
+backbone.body.layer4.0.bn1.bias of (512,)
+		saved in ./npy_save/backbone_body_layer4_0_bn1_bias.npy
+backbone.body.layer4.0.bn2.weight of (512,)
+		saved in ./npy_save/backbone_body_layer4_0_bn2_weight.npy
+backbone.body.layer4.0.bn2.bias of (512,)
+		saved in ./npy_save/backbone_body_layer4_0_bn2_bias.npy
+backbone.body.layer4.0.bn3.weight of (2048,)
+		saved in ./npy_save/backbone_body_layer4_0_bn3_weight.npy
+backbone.body.layer4.0.bn3.bias of (2048,)
+		saved in ./npy_save/backbone_body_layer4_0_bn3_bias.npy
+backbone.body.layer4.1.bn1.weight of (512,)
+		saved in ./npy_save/backbone_body_layer4_1_bn1_weight.npy
+backbone.body.layer4.1.bn1.bias of (512,)
+		saved in ./npy_save/backbone_body_layer4_1_bn1_bias.npy
+backbone.body.layer4.1.bn2.weight of (512,)
+		saved in ./npy_save/backbone_body_layer4_1_bn2_weight.npy
+backbone.body.layer4.1.bn2.bias of (512,)
+		saved in ./npy_save/backbone_body_layer4_1_bn2_bias.npy
+backbone.body.layer4.1.bn3.weight of (2048,)
+		saved in ./npy_save/backbone_body_layer4_1_bn3_weight.npy
+backbone.body.layer4.1.bn3.bias of (2048,)
+		saved in ./npy_save/backbone_body_layer4_1_bn3_bias.npy
+backbone.body.layer4.2.bn1.weight of (512,)
+		saved in ./npy_save/backbone_body_layer4_2_bn1_weight.npy
+backbone.body.layer4.2.bn1.bias of (512,)
+		saved in ./npy_save/backbone_body_layer4_2_bn1_bias.npy
+backbone.body.layer4.2.bn2.weight of (512,)
+		saved in ./npy_save/backbone_body_layer4_2_bn2_weight.npy
+backbone.body.layer4.2.bn2.bias of (512,)
+		saved in ./npy_save/backbone_body_layer4_2_bn2_bias.npy
+backbone.body.layer4.2.bn3.weight of (2048,)
+		saved in ./npy_save/backbone_body_layer4_2_bn3_weight.npy
+backbone.body.layer4.2.bn3.bias of (2048,)
+		saved in ./npy_save/backbone_body_layer4_2_bn3_bias.npy

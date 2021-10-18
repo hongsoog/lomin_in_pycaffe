@@ -35,8 +35,10 @@ import tools.prototxt
 import tools.pre_processing
 
 # for model debugging log
+import logging
 from model_log import  logger
 
+LOMIN_ROOT="/home/kimkk/work/lomin"
 
 
 # Detection V2 Model in PyTorch
@@ -266,45 +268,54 @@ def bb_image_draw(pil_image, line_color=(0, 0, 255), line_width=4, score_thresho
 
     return pil_image_cp, num_bbox_included
 
-# model version
-version = "v2"
+if __name__ == "__main__":
 
-# test image file path
-image_file_path = "./sample_images/detection/1594202471809.jpg"
-#image_file_path = "./sample_images/detection/1596537103856.jpeg"
-#image_file_path = "./sample_images/video_frames/frame000000.png"
+    #logger.setLevel(logging.DEBUG)
+    #logger.setLevel(logging.CRITICAL)
 
-# set model conf file path and mode weight file path
-# prefixed by ./model/[detection|recognition]
-config_file = os.path.join('./model/detection', detect_model[version]["config_file"])
-weight_file = os.path.join('./model/detection', detect_model[version]["weight_file"])
+    # model version
+    version = "v2"
 
-# clone project level config and merge with experiment config
-cfg = cfg.clone()
-cfg.merge_from_file(config_file)
+    # test image file path
+    image_file_path = LOMIN_ROOT + "/sample_images/detection/1594202471809.jpg"
+    #image_file_path = "./sample_images/detection/1596537103856.jpeg"
+    #image_file_path = "./sample_images/video_frames/frame000000.png"
 
-# Detection model object creation
-demo = DetectionDemo(cfg, weight_file)
+    # set model conf file path and mode weight file path
+    # prefixed by ./model/[detection|recognition]
+    #config_file = os.path.join('./model/detection', detect_model[version]["config_file"])
+    config_file = LOMIN_ROOT + "/model/detection/" + detect_model[version]["config_file"]
+    #weight_file = os.path.join('./model/detection', detect_model[version]["weight_file"])
+    weight_file = LOMIN_ROOT + "/model/detection/" + detect_model[version]["weight_file"]
 
-# open image file as PIL.Image with RGB
-pil_image = Image.open(image_file_path).convert('RGB')
-org_pil_image = np.array(pil_image)
-prediction = demo.run_on_pil_image(pil_image)
+    # clone project level config and merge with experiment config
+    from maskrcnn_benchmark.config import cfg
 
-#draw_result = True
-draw_result = False
+    cfg = cfg.clone()
+    cfg.merge_from_file(config_file)
 
-if draw_result:
-    # draw with predicted boxes
-    bboxes = prediction['bboxes']
-    scores = prediction['scores']
+    # Detection model object creation
+    demo = DetectionDemo(cfg, weight_file)
 
-    bboxed_image, num_boxes = bb_image_draw(pil_image, line_color=(255, 0, 0), line_width = 3, score_threshold = 0.3)
+    # open image file as PIL.Image with RGB
+    pil_image = Image.open(image_file_path).convert('RGB')
+    org_pil_image = np.array(pil_image)
+    prediction = demo.run_on_pil_image(pil_image)
 
-    # Display an image with Python
-    # https://stackoverflow.com/questions/35286540/display-an-image-with-python
-    plt.figure()
-    plt.imshow(bboxed_image)
-    plt.show()
+    draw_result = True
+    #draw_result = False
 
-# Detection model Info
+    if draw_result:
+        # draw with predicted boxes
+        bboxes = prediction['bboxes']
+        scores = prediction['scores']
+
+        bboxed_image, num_boxes = bb_image_draw(pil_image, line_color=(255, 0, 0), line_width = 3, score_threshold = 0.3)
+
+        # Display an image with Python
+        # https://stackoverflow.com/questions/35286540/display-an-image-with-python
+        plt.figure()
+        plt.imshow(bboxed_image)
+        plt.show()
+
+    # Detection model Info
